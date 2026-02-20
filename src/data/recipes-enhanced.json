@@ -34,29 +34,31 @@
       "recipeName": "Skyr Protein Pancakes",
       "milkyMistProduct": "Milky Mist Skyr",
       "ingredients": [
-        "150g Milky Mist Skyr (16.5g protein)",
-        "2 eggs (12g protein)",
+        "200g Milky Mist Skyr (22g protein)",
         "1/2 cup oats (5g protein)",
+        "2 tbsp ground flaxseed (2g protein)",
         "1 tsp baking powder (0g protein)",
+        "1 banana, mashed (1.3g protein)",
         "Fresh berries for topping (0.5g protein)"
       ],
       "steps": [
-        "Blend Skyr, eggs, oats, and baking powder until smooth",
+        "Blend Skyr, oats, flaxseed, baking powder, and banana until smooth",
+        "Let batter rest for 5 minutes to thicken",
         "Heat a non-stick pan over medium heat",
         "Pour batter to form pancakes",
-        "Cook 2-3 minutes each side until golden",
+        "Cook 3-4 minutes each side until golden",
         "Top with fresh berries and serve"
       ],
       "nutrition": {
-        "protein": 25,
-        "calories": 420,
-        "carbs": 52,
-        "fats": 10,
-        "fiber": 5,
-        "calcium": 280,
-        "vitaminD": 3.2,
-        "vitaminB12": 2.1,
-        "iron": 3.5
+        "protein": 30,
+        "calories": 385,
+        "carbs": 48,
+        "fats": 8,
+        "fiber": 8,
+        "calcium": 350,
+        "vitaminD": 3.8,
+        "vitaminB12": 2.8,
+        "iron": 3.2
       },
       "dietary": ["vegetarian"]
     },
@@ -64,29 +66,29 @@
       "recipeName": "Paneer Scramble Toast",
       "milkyMistProduct": "Milky Mist High Protein Paneer",
       "ingredients": [
-        "100g Milky Mist Paneer, crumbled (18g protein)",
-        "2 eggs (12g protein)",
+        "150g Milky Mist Paneer, crumbled (27g protein)",
         "2 slices whole wheat bread (6g protein)",
         "1/4 onion, diced (0.3g protein)",
-        "Salt and pepper to taste (0g protein)"
+        "1 tbsp olive oil (0g protein)",
+        "Salt, pepper and spices to taste (0.5g protein)"
       ],
       "steps": [
-        "Heat pan and sauté diced onion until soft",
-        "Add crumbled paneer and cook for 2 minutes",
-        "Add beaten eggs and scramble together",
-        "Season with salt and pepper",
+        "Heat oil in pan and sauté diced onion until soft",
+        "Add crumbled paneer and cook for 3-4 minutes",
+        "Season with salt, pepper and spices",
+        "Scramble paneer until well mixed",
         "Toast bread and top with paneer scramble"
       ],
       "nutrition": {
-        "protein": 28,
-        "calories": 450,
+        "protein": 33,
+        "calories": 420,
         "carbs": 35,
-        "fats": 20,
+        "fats": 18,
         "fiber": 4,
-        "calcium": 420,
-        "vitaminD": 2.8,
-        "vitaminB12": 2.5,
-        "iron": 3.2
+        "calcium": 520,
+        "vitaminD": 2.2,
+        "vitaminB12": 1.8,
+        "iron": 2.8
       },
       "dietary": ["vegetarian"]
     },
@@ -118,7 +120,183 @@
         "vitaminB12": 2.0,
         "iron": 2.8
       },
-      "dietary": ["gluten-free"]
+      "dietary": ["non-vegetarian"]
+    },
+    {
+      "recipeName": "Scrambled Eggs with Greek Yogurt",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "3 eggs (18g protein)",
+        "100g Milky Mist Greek Yogurt (10g protein)",
+        "1 slice whole wheat toast (3g protein)",
+        "1 tbsp olive oil (0g protein)",
+        "Salt and pepper to taste (0g protein)"
+      ],
+      "steps": [
+        "Beat eggs with salt and pepper",
+        "Scramble eggs in olive oil over medium heat",
+        "Serve with Greek yogurt on the side",
+        "Toast bread and serve alongside"
+      ],
+      "nutrition": {
+        "protein": 31,
+        "calories": 420,
+        "carbs": 18,
+        "fats": 28,
+        "fiber": 2,
+        "calcium": 280,
+        "vitaminD": 3.2,
+        "vitaminB12": 2.5,
+        "iron": 3.1
+      },
+      "dietary": ["non-vegetarian"]
+    },
+    {
+      "recipeName": "Chicken & Paneer Omelette",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "2 eggs (12g protein)",
+        "50g cooked chicken breast, diced (15.5g protein)",
+        "50g Milky Mist Paneer, crumbled (9g protein)",
+        "1 tbsp milk (0.5g protein)",
+        "Herbs and spices (0g protein)"
+      ],
+      "steps": [
+        "Beat eggs with milk",
+        "Add diced chicken and crumbled paneer",
+        "Cook omelette in a non-stick pan",
+        "Fold and serve hot"
+      ],
+      "nutrition": {
+        "protein": 37,
+        "calories": 385,
+        "carbs": 4,
+        "fats": 24,
+        "fiber": 0,
+        "calcium": 320,
+        "vitaminD": 2.8,
+        "vitaminB12": 2.2,
+        "iron": 2.9
+      },
+      "dietary": ["non-vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Paneer Stuffed Paratha",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "100g Milky Mist Paneer, crumbled (18g protein)",
+        "2 whole wheat parathas (8g protein)",
+        "1 tbsp ghee (0g protein)",
+        "100g Greek yogurt for serving (10g protein)",
+        "Spices and herbs (0.5g protein)"
+      ],
+      "steps": [
+        "Mix crumbled paneer with spices",
+        "Stuff parathas with paneer mixture",
+        "Cook on tawa with ghee until golden",
+        "Serve hot with Greek yogurt"
+      ],
+      "nutrition": {
+        "protein": 36,
+        "calories": 520,
+        "carbs": 45,
+        "fats": 22,
+        "fiber": 6,
+        "calcium": 480,
+        "vitaminD": 2.8,
+        "vitaminB12": 2.1,
+        "iron": 3.8
+      },
+      "dietary": ["vegetarian"]
+    },
+    {
+      "recipeName": "Protein-Rich Smoothie Bowl",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "150g Milky Mist Greek Yogurt (15g protein)",
+        "1 cup milk (8g protein)",
+        "1 banana (1.3g protein)",
+        "2 tbsp protein powder (20g protein)",
+        "Mixed nuts and seeds (4g protein)"
+      ],
+      "steps": [
+        "Blend yogurt, milk, banana, and protein powder",
+        "Pour into a bowl",
+        "Top with mixed nuts and seeds",
+        "Serve immediately"
+      ],
+      "nutrition": {
+        "protein": 48,
+        "calories": 485,
+        "carbs": 35,
+        "fats": 18,
+        "fiber": 5,
+        "calcium": 420,
+        "vitaminD": 3.2,
+        "vitaminB12": 2.5,
+        "iron": 2.8
+      },
+      "dietary": ["vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Chicken & Egg Breakfast Wrap",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "100g cooked chicken breast, diced (31g protein)",
+        "2 eggs, scrambled (12g protein)",
+        "1 whole wheat tortilla (4g protein)",
+        "50g Greek yogurt (5g protein)",
+        "Vegetables and spices (1g protein)"
+      ],
+      "steps": [
+        "Scramble eggs with diced chicken",
+        "Warm the tortilla",
+        "Spread Greek yogurt on tortilla",
+        "Add chicken-egg mixture and vegetables",
+        "Roll and serve"
+      ],
+      "nutrition": {
+        "protein": 53,
+        "calories": 465,
+        "carbs": 28,
+        "fats": 20,
+        "fiber": 4,
+        "calcium": 285,
+        "vitaminD": 2.9,
+        "vitaminB12": 2.3,
+        "iron": 3.5
+      },
+      "dietary": ["non-vegetarian"]
+    },
+    {
+      "recipeName": "Quinoa Yogurt Breakfast Bowl",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "1 cup cooked quinoa (8g protein)",
+        "150g Milky Mist Greek Yogurt (15g protein)",
+        "2 tbsp almond butter (8g protein)",
+        "Fresh fruits (1g protein)",
+        "Honey drizzle (0g protein)"
+      ],
+      "steps": [
+        "Cook quinoa and let it cool",
+        "Layer quinoa in a bowl",
+        "Top with Greek yogurt",
+        "Add almond butter and fresh fruits",
+        "Drizzle with honey"
+      ],
+      "nutrition": {
+        "protein": 32,
+        "calories": 520,
+        "carbs": 58,
+        "fats": 18,
+        "fiber": 8,
+        "calcium": 310,
+        "vitaminD": 2.4,
+        "vitaminB12": 1.9,
+        "iron": 4.2
+      },
+      "dietary": ["vegetarian", "gluten-free"]
     }
   ],
   "lunch": [
@@ -151,6 +329,36 @@
         "iron": 4.1
       },
       "dietary": ["vegetarian"]
+    },
+    {
+      "recipeName": "Chicken Tikka & Yogurt Bowl",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "150g chicken breast, cubed (46.5g protein)",
+        "100g Milky Mist Greek Yogurt (10g protein)",
+        "1 cup brown rice (5g protein)",
+        "Tikka spices (0.5g protein)",
+        "Mixed vegetables (2g protein)"
+      ],
+      "steps": [
+        "Marinate chicken in yogurt and tikka spices",
+        "Grill chicken until fully cooked",
+        "Cook brown rice",
+        "Prepare mixed vegetables",
+        "Assemble bowl with rice, chicken, vegetables, and yogurt"
+      ],
+      "nutrition": {
+        "protein": 64,
+        "calories": 520,
+        "carbs": 45,
+        "fats": 12,
+        "fiber": 4,
+        "calcium": 290,
+        "vitaminD": 2.1,
+        "vitaminB12": 1.8,
+        "iron": 3.5
+      },
+      "dietary": ["non-vegetarian", "gluten-free"]
     },
     {
       "recipeName": "Grilled Paneer Salad Bowl",
@@ -240,7 +448,7 @@
         "vitaminB12": 1.5,
         "iron": 3.8
       },
-      "dietary": ["gluten-free"]
+      "dietary": ["non-vegetarian", "gluten-free"]
     },
     {
       "recipeName": "Tuna & Yogurt Protein Bowl",
@@ -271,6 +479,126 @@
         "iron": 3.5
       },
       "dietary": ["gluten-free"]
+    },
+    {
+      "recipeName": "Paneer Butter Masala Bowl",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "150g Milky Mist Paneer, cubed (27g protein)",
+        "1 cup brown rice (5g protein)",
+        "100g Greek yogurt for sauce (10g protein)",
+        "Butter masala spices (1g protein)",
+        "Fresh coriander (0.5g protein)"
+      ],
+      "steps": [
+        "Cook paneer in butter masala sauce",
+        "Prepare brown rice",
+        "Mix Greek yogurt into the sauce",
+        "Serve paneer over rice",
+        "Garnish with fresh coriander"
+      ],
+      "nutrition": {
+        "protein": 43,
+        "calories": 580,
+        "carbs": 52,
+        "fats": 24,
+        "fiber": 4,
+        "calcium": 520,
+        "vitaminD": 2.9,
+        "vitaminB12": 2.4,
+        "iron": 4.1
+      },
+      "dietary": ["vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Chicken Caesar Salad with Paneer",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "150g grilled chicken breast (46.5g protein)",
+        "100g Milky Mist Paneer, grilled (18g protein)",
+        "2 cups romaine lettuce (2g protein)",
+        "Greek yogurt Caesar dressing (3g protein)",
+        "Parmesan cheese (2g protein)"
+      ],
+      "steps": [
+        "Grill chicken breast and paneer",
+        "Chop romaine lettuce",
+        "Prepare Greek yogurt Caesar dressing",
+        "Toss salad with dressing",
+        "Top with grilled chicken, paneer, and parmesan"
+      ],
+      "nutrition": {
+        "protein": 71,
+        "calories": 485,
+        "carbs": 12,
+        "fats": 18,
+        "fiber": 4,
+        "calcium": 480,
+        "vitaminD": 2.1,
+        "vitaminB12": 1.8,
+        "iron": 3.2
+      },
+      "dietary": ["non-vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Lentil & Yogurt Curry",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "1 cup cooked lentils (18g protein)",
+        "150g Milky Mist Greek Yogurt (15g protein)",
+        "1 cup basmati rice (4g protein)",
+        "Curry spices (0.5g protein)",
+        "Fresh herbs (0.5g protein)"
+      ],
+      "steps": [
+        "Cook lentils with curry spices",
+        "Stir in Greek yogurt",
+        "Prepare basmati rice",
+        "Serve curry over rice",
+        "Garnish with fresh herbs"
+      ],
+      "nutrition": {
+        "protein": 38,
+        "calories": 520,
+        "carbs": 68,
+        "fats": 8,
+        "fiber": 12,
+        "calcium": 290,
+        "vitaminD": 2.3,
+        "vitaminB12": 1.9,
+        "iron": 5.8
+      },
+      "dietary": ["vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Egg Fried Rice with Paneer",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "3 eggs, scrambled (18g protein)",
+        "100g Milky Mist Paneer, cubed (18g protein)",
+        "2 cups cooked rice (8g protein)",
+        "Mixed vegetables (2g protein)",
+        "Soy sauce and spices (0.5g protein)"
+      ],
+      "steps": [
+        "Scramble eggs and set aside",
+        "Pan-fry paneer cubes",
+        "Stir-fry rice with vegetables",
+        "Add eggs and paneer",
+        "Season with soy sauce and serve"
+      ],
+      "nutrition": {
+        "protein": 46,
+        "calories": 565,
+        "carbs": 58,
+        "fats": 20,
+        "fiber": 3,
+        "calcium": 420,
+        "vitaminD": 3.1,
+        "vitaminB12": 2.6,
+        "iron": 4.2
+      },
+      "dietary": ["non-vegetarian", "gluten-free"]
     }
   ],
   "dinner": [
@@ -362,7 +690,7 @@
         "vitaminB12": 1.2,
         "iron": 2.8
       },
-      "dietary": ["gluten-free"]
+      "dietary": ["non-vegetarian", "gluten-free"]
     },
     {
       "recipeName": "Baked Fish with Yogurt Sauce",
@@ -422,7 +750,7 @@
         "vitaminB12": 2.8,
         "iron": 4.2
       },
-      "dietary": ["gluten-free"]
+      "dietary": ["non-vegetarian", "gluten-free"]
     },
     {
       "recipeName": "Chicken Tikka with Skyr Marinade",
@@ -452,7 +780,7 @@
         "vitaminB12": 1.8,
         "iron": 3.2
       },
-      "dietary": ["gluten-free"]
+      "dietary": ["non-vegetarian", "gluten-free"]
     },
     {
       "recipeName": "Salmon & Yogurt Dill Bowl",
@@ -483,6 +811,156 @@
         "iron": 3.8
       },
       "dietary": ["gluten-free"]
+    },
+    {
+      "recipeName": "Paneer Tikka Masala",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "200g Milky Mist Paneer, cubed (36g protein)",
+        "100g Greek yogurt for sauce (10g protein)",
+        "1 cup basmati rice (4g protein)",
+        "Tikka masala spices (1g protein)",
+        "Fresh cilantro (0.5g protein)"
+      ],
+      "steps": [
+        "Marinate paneer in yogurt and spices",
+        "Grill paneer until charred",
+        "Prepare tikka masala sauce with yogurt",
+        "Simmer paneer in sauce",
+        "Serve with basmati rice and cilantro"
+      ],
+      "nutrition": {
+        "protein": 51,
+        "calories": 620,
+        "carbs": 48,
+        "fats": 26,
+        "fiber": 3,
+        "calcium": 580,
+        "vitaminD": 3.1,
+        "vitaminB12": 2.8,
+        "iron": 4.5
+      },
+      "dietary": ["vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Chicken Biryani with Yogurt Raita",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "200g chicken breast, cubed (62g protein)",
+        "150g Greek yogurt for raita (15g protein)",
+        "2 cups basmati rice (8g protein)",
+        "Biryani spices (1g protein)",
+        "Fried onions and herbs (1g protein)"
+      ],
+      "steps": [
+        "Marinate chicken in yogurt and spices",
+        "Cook chicken until tender",
+        "Prepare fragrant basmati rice",
+        "Layer chicken and rice",
+        "Serve with yogurt raita"
+      ],
+      "nutrition": {
+        "protein": 87,
+        "calories": 720,
+        "carbs": 68,
+        "fats": 18,
+        "fiber": 2,
+        "calcium": 320,
+        "vitaminD": 2.8,
+        "vitaminB12": 2.1,
+        "iron": 4.8
+      },
+      "dietary": ["non-vegetarian", "gluten-free"]
+    },
+    {
+      "recipeName": "Protein-Rich Dal Tadka",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "1 cup mixed lentils (24g protein)",
+        "100g Greek yogurt (10g protein)",
+        "2 chapatis (6g protein)",
+        "Tadka spices (0.5g protein)",
+        "Fresh coriander (0.5g protein)"
+      ],
+      "steps": [
+        "Cook mixed lentils until soft",
+        "Prepare tadka with spices",
+        "Add tadka to cooked dal",
+        "Stir in Greek yogurt",
+        "Serve with chapatis and coriander"
+      ],
+      "nutrition": {
+        "protein": 41,
+        "calories": 485,
+        "carbs": 62,
+        "fats": 8,
+        "fiber": 18,
+        "calcium": 285,
+        "vitaminD": 2.2,
+        "vitaminB12": 1.8,
+        "iron": 7.2
+      },
+      "dietary": ["vegetarian"]
+    },
+    {
+      "recipeName": "Egg Curry with Paneer",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "4 boiled eggs (24g protein)",
+        "100g Milky Mist Paneer, cubed (18g protein)",
+        "2 rotis (6g protein)",
+        "Curry sauce with yogurt (3g protein)",
+        "Spices and herbs (0.5g protein)"
+      ],
+      "steps": [
+        "Boil and peel eggs",
+        "Pan-fry paneer cubes",
+        "Prepare curry sauce with yogurt",
+        "Add eggs and paneer to curry",
+        "Serve with rotis"
+      ],
+      "nutrition": {
+        "protein": 51,
+        "calories": 565,
+        "carbs": 38,
+        "fats": 28,
+        "fiber": 4,
+        "calcium": 420,
+        "vitaminD": 3.8,
+        "vitaminB12": 3.2,
+        "iron": 5.1
+      },
+      "dietary": ["non-vegetarian"]
+    },
+    {
+      "recipeName": "Quinoa Stuffed Bell Peppers",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "2 cups cooked quinoa (16g protein)",
+        "100g Greek yogurt (10g protein)",
+        "4 bell peppers (4g protein)",
+        "Mixed vegetables (2g protein)",
+        "Cheese and herbs (3g protein)"
+      ],
+      "steps": [
+        "Cook quinoa with vegetables",
+        "Mix with Greek yogurt",
+        "Stuff bell peppers with quinoa mixture",
+        "Bake until peppers are tender",
+        "Serve with cheese and herbs"
+      ],
+      "nutrition": {
+        "protein": 35,
+        "calories": 420,
+        "carbs": 58,
+        "fats": 10,
+        "fiber": 12,
+        "calcium": 285,
+        "vitaminD": 2.1,
+        "vitaminB12": 1.7,
+        "iron": 4.8
+      },
+      "dietary": ["vegetarian", "gluten-free"]
     }
   ]
 }

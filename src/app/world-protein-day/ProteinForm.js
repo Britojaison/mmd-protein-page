@@ -32,9 +32,8 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
 
   const dietaryOptions = [
     { value: 'vegetarian', label: 'Vegetarian', icon: '🥗' },
-    { value: 'vegan', label: 'Vegan', icon: '🌱' },
-    { value: 'gluten-free', label: 'Gluten-Free', icon: '🌾' },
-    { value: 'lactose-free', label: 'Lactose-Free', icon: '🥛' }
+    { value: 'non-vegetarian', label: 'Non-Vegetarian', icon: '🍗' },
+    { value: 'gluten-free', label: 'Gluten-Free', icon: '🌾' }
   ];
 
   return (
@@ -129,7 +128,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         <label className="block text-sm font-medium text-gray-700 mb-1.5">
           Dietary Preferences (Optional)
         </label>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 gap-2">
           {dietaryOptions.map((option) => (
             <button
               key={option.value}

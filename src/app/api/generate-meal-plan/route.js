@@ -26,7 +26,20 @@ export async function POST(request) {
     
     // Create optimized prompt for Gemini
     const prompt = `Generate a 7-day meal plan for: Age ${age}, Gender ${gender}, Weight ${weight}kg, Protein target ${proteinRequired}g, Diet: ${dietaryString}. 
-    
+
+CRITICAL DIETARY GUIDELINES:
+- If diet includes "non-vegetarian": ALL meals must contain chicken or eggs as primary protein. NO vegetarian-only meals. Always combine with Milky Mist dairy products.
+- If diet includes "vegetarian": STRICTLY VEGETARIAN - NO eggs, NO chicken, NO meat, NO fish. Only plant-based ingredients and Milky Mist dairy products (paneer, yogurt, milk). EGGS ARE NOT VEGETARIAN.
+- If diet includes "gluten-free": Avoid wheat, barley, rye, and gluten-containing ingredients.
+- ALWAYS include Milky Mist dairy products in every meal (Greek Yogurt, Paneer, Skyr, Milk, etc.)
+
+IMPORTANT: EGGS ARE NOT VEGETARIAN. If user selects vegetarian, do not include any eggs in any recipe.
+
+EXAMPLES FOR NON-VEGETARIAN:
+- Breakfast: "Chicken Sausage & Greek Yogurt Parfait" (NOT "Paneer Pancakes")
+- Lunch: "Grilled Chicken & Paneer Salad" (NOT "Pure Paneer Salad")  
+- Dinner: "Egg & Paneer Bhurji" (NOT "Pasta")
+
 Return ONLY valid JSON with this structure:
 {
   "weeklyPlan": [
@@ -36,19 +49,19 @@ Return ONLY valid JSON with this structure:
       "meals": [
         {
           "type": "Breakfast",
-          "recipeName": "High Protein Oatmeal",
+          "recipeName": "Chicken & Greek Yogurt Bowl",
           "milkyMistProduct": "Milky Mist Greek Yogurt",
-          "ingredients": ["1 cup oats", "1 cup Greek yogurt (15g protein)"],
-          "steps": ["Cook oats", "Add yogurt"],
-          "nutrition": {"protein": 30, "calories": 400, "carbs": 45, "fats": 12},
-          "dietary": ["vegetarian"]
+          "ingredients": ["150g grilled chicken", "1 cup Greek yogurt (15g protein)"],
+          "steps": ["Grill chicken", "Add yogurt"],
+          "nutrition": {"protein": 45, "calories": 400, "carbs": 15, "fats": 12},
+          "dietary": ["non-vegetarian"]
         }
       ]
     }
   ]
 }
 
-Requirements: 3 meals/day, include Milky Mist products, respect dietary preferences, realistic portions.`;
+Requirements: 3 meals/day, include Milky Mist products in ALL meals, respect dietary preferences strictly, realistic portions.`;
 
     console.log('Calling Gemini API...');
     const model = genAI.getGenerativeModel({ 
@@ -89,6 +102,29 @@ Requirements: 3 meals/day, include Milky Mist products, respect dietary preferen
       }
       
       const mealPlanData = JSON.parse(jsonText);
+      
+      // Validate that vegetarian meals don't contain eggs
+      if (dietaryPreferences.includes('vegetarian')) {
+        console.log('Validating vegetarian meal plan from Gemini...');
+        mealPlanData.weeklyPlan.forEach(day => {
+          day.meals.forEach(meal => {
+            const hasEggs = meal.ingredients && meal.ingredients.some(ingredient => 
+              ingredient.toLowerCase().includes('egg')
+            );
+            const hasChicken = meal.ingredients && meal.ingredients.some(ingredient => 
+              ingredient.toLowerCase().includes('chicken')
+            );
+            
+            if (hasEggs || hasChicken) {
+              console.log(`WARNING: Non-vegetarian ingredient found in meal: ${meal.recipeName}`);
+              console.log(`Ingredients: ${meal.ingredients.join(', ')}`);
+              console.log('Falling back to curated recipes...');
+              throw new Error('Non-vegetarian ingredients in vegetarian meal plan');
+            }
+          });
+        });
+      }
+      
       return formatMealPlanResponse(mealPlanData, requestData);
       
     } catch (apiError) {
@@ -118,7 +154,48 @@ async function generateFallbackMealPlan(requestData) {
     // Filter recipes based on dietary preferences
     const filterRecipes = (recipes) => {
       if (dietaryPreferences.length === 0) return recipes;
+      
       return recipes.filter(recipe => {
+        // Handle non-vegetarian preference - ONLY non-veg recipes
+        if (dietaryPreferences.includes('non-vegetarian')) {
+          // Must have non-vegetarian tag OR contain chicken/egg in name
+          const isNonVeg = (recipe.dietary && recipe.dietary.includes('non-vegetarian')) ||
+                          recipe.recipeName.toLowerCase().includes('chicken') ||
+                          recipe.recipeName.toLowerCase().includes('egg');
+          
+          // Check for gluten-free if also selected
+          if (dietaryPreferences.includes('gluten-free')) {
+            return isNonVeg && recipe.dietary && recipe.dietary.includes('gluten-free');
+          }
+          
+          return isNonVeg;
+        }
+        
+        // Handle vegetarian preference (exclude non-veg)
+        if (dietaryPreferences.includes('vegetarian')) {
+          const isVegetarian = recipe.dietary && recipe.dietary.includes('vegetarian') &&
+                              !recipe.dietary.includes('non-vegetarian') &&
+                              !recipe.recipeName.toLowerCase().includes('chicken') &&
+                              !recipe.recipeName.toLowerCase().includes('egg');
+          
+          // Additional check: ensure no eggs in ingredients
+          const hasEggs = recipe.ingredients && recipe.ingredients.some(ingredient => 
+            ingredient.toLowerCase().includes('egg')
+          );
+          
+          if (hasEggs) {
+            return false; // Exclude recipes with eggs from vegetarian selection
+          }
+          
+          // Check for gluten-free if also selected
+          if (dietaryPreferences.includes('gluten-free')) {
+            return isVegetarian && recipe.dietary && recipe.dietary.includes('gluten-free');
+          }
+          
+          return isVegetarian;
+        }
+        
+        // Handle other preferences (gluten-free only)
         return dietaryPreferences.every(pref => 
           recipe.dietary && recipe.dietary.includes(pref)
         );
