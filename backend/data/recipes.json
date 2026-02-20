@@ -1,0 +1,179 @@
+{
+  "breakfast": [
+    {
+      "recipeName": "High Protein Greek Yogurt Bowl",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "200g Milky Mist Greek Yogurt",
+        "1 banana, sliced",
+        "2 tbsp almonds, chopped",
+        "1 tbsp honey",
+        "1 tbsp chia seeds"
+      ],
+      "steps": [
+        "Pour Greek yogurt into a bowl",
+        "Top with sliced banana",
+        "Sprinkle chopped almonds and chia seeds",
+        "Drizzle honey on top",
+        "Serve immediately"
+      ],
+      "protein": 22
+    },
+    {
+      "recipeName": "Skyr Protein Pancakes",
+      "milkyMistProduct": "Milky Mist Skyr",
+      "ingredients": [
+        "150g Milky Mist Skyr",
+        "2 eggs",
+        "1/2 cup oats",
+        "1 tsp baking powder",
+        "Fresh berries for topping"
+      ],
+      "steps": [
+        "Blend Skyr, eggs, oats, and baking powder until smooth",
+        "Heat a non-stick pan over medium heat",
+        "Pour batter to form pancakes",
+        "Cook 2-3 minutes each side until golden",
+        "Top with fresh berries and serve"
+      ],
+      "protein": 25
+    },
+    {
+      "recipeName": "Paneer Scramble Toast",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "100g Milky Mist Paneer, crumbled",
+        "2 eggs",
+        "2 slices whole wheat bread",
+        "1/4 onion, diced",
+        "Salt and pepper to taste"
+      ],
+      "steps": [
+        "Heat pan and sauté diced onion until soft",
+        "Add crumbled paneer and cook for 2 minutes",
+        "Add beaten eggs and scramble together",
+        "Season with salt and pepper",
+        "Toast bread and top with paneer scramble"
+      ],
+      "protein": 28
+    }
+  ],
+  "lunch": [
+    {
+      "recipeName": "Paneer Tikka Wrap",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "150g Milky Mist Paneer, cubed",
+        "2 tbsp tikka masala",
+        "1 whole wheat tortilla",
+        "Lettuce and tomatoes",
+        "2 tbsp Greek yogurt for sauce"
+      ],
+      "steps": [
+        "Marinate paneer cubes in tikka masala for 10 minutes",
+        "Grill or pan-fry paneer until golden",
+        "Warm the tortilla",
+        "Add lettuce, tomatoes, and paneer",
+        "Drizzle with yogurt sauce and wrap"
+      ],
+      "protein": 30
+    },
+    {
+      "recipeName": "Grilled Paneer Salad Bowl",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "150g Milky Mist Paneer, grilled",
+        "2 cups mixed greens",
+        "1/2 cup chickpeas",
+        "Cherry tomatoes",
+        "Olive oil and lemon dressing"
+      ],
+      "steps": [
+        "Grill paneer cubes until charred",
+        "Arrange mixed greens in a bowl",
+        "Add chickpeas and cherry tomatoes",
+        "Top with grilled paneer",
+        "Drizzle with olive oil and lemon dressing"
+      ],
+      "protein": 32
+    },
+    {
+      "recipeName": "Paneer Quinoa Power Bowl",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "120g Milky Mist Paneer, cubed",
+        "1 cup cooked quinoa",
+        "1/2 cup roasted vegetables",
+        "2 tbsp hummus",
+        "Fresh herbs"
+      ],
+      "steps": [
+        "Cook quinoa according to package instructions",
+        "Roast vegetables (bell peppers, zucchini) in oven",
+        "Pan-fry paneer cubes until golden",
+        "Assemble quinoa, vegetables, and paneer in bowl",
+        "Top with hummus and fresh herbs"
+      ],
+      "protein": 28
+    }
+  ],
+  "dinner": [
+    {
+      "recipeName": "Creamy Skyr Pasta",
+      "milkyMistProduct": "Milky Mist Skyr",
+      "ingredients": [
+        "150g Milky Mist Skyr",
+        "200g whole wheat pasta",
+        "1 cup spinach",
+        "2 cloves garlic, minced",
+        "Parmesan cheese"
+      ],
+      "steps": [
+        "Cook pasta according to package directions",
+        "Sauté garlic and spinach in a pan",
+        "Add Skyr and stir until creamy",
+        "Toss cooked pasta in the Skyr sauce",
+        "Top with parmesan and serve"
+      ],
+      "protein": 24
+    },
+    {
+      "recipeName": "Paneer Curry with Rice",
+      "milkyMistProduct": "Milky Mist High Protein Paneer",
+      "ingredients": [
+        "150g Milky Mist Paneer, cubed",
+        "1 cup tomato curry sauce",
+        "1 cup cooked brown rice",
+        "Fresh cilantro",
+        "Spices (cumin, turmeric, garam masala)"
+      ],
+      "steps": [
+        "Prepare curry sauce with tomatoes and spices",
+        "Add paneer cubes to the curry",
+        "Simmer for 10 minutes",
+        "Cook brown rice separately",
+        "Serve paneer curry over rice with cilantro"
+      ],
+      "protein": 29
+    },
+    {
+      "recipeName": "Greek Yogurt Chicken Bowl",
+      "milkyMistProduct": "Milky Mist Greek Yogurt",
+      "ingredients": [
+        "150g Milky Mist Greek Yogurt",
+        "150g grilled chicken breast",
+        "1 cup cooked rice",
+        "Cucumber and tomatoes",
+        "Herbs and spices"
+      ],
+      "steps": [
+        "Marinate chicken in Greek yogurt and spices",
+        "Grill chicken until fully cooked",
+        "Cook rice according to package",
+        "Dice cucumber and tomatoes",
+        "Assemble bowl with rice, chicken, vegetables, and yogurt sauce"
+      ],
+      "protein": 35
+    }
+  ]
+}
