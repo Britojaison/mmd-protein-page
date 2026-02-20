@@ -12,6 +12,7 @@ export default function WorldProteinDay() {
   const [userCount, setUserCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [userCountLoaded, setUserCountLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
   // Lazy load user count only when needed
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function WorldProteinDay() {
 
   const handleSubmit = async (formData) => {
     setIsLoading(true);
+    setError(null);
     
     try {
       // Use improved protein calculation with gender and age
@@ -96,11 +98,16 @@ export default function WorldProteinDay() {
         // Update user count asynchronously
         fetchUserCount();
       } else {
-        throw new Error(mealPlanData.error || 'Failed to generate meal plan');
+        // Handle validation errors
+        if (mealPlanData.validationErrors) {
+          setError(`Validation Error: ${mealPlanData.validationErrors.join(', ')}`);
+        } else {
+          throw new Error(mealPlanData.error || 'Failed to generate meal plan');
+        }
       }
     } catch (error) {
       console.error('Failed to save user:', error);
-      alert('Failed to save data. Please try again.');
+      setError(error.message || 'Failed to save data. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -142,6 +149,11 @@ export default function WorldProteinDay() {
                 <p className="text-gray-600 text-sm">
                   Enter your details to get a personalized meal plan
                 </p>
+                {error && (
+                  <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-600 text-sm">{error}</p>
+                  </div>
+                )}
               </div>
               <ProteinForm onSubmit={handleSubmit} isLoading={isLoading} />
             </div>
@@ -171,7 +183,10 @@ export default function WorldProteinDay() {
             
             <div className="text-center mt-8">
               <button
-                onClick={() => setResult(null)}
+                onClick={() => {
+                  setResult(null);
+                  setError(null);
+                }}
                 className="bg-[#1e3a5f] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#2d4a6f] transition-colors duration-200 shadow-md"
               >
                 Calculate for Another Person

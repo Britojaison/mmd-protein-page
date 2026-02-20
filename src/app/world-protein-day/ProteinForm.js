@@ -12,8 +12,50 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
     dietaryPreferences: []
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validateField = (name, value) => {
+    const newErrors = { ...errors };
+
+    switch (name) {
+      case 'age':
+        const age = parseInt(value);
+        if (value && (age < 1 || age > 100)) {
+          newErrors.age = 'Age must be between 1 and 100 years';
+        } else {
+          delete newErrors.age;
+        }
+        break;
+
+      case 'height':
+        const height = parseInt(value);
+        if (value && (height < 50 || height > 272)) {
+          newErrors.height = 'Height must be between 50 and 272 cm';
+        } else {
+          delete newErrors.height;
+        }
+        break;
+
+      case 'weight':
+        const weight = parseFloat(value);
+        if (value && (weight < 5 || weight > 500)) {
+          newErrors.weight = 'Weight must be between 5 and 500 kg';
+        } else {
+          delete newErrors.weight;
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    setErrors(newErrors);
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    validateField(name, value);
   };
 
   const handleDietaryChange = (preference) => {
@@ -25,8 +67,38 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    
+    // Validate age
+    const age = parseInt(formData.age);
+    if (!formData.age || age < 1 || age > 100) {
+      newErrors.age = 'Please enter a valid age between 1 and 100 years';
+    }
+
+    // Validate height
+    const height = parseInt(formData.height);
+    if (!formData.height || height < 50 || height > 272) {
+      newErrors.height = 'Please enter a valid height between 50 and 272 cm';
+    }
+
+    // Validate weight
+    const weight = parseFloat(formData.weight);
+    if (!formData.weight || weight < 5 || weight > 500) {
+      newErrors.weight = 'Please enter a valid weight between 5 and 500 kg';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     await onSubmit(formData);
   };
 
@@ -56,19 +128,23 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="animate-slideUp" style={{ animationDelay: '0.2s' }}>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Age
+            Age (years)
           </label>
           <input
             type="number"
             name="age"
             required
             min="1"
-            max="120"
+            max="100"
             value={formData.age}
             onChange={handleChange}
-            placeholder="Age"
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f]"
+            className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] ${
+              errors.age ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
+          {errors.age && (
+            <p className="text-red-500 text-xs mt-1">{errors.age}</p>
+          )}
         </div>
 
         <div className="animate-slideUp" style={{ animationDelay: '0.3s' }}>
@@ -99,12 +175,18 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             type="number"
             name="height"
             required
-            min="1"
+            min="50"
+            max="272"
+            step="0.1"
             value={formData.height}
             onChange={handleChange}
-            placeholder="Height"
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f]"
+            className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] ${
+              errors.height ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
+          {errors.height && (
+            <p className="text-red-500 text-xs mt-1">{errors.height}</p>
+          )}
         </div>
         
         <div className="animate-slideUp" style={{ animationDelay: '0.5s' }}>
@@ -115,12 +197,18 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             type="number"
             name="weight"
             required
-            min="1"
+            min="5"
+            max="500"
+            step="0.1"
             value={formData.weight}
             onChange={handleChange}
-            placeholder="Weight"
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f]"
+            className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] ${
+              errors.weight ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
+          {errors.weight && (
+            <p className="text-red-500 text-xs mt-1">{errors.weight}</p>
+          )}
         </div>
       </div>
 
@@ -141,7 +229,8 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
               }`}
             >
               <div className="text-center">
-                <div className="text-lg mb-0.5">{option.icon}</div>                <div className="text-xs font-semibold">{option.label}</div>
+                <div className="text-lg mb-0.5">{option.icon}</div>
+                <div className="text-xs font-semibold">{option.label}</div>
               </div>
             </button>
           ))}
@@ -150,7 +239,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
       
       <button
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || Object.keys(errors).length > 0}
         className="w-full bg-[#1e3a5f] text-white py-2.5 rounded-full font-semibold text-base hover:bg-[#2d4a6f] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl transform hover:scale-105 animate-slideUp"
         style={{ animationDelay: '0.7s' }}
       >

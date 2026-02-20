@@ -817,5 +817,18 @@
     ],
     "proteinRequired": 68.4,
     "timestamp": "2026-02-20T09:27:59.240Z"
+  },
+  {
+    "name": "Maya ",
+    "age": "12",
+    "gender": "female",
+    "height": "154",
+    "weight": "45",
+    "dietaryPreferences": [
+      "gluten-free",
+      "non-vegetarian"
+    ],
+    "proteinRequired": 54,
+    "timestamp": "2026-02-20T12:08:56.608Z"
   }
 ]

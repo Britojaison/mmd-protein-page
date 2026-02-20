@@ -11,6 +11,48 @@ export async function POST(request) {
     requestData = await request.json();
     const { name, age, height, weight, proteinRequired, dietaryPreferences = [], gender } = requestData;
     
+    // Server-side validation
+    const validationErrors = [];
+    
+    // Validate age
+    const ageNum = parseInt(age);
+    if (!age || isNaN(ageNum) || ageNum < 1 || ageNum > 100) {
+      validationErrors.push('Age must be between 1 and 100 years');
+    }
+    
+    // Validate height
+    const heightNum = parseFloat(height);
+    if (!height || isNaN(heightNum) || heightNum < 50 || heightNum > 272) {
+      validationErrors.push('Height must be between 50 and 272 cm');
+    }
+    
+    // Validate weight
+    const weightNum = parseFloat(weight);
+    if (!weight || isNaN(weightNum) || weightNum < 5 || weightNum > 500) {
+      validationErrors.push('Weight must be between 5 and 500 kg');
+    }
+    
+    // Validate name
+    if (!name || name.trim().length < 2) {
+      validationErrors.push('Name must be at least 2 characters long');
+    }
+    
+    // Validate gender
+    if (!gender || !['male', 'female', 'other'].includes(gender)) {
+      validationErrors.push('Please select a valid gender');
+    }
+    
+    if (validationErrors.length > 0) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Validation failed', 
+          validationErrors 
+        },
+        { status: 400 }
+      );
+    }
+    
     // Check if API key exists
     if (!process.env.GEMINI_API_KEY) {
       console.log('GEMINI_API_KEY not configured, using fallback recipes');
