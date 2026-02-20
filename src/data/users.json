@@ -601,5 +601,53 @@
     "dietaryPreferences": [],
     "proteinRequired": 104,
     "timestamp": "2026-02-20T05:20:55.569Z"
+  },
+  {
+    "name": "shreya",
+    "age": "22",
+    "gender": "female",
+    "height": "159",
+    "weight": "55",
+    "dietaryPreferences": [
+      "vegetarian"
+    ],
+    "proteinRequired": 66,
+    "timestamp": "2026-02-20T06:32:28.699Z"
+  },
+  {
+    "name": "Shreya Paul",
+    "age": "16",
+    "gender": "female",
+    "height": "154",
+    "weight": "59",
+    "dietaryPreferences": [
+      "vegetarian"
+    ],
+    "proteinRequired": 70.8,
+    "timestamp": "2026-02-20T06:50:21.721Z"
+  },
+  {
+    "name": "Maya",
+    "age": "22",
+    "gender": "female",
+    "height": "155",
+    "weight": "60",
+    "dietaryPreferences": [
+      "vegan"
+    ],
+    "proteinRequired": 72,
+    "timestamp": "2026-02-20T06:58:03.894Z"
+  },
+  {
+    "name": "Maya",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "60",
+    "dietaryPreferences": [
+      "lactose-free"
+    ],
+    "proteinRequired": 72,
+    "timestamp": "2026-02-20T07:50:38.688Z"
   }
 ]

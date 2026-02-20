@@ -1,66 +1,80 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import ProteinForm from './ProteinForm';
-import MealPlan from './MealPlan';
 import { calculateProtein } from '../../utils/protein';
+
+// Lazy load the MealPlan component
+const MealPlan = lazy(() => import('./MealPlan'));
 
 export default function WorldProteinDay() {
   const [result, setResult] = useState(null);
   const [userCount, setUserCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [userCountLoaded, setUserCountLoaded] = useState(false);
 
+  // Lazy load user count only when needed
   useEffect(() => {
-    fetchUserCount();
-  }, []);
+    if (!userCountLoaded) {
+      const timer = setTimeout(() => {
+        fetchUserCount();
+      }, 100); // Delay to prioritize main content
+      return () => clearTimeout(timer);
+    }
+  }, [userCountLoaded]);
 
   const fetchUserCount = async () => {
     try {
       const res = await fetch('/api/user-count');
       const data = await res.json();
       setUserCount(data.count);
+      setUserCountLoaded(true);
     } catch (error) {
       console.error('Failed to fetch user count:', error);
+      setUserCountLoaded(true);
     }
   };
 
   const handleSubmit = async (formData) => {
-    // Use improved protein calculation with gender and age
-    const proteinRequired = parseFloat(calculateProtein(
-      formData.weight, 
-      formData.gender, 
-      'moderate', // Default activity level
-      formData.age
-    ));
-
-    const userData = {
-      ...formData,
-      proteinRequired,
-      timestamp: new Date().toISOString()
-    };
-
+    setIsLoading(true);
+    
     try {
-      // Save to local JSON
-      const saveResponse = await fetch('/api/save-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
+      // Use improved protein calculation with gender and age
+      const proteinRequired = parseFloat(calculateProtein(
+        formData.weight, 
+        formData.gender, 
+        'moderate', // Default activity level
+        formData.age
+      ));
+
+      const userData = {
+        ...formData,
+        proteinRequired,
+        timestamp: new Date().toISOString()
+      };
+
+      // Execute API calls in parallel for better performance
+      const [saveResponse, mealPlanResponse] = await Promise.all([
+        fetch('/api/save-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+        }),
+        fetch('/api/generate-meal-plan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+        })
+      ]);
 
       if (!saveResponse.ok) {
         throw new Error('Failed to save user data');
       }
 
-      // Generate meal plan with recipes
-      const mealPlanResponse = await fetch('/api/generate-meal-plan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
-
       const mealPlanData = await mealPlanResponse.json();
 
       if (mealPlanData.success) {
-        // Send to external API (placeholder)
+        // Send to external API asynchronously (non-blocking)
         if (process.env.NEXT_PUBLIC_PROTEIN_API) {
           fetch(process.env.NEXT_PUBLIC_PROTEIN_API, {
             method: 'POST',
@@ -78,6 +92,8 @@ export default function WorldProteinDay() {
           weeklyTotalCalories: mealPlanData.weeklyTotalCalories,
           dietaryPreferences: mealPlanData.dietaryPreferences
         });
+        
+        // Update user count asynchronously
         fetchUserCount();
       } else {
         throw new Error(mealPlanData.error || 'Failed to generate meal plan');
@@ -85,8 +101,23 @@ export default function WorldProteinDay() {
     } catch (error) {
       console.error('Failed to save user:', error);
       alert('Failed to save data. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  // Loading component for MealPlan
+  const MealPlanLoader = () => (
+    <div className="space-y-6 max-w-7xl mx-auto animate-pulse">
+      <div className="bg-gray-200 rounded-2xl h-48"></div>
+      <div className="bg-gray-200 rounded-2xl h-32"></div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[1, 2, 3].map(i => (
+          <div key={i} className="bg-gray-200 rounded-xl h-64"></div>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -112,7 +143,7 @@ export default function WorldProteinDay() {
                   Enter your details to get a personalized meal plan
                 </p>
               </div>
-              <ProteinForm onSubmit={handleSubmit} />
+              <ProteinForm onSubmit={handleSubmit} isLoading={isLoading} />
             </div>
           </div>
         ) : (
@@ -126,15 +157,17 @@ export default function WorldProteinDay() {
               </p>
             </div>
 
-            <MealPlan 
-              weeklyPlan={result.weeklyPlan}
-              proteinRequired={result.proteinRequired}
-              averageDailyProtein={result.averageDailyProtein}
-              averageDailyCalories={result.averageDailyCalories}
-              weeklyTotalProtein={result.weeklyTotalProtein}
-              weeklyTotalCalories={result.weeklyTotalCalories}
-              dietaryPreferences={result.dietaryPreferences}
-            />
+            <Suspense fallback={<MealPlanLoader />}>
+              <MealPlan 
+                weeklyPlan={result.weeklyPlan}
+                proteinRequired={result.proteinRequired}
+                averageDailyProtein={result.averageDailyProtein}
+                averageDailyCalories={result.averageDailyCalories}
+                weeklyTotalProtein={result.weeklyTotalProtein}
+                weeklyTotalCalories={result.weeklyTotalCalories}
+                dietaryPreferences={result.dietaryPreferences}
+              />
+            </Suspense>
             
             <div className="text-center mt-8">
               <button

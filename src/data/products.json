@@ -1,14 +1,23 @@
 [
   {
     "name": "Milky Mist High Protein Paneer",
-    "proteinPer100g": 18
+    "proteinPer100g": 18,
+    "deliveryLinks": {
+      "zepto": "https://www.zeptonow.com/search?query=milky+mist+paneer"
+    }
   },
   {
     "name": "Milky Mist Greek Yogurt",
-    "proteinPer100g": 10
+    "proteinPer100g": 10,
+    "deliveryLinks": {
+      "zepto": "https://www.zeptonow.com/search?query=milky+mist+greek+yogurt"
+    }
   },
   {
     "name": "Milky Mist Skyr",
-    "proteinPer100g": 11
+    "proteinPer100g": 11,
+    "deliveryLinks": {
+      "zepto": "https://www.zeptonow.com/search?query=milky+mist+skyr"
+    }
   }
 ]

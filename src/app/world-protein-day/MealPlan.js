@@ -2,6 +2,18 @@
 
 import { useState } from 'react';
 
+// Helper function to get delivery links for products
+function getDeliveryLink(productName, platform) {
+  // Create a search query from the product name
+  const searchQuery = productName.toLowerCase().replace(/\s+/g, '+');
+  
+  if (platform === 'zepto') {
+    return `https://www.zeptonow.com/search?query=${searchQuery}`;
+  }
+  
+  return '#';
+}
+
 export default function MealPlan({ weeklyPlan, proteinRequired, averageDailyProtein, averageDailyCalories, weeklyTotalProtein, weeklyTotalCalories, dietaryPreferences }) {
   const [selectedDay, setSelectedDay] = useState(0);
   const currentDayPlan = weeklyPlan[selectedDay];
@@ -193,7 +205,25 @@ function MealCard({ meal, dietaryPreferences }) {
 
         <div className="bg-blue-50 rounded-lg p-3 border border-blue-100 transition-all duration-300 hover:bg-blue-100">
           <p className="text-xs font-semibold mb-1" style={{ color: '#1e3a5f' }}>Featured Product</p>
-          <p className="text-sm font-bold text-gray-900">{meal.milkyMistProduct}</p>
+          <p className="text-sm font-bold text-gray-900 mb-2">{meal.milkyMistProduct}</p>
+          
+          {/* Delivery Platform Link */}
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-gray-600">Order Now:</p>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={getDeliveryLink(meal.milkyMistProduct, 'zepto')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-3 py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 text-sm font-semibold rounded-lg transition-colors duration-200 hover:scale-105 transform"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9.5H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+                </svg>
+                Order on Zepto
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Dietary Tags */}

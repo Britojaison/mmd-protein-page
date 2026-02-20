@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function ProteinForm({ onSubmit }) {
+export default function ProteinForm({ onSubmit, isLoading = false }) {
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -11,7 +11,6 @@ export default function ProteinForm({ onSubmit }) {
     weight: '',
     dietaryPreferences: []
   });
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,9 +27,7 @@ export default function ProteinForm({ onSubmit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     await onSubmit(formData);
-    setLoading(false);
   };
 
   const dietaryOptions = [
@@ -154,11 +151,11 @@ export default function ProteinForm({ onSubmit }) {
       
       <button
         type="submit"
-        disabled={loading}
+        disabled={isLoading}
         className="w-full bg-[#1e3a5f] text-white py-2.5 rounded-full font-semibold text-base hover:bg-[#2d4a6f] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl transform hover:scale-105 animate-slideUp"
         style={{ animationDelay: '0.7s' }}
       >
-        {loading ? (
+        {isLoading ? (
           <span className="flex items-center justify-center gap-2">
             <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
