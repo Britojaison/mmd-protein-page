@@ -69,7 +69,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     // Validate age
     const age = parseInt(formData.age);
     if (!formData.age || age < 1 || age > 100) {
@@ -94,7 +94,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -103,33 +103,38 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
   };
 
   const dietaryOptions = [
-    { value: 'vegetarian', label: 'Vegetarian', icon: '🥗' },
-    { value: 'non-vegetarian', label: 'Non-Vegetarian', icon: '🍗' },
-    { value: 'gluten-free', label: 'Gluten-Free', icon: '🌾' }
+    { value: 'lactose-free', label: 'Lactose Free', icon: '🍼', block: true },
+    { value: 'gluten-free', label: 'Gluten Free', icon: '🌾', block: true },
+    { value: 'vegetarian', label: 'Vegetarian', icon: '🥗', block: false },
+    { value: 'vegan', label: 'Vegan', icon: '🌿', block: false }
   ];
 
+  const InputLabel = ({ title }) => (
+    <label className="block text-[14px] font-medium text-[#0f284e] mb-2">
+      {title} <span className="text-red-500">*</span>
+    </label>
+  );
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-6">
+
+      {/* Name Field */}
       <div className="animate-slideUp" style={{ animationDelay: '0.1s' }}>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Full Name
-        </label>
+        <InputLabel title="Name" />
         <input
           type="text"
           name="name"
           required
           value={formData.name}
           onChange={handleChange}
-          placeholder="Enter your name"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f]"
+          className="w-full px-5 py-3.5 border border-gray-100 rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px]"
         />
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      {/* Age & Gender Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="animate-slideUp" style={{ animationDelay: '0.2s' }}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Age (years)
-          </label>
+          <InputLabel title="Age" />
           <input
             type="number"
             name="age"
@@ -138,39 +143,43 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             max="100"
             value={formData.age}
             onChange={handleChange}
-            className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] ${
-              errors.age ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.age ? 'border-red-400' : 'border-gray-100'
+              }`}
           />
           {errors.age && (
-            <p className="text-red-500 text-xs mt-1">{errors.age}</p>
+            <p className="text-red-500 text-xs mt-1.5">{errors.age}</p>
           )}
         </div>
 
         <div className="animate-slideUp" style={{ animationDelay: '0.3s' }}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Gender
-          </label>
-          <select
-            name="gender"
-            required
-            value={formData.gender}
-            onChange={handleChange}
-            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] bg-white"
-          >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
+          <InputLabel title="Gender" />
+          <div className="relative">
+            <select
+              name="gender"
+              required
+              value={formData.gender}
+              onChange={handleChange}
+              className="w-full px-5 py-3.5 border border-gray-100 rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] appearance-none"
+            >
+              <option value="" disabled className="text-gray-400">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            {/* Custom arrow right icon */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-400">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      {/* Height & Weight Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="animate-slideUp" style={{ animationDelay: '0.4s' }}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Height (cm)
-          </label>
+          <InputLabel title="Height (cm)" />
           <input
             type="number"
             name="height"
@@ -180,19 +189,16 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             step="0.1"
             value={formData.height}
             onChange={handleChange}
-            className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] ${
-              errors.height ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.height ? 'border-red-400' : 'border-gray-100'
+              }`}
           />
           {errors.height && (
-            <p className="text-red-500 text-xs mt-1">{errors.height}</p>
+            <p className="text-red-500 text-xs mt-1.5">{errors.height}</p>
           )}
         </div>
-        
+
         <div className="animate-slideUp" style={{ animationDelay: '0.5s' }}>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Weight (kg)
-          </label>
+          <InputLabel title="Weight(kg)" />
           <input
             type="number"
             name="weight"
@@ -202,65 +208,79 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             step="0.1"
             value={formData.weight}
             onChange={handleChange}
-            className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1e3a5f] focus:border-[#1e3a5f] outline-none transition-all duration-300 hover:border-[#1e3a5f] ${
-              errors.weight ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.weight ? 'border-red-400' : 'border-gray-100'
+              }`}
           />
           {errors.weight && (
-            <p className="text-red-500 text-xs mt-1">{errors.weight}</p>
+            <p className="text-red-500 text-xs mt-1.5">{errors.weight}</p>
           )}
         </div>
       </div>
 
       <div className="animate-slideUp" style={{ animationDelay: '0.6s' }}>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Dietary Preferences (Optional)
+        <label className="block text-[16px] font-medium text-[#0f284e] mb-4 mt-2">
+          Dietary Preferences
         </label>
-        <div className="grid grid-cols-3 gap-2">
-          {dietaryOptions.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => handleDietaryChange(option.value)}
-              className={`p-2 rounded-lg border-2 transition-all duration-300 transform hover:scale-105 ${
-                formData.dietaryPreferences.includes(option.value)
-                  ? 'border-[#1e3a5f] bg-[#1e3a5f] text-white shadow-md'
-                  : 'border-gray-300 bg-white text-gray-700 hover:border-[#1e3a5f]'
-              }`}
-            >
-              <div className="text-center">
-                <div className="text-lg mb-0.5">{option.icon}</div>
-                <div className="text-xs font-semibold">{option.label}</div>
-              </div>
-            </button>
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {dietaryOptions.map((option) => {
+            const isSelected = formData.dietaryPreferences.includes(option.value);
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleDietaryChange(option.value)}
+                className={`py-5 px-3 rounded-3xl border transition-all duration-300 flex flex-col items-center justify-center gap-2 group ${isSelected
+                    ? 'border-[#0f284e] bg-indigo-50/30'
+                    : 'border-gray-100 bg-white hover:border-gray-200'
+                  }`}
+              >
+                <div className="text-[32px] mb-1 relative flex items-center justify-center w-12 h-12">
+                  <span className={`transform transition-transform duration-300 ${isSelected ? 'scale-110' : 'group-hover:scale-110'}`}>
+                    {option.icon}
+                  </span>
+                  {option.block && (
+                    <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                <div className={`text-[13px] font-medium ${isSelected ? 'text-[#0f284e]' : 'text-gray-500'}`}>
+                  {option.label}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
-      
-      <button
-        type="submit"
-        disabled={isLoading || Object.keys(errors).length > 0}
-        className="w-full bg-[#1e3a5f] text-white py-2.5 rounded-full font-semibold text-base hover:bg-[#2d4a6f] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl transform hover:scale-105 animate-slideUp"
-        style={{ animationDelay: '0.7s' }}
-      >
-        {isLoading ? (
-          <span className="flex items-center justify-center gap-2">
-            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <span>Generating your personalized meal plan...</span>
-          </span>
-        ) : (
-          'Get My Personalized Meal Plan'
-        )}
-      </button>
+
+      <div className="pt-6 animate-slideUp flex justify-end" style={{ animationDelay: '0.7s' }}>
+        <button
+          type="submit"
+          disabled={isLoading || Object.keys(errors).length > 0}
+          className="bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white py-3.5 px-10 rounded-2xl font-semibold text-[15px] hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:-translate-y-0.5"
+        >
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>Loading...</span>
+            </span>
+          ) : (
+            'Continue'
+          )}
+        </button>
+      </div>
 
       <style jsx>{`
         @keyframes slideUp {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(10px);
           }
           to {
             opacity: 1;
@@ -269,7 +289,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         }
 
         .animate-slideUp {
-          animation: slideUp 0.6s ease-out forwards;
+          animation: slideUp 0.5s ease-out forwards;
         }
       `}</style>
     </form>

@@ -830,5 +830,29 @@
     ],
     "proteinRequired": 54,
     "timestamp": "2026-02-20T12:08:56.608Z"
+  },
+  {
+    "name": "Brito",
+    "age": "90",
+    "gender": "female",
+    "height": "120",
+    "weight": "35",
+    "dietaryPreferences": [
+      "vegetarian",
+      "non-vegetarian",
+      "gluten-free"
+    ],
+    "proteinRequired": 49,
+    "timestamp": "2026-02-20T14:05:46.048Z"
+  },
+  {
+    "name": "Windows Lap 11",
+    "age": "1",
+    "gender": "female",
+    "height": "80",
+    "weight": "6",
+    "dietaryPreferences": [],
+    "proteinRequired": 7.2,
+    "timestamp": "2026-02-20T14:09:09.861Z"
   }
 ]
