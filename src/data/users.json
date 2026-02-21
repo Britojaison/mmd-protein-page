@@ -854,5 +854,17 @@
     "dietaryPreferences": [],
     "proteinRequired": 7.2,
     "timestamp": "2026-02-20T14:09:09.861Z"
+  },
+  {
+    "name": "John Doe",
+    "age": "25",
+    "gender": "female",
+    "height": "175",
+    "weight": "70",
+    "dietaryPreferences": [
+      "lactose-free"
+    ],
+    "proteinRequired": 84,
+    "timestamp": "2026-02-21T15:50:07.551Z"
   }
 ]

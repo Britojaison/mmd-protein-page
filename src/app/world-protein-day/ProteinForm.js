@@ -18,9 +18,25 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
     const newErrors = { ...errors };
 
     switch (name) {
+      case 'name':
+        if (!value || value.trim().length < 2) {
+          newErrors.name = 'Please enter your name';
+        } else {
+          delete newErrors.name;
+        }
+        break;
+
+      case 'gender':
+        if (!value) {
+          newErrors.gender = 'Please select a gender';
+        } else {
+          delete newErrors.gender;
+        }
+        break;
+
       case 'age':
         const age = parseInt(value);
-        if (value && (age < 1 || age > 100)) {
+        if (!value || isNaN(age) || age < 1 || age > 100) {
           newErrors.age = 'Age must be between 1 and 100 years';
         } else {
           delete newErrors.age;
@@ -28,8 +44,8 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         break;
 
       case 'height':
-        const height = parseInt(value);
-        if (value && (height < 50 || height > 272)) {
+        const height = parseFloat(value);
+        if (!value || isNaN(height) || height < 50 || height > 272) {
           newErrors.height = 'Height must be between 50 and 272 cm';
         } else {
           delete newErrors.height;
@@ -38,7 +54,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
 
       case 'weight':
         const weight = parseFloat(value);
-        if (value && (weight < 5 || weight > 500)) {
+        if (!value || isNaN(weight) || weight < 5 || weight > 500) {
           newErrors.weight = 'Weight must be between 5 and 500 kg';
         } else {
           delete newErrors.weight;
@@ -70,21 +86,26 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate age
+    if (!formData.name || formData.name.trim().length < 2) {
+      newErrors.name = 'Please enter your name';
+    }
+
+    if (!formData.gender) {
+      newErrors.gender = 'Please select a gender';
+    }
+
     const age = parseInt(formData.age);
-    if (!formData.age || age < 1 || age > 100) {
+    if (!formData.age || isNaN(age) || age < 1 || age > 100) {
       newErrors.age = 'Please enter a valid age between 1 and 100 years';
     }
 
-    // Validate height
-    const height = parseInt(formData.height);
-    if (!formData.height || height < 50 || height > 272) {
+    const height = parseFloat(formData.height);
+    if (!formData.height || isNaN(height) || height < 50 || height > 272) {
       newErrors.height = 'Please enter a valid height between 50 and 272 cm';
     }
 
-    // Validate weight
     const weight = parseFloat(formData.weight);
-    if (!formData.weight || weight < 5 || weight > 500) {
+    if (!formData.weight || isNaN(weight) || weight < 5 || weight > 500) {
       newErrors.weight = 'Please enter a valid weight between 5 and 500 kg';
     }
 
@@ -116,7 +137,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
 
       {/* Name Field */}
       <div className="animate-slideUp" style={{ animationDelay: '0.1s' }}>
@@ -124,11 +145,14 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         <input
           type="text"
           name="name"
-          required
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-5 py-3.5 border border-gray-100 rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px]"
+          className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.name ? 'border-red-400' : 'border-gray-100'
+            }`}
         />
+        {errors.name && (
+          <p className="text-red-500 text-xs mt-1.5">{errors.name}</p>
+        )}
       </div>
 
       {/* Age & Gender Grid */}
@@ -138,11 +162,9 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
           <input
             type="number"
             name="age"
-            required
-            min="1"
-            max="100"
             value={formData.age}
             onChange={handleChange}
+            placeholder="e.g. 25"
             className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.age ? 'border-red-400' : 'border-gray-100'
               }`}
           />
@@ -156,10 +178,10 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
           <div className="relative">
             <select
               name="gender"
-              required
               value={formData.gender}
               onChange={handleChange}
-              className="w-full px-5 py-3.5 border border-gray-100 rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] appearance-none"
+              className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] appearance-none ${errors.gender ? 'border-red-400' : 'border-gray-100'
+                }`}
             >
               <option value="" disabled className="text-gray-400">Select...</option>
               <option value="male">Male</option>
@@ -173,6 +195,9 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
               </svg>
             </div>
           </div>
+          {errors.gender && (
+            <p className="text-red-500 text-xs mt-1.5">{errors.gender}</p>
+          )}
         </div>
       </div>
 
@@ -183,12 +208,9 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
           <input
             type="number"
             name="height"
-            required
-            min="50"
-            max="272"
-            step="0.1"
             value={formData.height}
             onChange={handleChange}
+            placeholder="e.g. 175"
             className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.height ? 'border-red-400' : 'border-gray-100'
               }`}
           />
@@ -202,12 +224,9 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
           <input
             type="number"
             name="weight"
-            required
-            min="5"
-            max="500"
-            step="0.1"
             value={formData.weight}
             onChange={handleChange}
+            placeholder="e.g. 70"
             className={`w-full px-5 py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[15px] ${errors.weight ? 'border-red-400' : 'border-gray-100'
               }`}
           />
@@ -229,9 +248,9 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
                 key={option.value}
                 type="button"
                 onClick={() => handleDietaryChange(option.value)}
-                className={`py-5 px-3 rounded-3xl border transition-all duration-300 flex flex-col items-center justify-center gap-2 group ${isSelected
-                    ? 'border-[#0f284e] bg-indigo-50/30'
-                    : 'border-gray-100 bg-white hover:border-gray-200'
+                className={`py-5 px-3 rounded-3xl border transition-all duration-300 flex flex-col items-center justify-center gap-2 group cursor-pointer ${isSelected
+                    ? 'border-[#0f284e] bg-[#f8fbff] shadow-sm ring-1 ring-[#0f284e] transform scale-[1.02]'
+                    : 'border-gray-100 bg-white hover:border-[#0f284e]/40 hover:bg-[#f8fbff] hover:shadow-md transform hover:-translate-y-1'
                   }`}
               >
                 <div className="text-[32px] mb-1 relative flex items-center justify-center w-12 h-12">
@@ -247,7 +266,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
                     </div>
                   )}
                 </div>
-                <div className={`text-[13px] font-medium ${isSelected ? 'text-[#0f284e]' : 'text-gray-500'}`}>
+                <div className={`text-[13px] font-medium transition-colors duration-300 ${isSelected ? 'text-[#0f284e]' : 'text-gray-500 group-hover:text-[#0f284e]'}`}>
                   {option.label}
                 </div>
               </button>
@@ -259,7 +278,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
       <div className="pt-6 animate-slideUp flex justify-end" style={{ animationDelay: '0.7s' }}>
         <button
           type="submit"
-          disabled={isLoading || Object.keys(errors).length > 0}
+          disabled={isLoading}
           className="bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white py-3.5 px-10 rounded-2xl font-semibold text-[15px] hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:-translate-y-0.5"
         >
           {isLoading ? (
