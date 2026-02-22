@@ -75,12 +75,21 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
   };
 
   const handleDietaryChange = (preference) => {
-    setFormData(prev => ({
-      ...prev,
-      dietaryPreferences: prev.dietaryPreferences.includes(preference)
-        ? prev.dietaryPreferences.filter(p => p !== preference)
-        : [...prev.dietaryPreferences, preference]
-    }));
+    // For vegetarian/non-vegetarian, make it mutually exclusive
+    if (preference === 'vegetarian' || preference === 'non-vegetarian') {
+      setFormData(prev => ({
+        ...prev,
+        dietaryPreferences: [preference] // Replace with single selection
+      }));
+    } else {
+      // For other preferences (if any), allow multiple selection
+      setFormData(prev => ({
+        ...prev,
+        dietaryPreferences: prev.dietaryPreferences.includes(preference)
+          ? prev.dietaryPreferences.filter(p => p !== preference)
+          : [...prev.dietaryPreferences, preference]
+      }));
+    }
   };
 
   const validateForm = () => {
@@ -124,10 +133,8 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
   };
 
   const dietaryOptions = [
-    { value: 'lactose-free', label: 'Lactose Free', icon: '🍼', block: true },
-    { value: 'gluten-free', label: 'Gluten Free', icon: '🌾', block: true },
     { value: 'vegetarian', label: 'Vegetarian', icon: '🥗', block: false },
-    { value: 'vegan', label: 'Vegan', icon: '🌿', block: false }
+    { value: 'non-vegetarian', label: 'Non-Vegetarian', icon: '🍗', block: false }
   ];
 
   const InputLabel = ({ title }) => (
@@ -240,7 +247,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         <label className="block text-[16px] font-medium text-[#0f284e] mb-4 mt-2">
           Dietary Preferences
         </label>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
           {dietaryOptions.map((option) => {
             const isSelected = formData.dietaryPreferences.includes(option.value);
             return (

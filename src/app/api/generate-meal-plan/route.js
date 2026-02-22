@@ -66,23 +66,27 @@ export async function POST(request) {
       ? dietaryPreferences.join(', ') 
       : 'no specific restrictions';
     
-    // Create optimized prompt for Gemini
+    // Create optimized prompt for Gemini - simplified for complete response
     const prompt = `Generate a 7-day meal plan for: Age ${age}, Gender ${gender}, Weight ${weight}kg, Protein target ${proteinRequired}g, Diet: ${dietaryString}. 
 
-CRITICAL DIETARY GUIDELINES:
-- If diet includes "non-vegetarian": ALL meals must contain chicken or eggs as primary protein. NO vegetarian-only meals. Always combine with Milky Mist dairy products.
-- If diet includes "vegetarian": STRICTLY VEGETARIAN - NO eggs, NO chicken, NO meat, NO fish. Only plant-based ingredients and Milky Mist dairy products (paneer, yogurt, milk). EGGS ARE NOT VEGETARIAN.
-- If diet includes "gluten-free": Avoid wheat, barley, rye, and gluten-containing ingredients.
-- ALWAYS include Milky Mist dairy products in every meal (Greek Yogurt, Paneer, Skyr, Milk, etc.)
+CRITICAL RULES:
+- If vegetarian: NO eggs, NO chicken, NO meat. Only plant-based + Milky Mist dairy.
+- If non-vegetarian: ONLY chicken and eggs + Milky Mist dairy.
+- ALWAYS include Milky Mist products in EVERY meal.
+- Keep ingredients list SHORT (max 5 items).
+- Keep steps SHORT (max 3 steps).
 
-IMPORTANT: EGGS ARE NOT VEGETARIAN. If user selects vegetarian, do not include any eggs in any recipe.
+MILKY MIST PRODUCTS TO USE (vary across meals):
+- Milky Mist Skyr
+- Milky Mist Greek Yogurt Natural
+- Milky Mist Greek Yogurt Cereal
+- Milky Mist Greek Yogurt Honey and Fig
+- Milky Mist High Protein Paneer
+- Milky Mist High Protein Cheddar Cheese
 
-EXAMPLES FOR NON-VEGETARIAN:
-- Breakfast: "Chicken Sausage & Greek Yogurt Parfait" (NOT "Paneer Pancakes")
-- Lunch: "Grilled Chicken & Paneer Salad" (NOT "Pure Paneer Salad")  
-- Dinner: "Egg & Paneer Bhurji" (NOT "Pasta")
+IMPORTANT: Use DIFFERENT Milky Mist products across different meals. Don't repeat the same product too often.
 
-Return ONLY valid JSON with this structure:
+Return ONLY this JSON (complete all 7 days, Monday-Sunday):
 {
   "weeklyPlan": [
     {
@@ -91,28 +95,48 @@ Return ONLY valid JSON with this structure:
       "meals": [
         {
           "type": "Breakfast",
-          "recipeName": "Chicken & Greek Yogurt Bowl",
-          "milkyMistProduct": "Milky Mist Greek Yogurt",
-          "ingredients": ["150g grilled chicken", "1 cup Greek yogurt (15g protein)"],
-          "steps": ["Grill chicken", "Add yogurt"],
-          "nutrition": {"protein": 45, "calories": 400, "carbs": 15, "fats": 12},
-          "dietary": ["non-vegetarian"]
+          "recipeName": "Short name",
+          "milkyMistProduct": "Milky Mist Greek Yogurt Honey and Fig",
+          "ingredients": ["item1", "item2", "item3"],
+          "steps": ["step1", "step2"],
+          "nutrition": {"protein": 30, "calories": 400, "carbs": 40, "fats": 15},
+          "dietary": ["vegetarian"]
+        },
+        {
+          "type": "Lunch",
+          "recipeName": "Short name",
+          "milkyMistProduct": "Milky Mist High Protein Paneer",
+          "ingredients": ["item1", "item2"],
+          "steps": ["step1", "step2"],
+          "nutrition": {"protein": 35, "calories": 450, "carbs": 45, "fats": 18},
+          "dietary": ["vegetarian"]
+        },
+        {
+          "type": "Dinner",
+          "recipeName": "Short name",
+          "milkyMistProduct": "Milky Mist Skyr",
+          "ingredients": ["item1", "item2"],
+          "steps": ["step1", "step2"],
+          "nutrition": {"protein": 30, "calories": 400, "carbs": 35, "fats": 16},
+          "dietary": ["vegetarian"]
         }
       ]
     }
   ]
 }
 
-Requirements: 3 meals/day, include Milky Mist products in ALL meals, respect dietary preferences strictly, realistic portions.`;
+IMPORTANT: Keep ALL text SHORT. Use VARIETY of Milky Mist products. Generate ALL 7 days. Return ONLY valid JSON, no markdown.`;
 
     console.log('Calling Gemini API...');
+    
+    // Use gemini-2.5-flash which is available in your API key
     const model = genAI.getGenerativeModel({ 
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.5-flash',
       generationConfig: {
-        temperature: 0.3, // Lower temperature for more consistent results
+        temperature: 0.3,
         topK: 20,
         topP: 0.8,
-        maxOutputTokens: 4096, // Reduced for faster response
+        maxOutputTokens: 8192, // Increased to ensure complete response
       }
     });
     
@@ -128,36 +152,62 @@ Requirements: 3 meals/day, include Milky Mist products in ALL meals, respect die
       const text = response.text();
       
       console.log('Gemini response received, length:', text.length);
+      console.log('Raw response preview:', text.substring(0, 200));
       
-      // Extract JSON from response
+      // Extract JSON from response with better error handling
       let jsonText = text.trim();
+      
+      // Remove markdown code blocks if present
       if (jsonText.includes('```json')) {
         jsonText = jsonText.split('```json')[1].split('```')[0].trim();
       } else if (jsonText.includes('```')) {
         jsonText = jsonText.split('```')[1].split('```')[0].trim();
       }
       
+      // Find JSON boundaries
       const jsonStart = jsonText.indexOf('{');
       const jsonEnd = jsonText.lastIndexOf('}');
-      if (jsonStart !== -1 && jsonEnd !== -1) {
-        jsonText = jsonText.substring(jsonStart, jsonEnd + 1);
+      
+      if (jsonStart === -1 || jsonEnd === -1 || jsonStart >= jsonEnd) {
+        console.error('Could not find valid JSON boundaries in response');
+        throw new Error('Invalid JSON structure in Gemini response');
       }
       
-      const mealPlanData = JSON.parse(jsonText);
+      jsonText = jsonText.substring(jsonStart, jsonEnd + 1);
       
-      // Validate that vegetarian meals don't contain eggs
+      console.log('Extracted JSON length:', jsonText.length);
+      
+      let mealPlanData;
+      try {
+        mealPlanData = JSON.parse(jsonText);
+      } catch (parseError) {
+        console.error('JSON Parse Error:', parseError.message);
+        console.error('Failed JSON preview (first 500 chars):', jsonText.substring(0, 500));
+        console.error('Failed JSON preview (last 500 chars):', jsonText.substring(Math.max(0, jsonText.length - 500)));
+        throw new Error('Failed to parse Gemini response as JSON');
+      }
+      
+      // Validate the structure
+      if (!mealPlanData.weeklyPlan || !Array.isArray(mealPlanData.weeklyPlan) || mealPlanData.weeklyPlan.length !== 7) {
+        console.error('Invalid meal plan structure:', mealPlanData);
+        throw new Error('Gemini returned incomplete meal plan');
+      }
+      
+      // Validate that vegetarian meals don't contain eggs or chicken
       if (dietaryPreferences.includes('vegetarian')) {
         console.log('Validating vegetarian meal plan from Gemini...');
         mealPlanData.weeklyPlan.forEach(day => {
           day.meals.forEach(meal => {
-            const hasEggs = meal.ingredients && meal.ingredients.some(ingredient => 
-              ingredient.toLowerCase().includes('egg')
-            );
-            const hasChicken = meal.ingredients && meal.ingredients.some(ingredient => 
-              ingredient.toLowerCase().includes('chicken')
-            );
+            // Check for whole word matches only, not substrings
+            const ingredientsText = meal.ingredients ? meal.ingredients.join(' ').toLowerCase() : '';
+            const recipeNameText = meal.recipeName ? meal.recipeName.toLowerCase() : '';
             
-            if (hasEggs || hasChicken) {
+            // Use word boundaries to match whole words only
+            const hasEggs = /\begg\b|\beggs\b/.test(ingredientsText) || /\begg\b|\beggs\b/.test(recipeNameText);
+            const hasChicken = /\bchicken\b/.test(ingredientsText) || /\bchicken\b/.test(recipeNameText);
+            const hasMeat = /\bmeat\b|\bbeef\b|\bpork\b|\bfish\b/.test(ingredientsText) || /\bmeat\b|\bbeef\b|\bpork\b|\bfish\b/.test(recipeNameText);
+            
+            if (hasEggs || hasChicken || hasMeat) {
               console.log(`WARNING: Non-vegetarian ingredient found in meal: ${meal.recipeName}`);
               console.log(`Ingredients: ${meal.ingredients.join(', ')}`);
               console.log('Falling back to curated recipes...');
@@ -171,6 +221,12 @@ Requirements: 3 meals/day, include Milky Mist products in ALL meals, respect die
       
     } catch (apiError) {
       clearTimeout(timeoutId);
+      console.error('Gemini API Error Details:', {
+        message: apiError.message,
+        status: apiError.status,
+        statusText: apiError.statusText,
+        name: apiError.name
+      });
       console.log('Gemini API failed, using fallback:', apiError.message);
       return generateFallbackMealPlan(requestData);
     }
