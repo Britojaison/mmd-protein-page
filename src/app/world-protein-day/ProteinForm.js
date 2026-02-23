@@ -148,13 +148,13 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
   ];
 
   const InputLabel = ({ title }) => (
-    <label className="block text-[14px] font-medium text-[#0f284e] mb-2">
+    <label className="block text-[16px] sm:text-[16px] font-medium text-[#0f284e] mb-2">
       {title} <span className="text-red-500">*</span>
     </label>
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 lg:space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3 lg:space-y-6" noValidate>
 
       {/* Name Field */}
       <div className="animate-slideUp" style={{ animationDelay: '0.1s' }}>
@@ -164,16 +164,16 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] ${errors.name ? 'border-red-400' : 'border-gray-100'
+          className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] ${errors.name ? 'border-red-400' : 'border-gray-100'
             }`}
         />
         {errors.name && (
-          <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+          <p className="text-red-500 text-[14px] mt-1">{errors.name}</p>
         )}
       </div>
 
       {/* Age & Gender Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-6">
         <div className="animate-slideUp" style={{ animationDelay: '0.2s' }}>
           <InputLabel title="Age" />
           <input
@@ -182,11 +182,11 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             value={formData.age}
             onChange={handleChange}
             placeholder="e.g. 25"
-            className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] ${errors.age ? 'border-red-400' : 'border-gray-100'
+            className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] ${errors.age ? 'border-red-400' : 'border-gray-100'
               }`}
           />
           {errors.age && (
-            <p className="text-red-500 text-xs mt-1">{errors.age}</p>
+            <p className="text-red-500 text-[14px] mt-1">{errors.age}</p>
           )}
         </div>
 
@@ -197,7 +197,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] appearance-none ${errors.gender ? 'border-red-400' : 'border-gray-100'
+              className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] appearance-none ${errors.gender ? 'border-red-400' : 'border-gray-100'
                 }`}
             >
               <option value="" disabled className="text-gray-400">Select...</option>
@@ -206,20 +206,20 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
               <option value="other">Other</option>
             </select>
             {/* Custom arrow right icon */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 lg:px-5 text-gray-400">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
           {errors.gender && (
-            <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+            <p className="text-red-500 text-[14px] mt-1">{errors.gender}</p>
           )}
         </div>
       </div>
 
       {/* Height & Weight Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-6">
         <div className="animate-slideUp" style={{ animationDelay: '0.4s' }}>
           <InputLabel title="Height (cm)" />
           <input
@@ -228,11 +228,11 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             value={formData.height}
             onChange={handleChange}
             placeholder="e.g. 175"
-            className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] ${errors.height ? 'border-red-400' : 'border-gray-100'
+            className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] ${errors.height ? 'border-red-400' : 'border-gray-100'
               }`}
           />
           {errors.height && (
-            <p className="text-red-500 text-xs mt-1">{errors.height}</p>
+            <p className="text-red-500 text-[14px] mt-1">{errors.height}</p>
           )}
         </div>
 
@@ -244,20 +244,20 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             value={formData.weight}
             onChange={handleChange}
             placeholder="e.g. 70"
-            className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] ${errors.weight ? 'border-red-400' : 'border-gray-100'
+            className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] ${errors.weight ? 'border-red-400' : 'border-gray-100'
               }`}
           />
           {errors.weight && (
-            <p className="text-red-500 text-xs mt-1">{errors.weight}</p>
+            <p className="text-red-500 text-[14px] mt-1">{errors.weight}</p>
           )}
         </div>
       </div>
 
       <div className="animate-slideUp" style={{ animationDelay: '0.6s' }}>
-        <label className="block text-[14px] lg:text-[16px] font-medium text-[#0f284e] mb-2 lg:mb-4 mt-1 lg:mt-2">
+        <label className="block text-[16px] font-medium text-[#0f284e] mb-2 mt-1">
           Dietary Preferences
         </label>
-        <div className="grid grid-cols-2 gap-3 lg:gap-4 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-3 max-w-xs sm:max-w-md mx-auto">
           {dietaryOptions.map((option) => {
             const isSelected = formData.dietaryPreferences.includes(option.value);
             return (
@@ -265,12 +265,12 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
                 key={option.value}
                 type="button"
                 onClick={() => handleDietaryChange(option.value)}
-                className={`py-3 lg:py-5 px-2 lg:px-3 rounded-3xl border transition-all duration-300 flex flex-col items-center justify-center gap-1 lg:gap-2 group cursor-pointer ${isSelected
+                className={`py-3 px-2 rounded-2xl border transition-all duration-300 flex flex-col items-center justify-center gap-1 group cursor-pointer ${isSelected
                     ? 'border-[#0f284e] bg-[#f8fbff] shadow-sm ring-1 ring-[#0f284e] transform scale-[1.02]'
                     : 'border-gray-100 bg-white hover:border-[#0f284e]/40 hover:bg-[#f8fbff] hover:shadow-md transform hover:-translate-y-1'
                   }`}
               >
-                <div className="text-[28px] lg:text-[32px] mb-0 lg:mb-1 relative flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12">
+                <div className="text-[28px] mb-0 relative flex items-center justify-center w-10 h-10">
                   <span className={`transform transition-transform duration-300 ${isSelected ? 'scale-110' : 'group-hover:scale-110'}`}>
                     {option.icon}
                   </span>
@@ -283,7 +283,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
                     </div>
                   )}
                 </div>
-                <div className={`text-[11px] lg:text-[13px] font-medium transition-colors duration-300 ${isSelected ? 'text-[#0f284e]' : 'text-gray-500 group-hover:text-[#0f284e]'}`}>
+                <div className={`text-[14px] font-medium transition-colors duration-300 ${isSelected ? 'text-[#0f284e]' : 'text-gray-500 group-hover:text-[#0f284e]'}`}>
                   {option.label}
                 </div>
               </button>
@@ -300,7 +300,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             name="cuisinePreference"
             value={formData.cuisinePreference}
             onChange={handleChange}
-            className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] appearance-none ${errors.cuisinePreference ? 'border-red-400' : 'border-gray-100'
+            className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] appearance-none ${errors.cuisinePreference ? 'border-red-400' : 'border-gray-100'
               }`}
           >
             <option value="" disabled className="text-gray-400">Select cuisine...</option>
@@ -316,14 +316,14 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             <option value="kerala">Kerala</option>
             <option value="mixed">Mixed/All Regions</option>
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 lg:px-5 text-gray-400">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </div>
         {errors.cuisinePreference && (
-          <p className="text-red-500 text-xs mt-1">{errors.cuisinePreference}</p>
+          <p className="text-red-500 text-[14px] mt-1">{errors.cuisinePreference}</p>
         )}
       </div>
 
@@ -335,7 +335,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             name="activityLevel"
             value={formData.activityLevel}
             onChange={handleChange}
-            className={`w-full px-4 lg:px-5 py-2.5 lg:py-3.5 border rounded-[1.25rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[14px] lg:text-[15px] appearance-none ${errors.activityLevel ? 'border-red-400' : 'border-gray-100'
+            className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] appearance-none ${errors.activityLevel ? 'border-red-400' : 'border-gray-100'
               }`}
           >
             <option value="" disabled className="text-gray-400">Select activity level...</option>
@@ -345,26 +345,26 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
             <option value="active">Very Active (Heavy exercise 6-7 days/week)</option>
             <option value="veryActive">Extremely Active (Intense exercise, physical job)</option>
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 lg:px-5 text-gray-400">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </div>
         {errors.activityLevel && (
-          <p className="text-red-500 text-xs mt-1">{errors.activityLevel}</p>
+          <p className="text-red-500 text-[14px] mt-1">{errors.activityLevel}</p>
         )}
       </div>
 
-      <div className="pt-3 lg:pt-6 animate-slideUp flex justify-end" style={{ animationDelay: '0.9s' }}>
+      <div className="pt-2 sm:pt-3 lg:pt-6 animate-slideUp flex justify-center" style={{ animationDelay: '0.9s' }}>
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white py-2.5 lg:py-3.5 px-8 lg:px-10 rounded-2xl font-semibold text-[14px] lg:text-[15px] hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:-translate-y-0.5"
+          className="bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white py-3 px-8 rounded-xl font-semibold text-[16px] hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:-translate-y-0.5"
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
-              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-4 w-4 sm:h-5 sm:w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>

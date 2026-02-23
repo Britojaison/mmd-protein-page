@@ -1542,5 +1542,93 @@
     "activityLevel": "light",
     "proteinRequired": 65,
     "timestamp": "2026-02-23T11:37:10.661Z"
+  },
+  {
+    "name": "Shreya",
+    "age": "21",
+    "gender": "female",
+    "height": "154",
+    "weight": "60",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": "north-indian",
+    "activityLevel": "moderate",
+    "proteinRequired": 67,
+    "timestamp": "2026-02-23T12:06:41.294Z"
+  },
+  {
+    "name": "Shreya",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": "north-indian",
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-23T12:12:12.491Z"
+  },
+  {
+    "name": "Shreya",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": "south-indian",
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-23T12:52:24.352Z"
+  },
+  {
+    "name": "maya",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreferences": [
+      "north-indian"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-23T13:54:30.332Z"
+  },
+  {
+    "name": "Maya",
+    "age": "21",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreferences": [
+      "north-indian"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-23T14:31:06.898Z"
+  },
+  {
+    "name": "Shreya",
+    "age": "21",
+    "gender": "female",
+    "height": "154",
+    "weight": "54",
+    "dietaryPreferences": [
+      "vegetarian"
+    ],
+    "cuisinePreference": "north-indian",
+    "activityLevel": "sedentary",
+    "proteinRequired": 43,
+    "timestamp": "2026-02-23T14:43:03.199Z"
   }
 ]
