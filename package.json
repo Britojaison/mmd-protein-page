@@ -10,6 +10,8 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "caniuse-lite": "^1.0.30001770",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.0",
     "next": "^16.1.6",
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",
