@@ -824,7 +824,7 @@ export default function WorldProteinDay() {
 
                               {/* How to Prepare - Always show */}
                               <div className="mb-1">
-                                <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                                <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   How to Prepare
                                 </h5>
                                 <ol className="space-y-2">
