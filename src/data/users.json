@@ -1742,5 +1742,21 @@
     "activityLevel": "light",
     "proteinRequired": 53,
     "timestamp": "2026-02-24T06:22:49.967Z"
+  },
+  {
+    "name": "Shreya Paul",
+    "age": "22",
+    "gender": "female",
+    "height": "149",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "north-indian"
+    ],
+    "activityLevel": "light",
+    "proteinRequired": 53,
+    "timestamp": "2026-02-24T06:46:38.345Z"
   }
 ]

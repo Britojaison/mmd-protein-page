@@ -451,102 +451,102 @@ export default function WorldProteinDay() {
       {/* Summary Page - Full Screen Centered */}
       {result && !showMealPlan ? (
         <div className="h-full w-full flex items-center justify-center px-4">
-          <div className="w-full max-w-[1056px] lg:w-[1056px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[24px] lg:pt-[48px] px-4 lg:px-12 pb-6 lg:pb-0">
+          <div className="w-full max-w-[1056px] lg:w-[1056px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[32px] lg:pt-[48px] px-6 lg:px-12 pb-8 lg:pb-0">
             {/* Progress Steps */}
-            <div className="flex items-center justify-center mb-6 lg:mb-8">
-              <div className="flex items-center space-x-2 lg:space-x-3">
-                <div className="flex items-center">
-                  <div className="w-6 h-6 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-xs lg:text-sm font-semibold">
+            <div className="flex items-center justify-center mb-8 lg:mb-8">
+              <div className="flex items-center space-x-3 lg:space-x-3">
+                <div className="flex flex-col lg:flex-row items-center lg:items-center">
+                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     1
                   </div>
-                  <span className="ml-1 lg:ml-2 text-sm lg:text-base text-[#2B4C6F] font-medium">Personal Info</span>
+                  <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base text-[#2B4C6F] font-medium text-center">Personal Info</span>
                 </div>
-                <div className="w-6 lg:w-10 h-[2px] bg-[#2B4C6F]"></div>
-                <div className="flex items-center">
-                  <div className="w-6 h-6 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-xs lg:text-sm font-semibold">
+                <div className="w-8 lg:w-10 h-[2px] bg-[#2B4C6F] mt-4 lg:mt-0"></div>
+                <div className="flex flex-col lg:flex-row items-center lg:items-center">
+                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     2
                   </div>
-                  <span className="ml-1 lg:ml-2 text-sm lg:text-base font-semibold text-[#2B4C6F]">Plan for You</span>
+                  <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base font-semibold text-[#2B4C6F] text-center">Plan for You</span>
                 </div>
-                <div className="w-6 lg:w-10 h-[2px] bg-gray-300"></div>
-                <div className="flex items-center">
-                  <div className="w-6 h-6 lg:w-8 lg:h-8 bg-gray-300 text-gray-500 rounded-[6px] flex items-center justify-center text-xs lg:text-sm font-semibold">
+                <div className="w-8 lg:w-10 h-[2px] bg-gray-300 mt-4 lg:mt-0"></div>
+                <div className="flex flex-col lg:flex-row items-center lg:items-center">
+                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-gray-300 text-gray-500 rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     3
                   </div>
-                  <span className="ml-1 lg:ml-2 text-sm lg:text-base text-gray-400">Meal Plan</span>
+                  <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base text-gray-400 text-center">Meal Plan</span>
                 </div>
               </div>
             </div>
 
             {/* Title Section with Step indicator */}
-            <div className="w-full max-w-[960px] flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 lg:mb-6 lg:mt-8 text-center lg:text-left">
+            <div className="w-full max-w-[960px] flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 lg:mb-6 lg:mt-8 text-left lg:text-left">
               <div className="flex flex-col">
-                <h1 className="text-[20px] lg:text-[30px] text-[#2B4C6F] leading-[1.2] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                  Your Personalised Meal Plan
+                <h1 className="text-[24px] lg:text-[30px] text-[#2B4C6F] leading-[1.2] mb-2 lg:mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                  {result.userData?.name ? `${result.userData.name}'s Personalized Meal Plan` : 'Your Personalised Meal Plan'}
                 </h1>
-                <p className="text-[12px] lg:text-[14px] text-gray-500 leading-[1.4]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                <p className="text-[14px] lg:text-[14px] text-gray-500 leading-[1.4]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                   Crafted with Premium Milky Mist Dairy Products
                 </p>
               </div>
-              <p className="text-[10px] lg:text-[12px] text-gray-400 leading-[1.4] mt-2 lg:mt-0" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Step 2/3</p>
+              <p className="text-[12px] lg:text-[12px] text-gray-400 leading-[1.4] mt-3 lg:mt-0 hidden lg:block" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Step 2/3</p>
             </div>
 
             {/* Protein Summary Cards */}
-            <div className="w-full max-w-[960px] grid grid-cols-2 lg:flex lg:justify-center gap-3 lg:gap-6 mb-6 lg:mb-10 px-2 lg:px-8">
-              <div className="w-full lg:w-[180px] h-[140px] lg:h-[162px] flex flex-col items-center justify-center p-3 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[10px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
-                <div className="w-[50px] h-[45px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-3">
-                  <span className="text-[16px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+            <div className="w-full max-w-[960px] grid grid-cols-2 lg:flex lg:justify-center gap-4 lg:gap-6 mb-8 lg:mb-10 px-2 lg:px-8">
+              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
+                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
+                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
                     {result.proteinRequired}g
                   </span>
                 </div>
-                <div className="text-[10px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Your goal</div>
+                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Your goal</div>
               </div>
               
-              <div className="w-full lg:w-[180px] h-[140px] lg:h-[162px] flex flex-col items-center justify-center p-3 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[10px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>AVERAGE PER DAY</div>
-                <div className="w-[50px] h-[45px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-3">
-                  <span className="text-[16px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[11px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center whitespace-nowrap" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>AVERAGE PER DAY</div>
+                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
+                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
                     {result.averageDailyProtein}g
                   </span>
                 </div>
-                <div className="text-[10px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Exceeds by {result.averageDailyProtein - result.proteinRequired}g</div>
+                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Exceeds by {result.averageDailyProtein - result.proteinRequired}g</div>
               </div>
               
-              <div className="w-full lg:w-[180px] h-[140px] lg:h-[162px] flex flex-col items-center justify-center p-3 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[10px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>WEEKLY TOTAL</div>
-                <div className="w-[50px] h-[45px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-3">
-                  <span className="text-[16px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>WEEKLY TOTAL</div>
+                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
+                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
                     {result.weeklyTotalProtein}g
                   </span>
                 </div>
-                <div className="text-[10px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
+                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
               </div>
               
-              <div className="w-full lg:w-[180px] h-[140px] lg:h-[162px] flex flex-col items-center justify-center p-3 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[10px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
-                <div className="w-[50px] h-[45px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-3">
-                  <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-4 h-4 lg:w-6 lg:h-6" />
+              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
+                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
+                  <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-5 h-5 lg:w-6 lg:h-6" />
                 </div>
-                <div className="text-[10px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Optimal</div>
+                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Optimal</div>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="w-full max-w-[960px] flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 mt-auto mb-4 lg:mb-8 px-4 lg:px-0">
+            <div className="w-full max-w-[960px] flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 mt-auto mb-6 lg:mb-8 px-4 lg:px-0">
               <button
                 onClick={() => {
                   setResult(null);
                   setError(null);
                   setShowMealPlan(false);
                 }}
-                className="w-full lg:w-[150px] h-[48px] flex items-center justify-center px-[18px] py-[16px] border border-[#D1D5DB] text-[#2B4C6F] rounded-[8px] font-semibold text-[14px] lg:text-[16px] hover:bg-gray-50 transition-all duration-300 bg-white"
+                className="w-full lg:w-[150px] h-[52px] lg:h-[48px] flex items-center justify-center px-[18px] py-[16px] border border-[#D1D5DB] text-[#2B4C6F] rounded-[8px] font-semibold text-[16px] lg:text-[16px] hover:bg-gray-50 transition-all duration-300 bg-white"
               >
                 Back
               </button>
               <button
                 onClick={() => setShowMealPlan(true)}
-                className="w-full lg:w-[150px] h-[48px] flex items-center justify-center px-[18px] py-[16px] bg-gradient-to-b from-[#211E57] to-[#106D6B] text-white rounded-[8px] font-semibold text-[14px] lg:text-[16px] hover:opacity-90 transition-all duration-300 shadow-sm"
+                className="w-full lg:w-[150px] h-[52px] lg:h-[48px] flex items-center justify-center px-[18px] py-[16px] bg-gradient-to-b from-[#211E57] to-[#106D6B] text-white rounded-[8px] font-semibold text-[16px] lg:text-[16px] hover:opacity-90 transition-all duration-300 shadow-sm"
               >
                 Continue
               </button>
@@ -557,15 +557,15 @@ export default function WorldProteinDay() {
         // Form, Day Selector, and Meal Plan Pages - Normal Layout
         <div className={`${showMealPlan ? 'min-h-screen' : 'h-screen'} w-full flex flex-col lg:flex-row justify-center items-start gap-4 lg:gap-8 py-4 lg:py-8 px-4 lg:px-0`}>
 
-          {/* Left Stepper Sidebar - Only show on form page, not on day selector or meal plan */}
+          {/* Left Stepper Sidebar - Only show on desktop and only on form page */}
           {!result && (
-          <div className="bg-gradient-to-b from-[#FFFFFF] to-[#E6F0FF] rounded-[1.5rem] lg:rounded-[2.5rem] w-full lg:w-[348px] h-auto lg:h-[746px] flex flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 relative shrink-0 p-4 lg:p-8">
+          <div className="bg-gradient-to-b from-[#FFFFFF] to-[#E6F0FF] rounded-[1.5rem] lg:rounded-[2.5rem] w-full lg:w-[348px] h-auto lg:h-[746px] flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 relative shrink-0 p-4 lg:p-8 hidden lg:flex">
             <div>
               <div className="mb-4 lg:mb-8 pb-4 lg:pb-8 border-b border-indigo-50/70 flex justify-center">
                 <img src="/assets/logos/logo.png" alt="MilkyMist" className="h-8 lg:h-10 object-contain ml-3" />
               </div>
 
-              <div className="space-y-0 relative px-2 hidden lg:block">
+              <div className="space-y-0 relative px-2">
                 <Step
                   number={1}
                   title="Enter the Details"
@@ -590,7 +590,7 @@ export default function WorldProteinDay() {
               </div>
             </div>
 
-            <div className="mt-4 lg:mt-16 flex items-center justify-between px-2 hidden lg:flex">
+            <div className="mt-4 lg:mt-16 flex items-center justify-between px-2">
               <div>
                 <h4 className="font-bold text-[16px] text-[#04142f] mb-0.5">Need a help?</h4>
                 <p className="text-[13px] text-gray-500 font-medium">chat with live support</p>
@@ -609,16 +609,16 @@ export default function WorldProteinDay() {
         <div className={`${
           result && showMealPlan
             ? 'w-full min-h-screen flex items-start justify-center py-4 lg:py-8'
-            : 'bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[1.5rem] lg:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/50 w-[343px] h-[698px] lg:w-[680px] lg:h-[746px] flex items-center justify-center p-6 lg:p-12 overflow-hidden'
+            : 'bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[1.5rem] lg:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/50 w-full lg:w-[680px] h-auto lg:h-[746px] flex items-center justify-center p-4 lg:p-12 overflow-hidden'
         }`}>
           {!result ? (
             <div className="w-full max-w-3xl h-full overflow-y-auto px-2">
-              <h2 className="text-lg lg:text-2xl xl:text-[28px] font-bold text-[#0f284e] mb-4 lg:mb-8 text-center lg:text-left">
+              <h2 className="text-2xl lg:text-2xl xl:text-[28px] font-bold text-[#0f284e] mb-6 lg:mb-8 text-center lg:text-left">
                 Calculate Your Protein Today!
               </h2>
               {error && (
-                <div className="mb-3 lg:mb-6 p-3 lg:p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
-                  <p className="text-red-600 text-[12px] lg:text-[15px]">{error}</p>
+                <div className="mb-4 lg:mb-6 p-4 lg:p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
+                  <p className="text-red-600 text-[14px] lg:text-[15px]">{error}</p>
                 </div>
               )}
               <ProteinForm onSubmit={handleSubmit} isLoading={isLoading} />
