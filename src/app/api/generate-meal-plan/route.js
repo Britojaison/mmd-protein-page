@@ -15,7 +15,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Recipe examples: Paneer Butter Masala, Dal Makhani, Chicken Curry, Aloo Paratha, Tandoori Chicken, Rajma, Chole
 - Protein sources: paneer, chicken, yogurt, milk, ghee-based preparations
 - VARIETY: Use different cooking styles - Day 1: Curry-based, Day 2: Tandoori, Day 3: Dal-based, Day 4: Paratha/Bread, Day 5: Rice dishes, Day 6: Dry sabzi, Day 7: Fusion`,
-    
+
     'south-indian': `
 - Use spices like mustard seeds, curry leaves, coconut, tamarind, sambar powder
 - Include dishes like dosa, idli, sambar, rasam, coconut chutney, curd rice
@@ -24,7 +24,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Recipe examples: Coconut Chicken Curry, Protein Dosa, Sambar with Paneer, Rasam, Appam, Uttapam, Fish Curry
 - Protein sources: coconut milk, lentils, chicken, paneer in South Indian style
 - VARIETY: Day 1: Coconut curries, Day 2: Steamed items, Day 3: Sambar/Rasam, Day 4: Dosa varieties, Day 5: Rice preparations, Day 6: Dry curries, Day 7: Chettinad style`,
-    
+
     'west-indian': `
 - Use spices like kokum, jaggery, peanuts, sesame seeds, red chilies
 - Include dishes like dhokla, thepla, pav bhaji, vada pav, gujarati dal
@@ -32,7 +32,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: gram flour, jaggery, peanuts, sesame, kokum
 - Recipe examples: Protein Dhokla, Paneer Thepla, Gujarati Dal with Yogurt
 - Protein sources: gram flour, paneer, yogurt, milk-based sweets`,
-    
+
     'east-indian': `
 - Use spices like panch phoron, mustard oil, nigella seeds, poppy seeds
 - Include dishes like fish curry, rice, posto, mishti doi, sandesh
@@ -40,7 +40,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: rice, fish, mustard oil, poppy seeds, jaggery
 - Recipe examples: Chicken in Mustard Sauce, Paneer Posto, Sweet Yogurt
 - Protein sources: fish/chicken, paneer, milk-based sweets, yogurt`,
-    
+
     'punjabi': `
 - Use spices like garam masala, kasoori methi, amchur, red chili powder
 - Include dishes like butter chicken, dal makhani, naan, lassi, sarson ka saag
@@ -48,7 +48,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: wheat, dairy products, onions, tomatoes, cream
 - Recipe examples: Butter Chicken, Paneer Makhani, Protein Lassi, Dal Makhani
 - Protein sources: chicken, paneer, butter, cream, milk, yogurt`,
-    
+
     'gujarati': `
 - Use spices like hing, jaggery, sesame seeds, green chilies, turmeric
 - Include dishes like dhokla, khandvi, undhiyu, gujarati dal, thepla
@@ -56,7 +56,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: gram flour, jaggery, peanuts, sesame, vegetables
 - Recipe examples: Protein Dhokla, Paneer Khandvi, Sweet Yogurt Curry
 - Protein sources: gram flour, paneer, yogurt, milk, buttermilk`,
-    
+
     'maharashtrian': `
 - Use spices like goda masala, kokum, tamarind, jaggery, red chilies
 - Include dishes like vada pav, misal pav, puran poli, bhel puri
@@ -64,7 +64,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: rice, lentils, coconut, jaggery, peanuts
 - Recipe examples: Protein Misal, Paneer Vada, Coconut Chicken Curry
 - Protein sources: lentils, paneer, chicken, coconut, yogurt`,
-    
+
     'bengali': `
 - Use spices like panch phoron, mustard seeds, poppy seeds, nigella seeds
 - Include dishes like fish curry, rice, posto bata, mishti doi, rasgulla
@@ -73,7 +73,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Recipe examples: Chicken in Poppy Seed Sauce, Paneer Posto, Mishti Doi, Macher Jhol, Kosha Mangsho, Chingri Malai Curry
 - Protein sources: fish/chicken, paneer, milk sweets, yogurt, coconut
 - VARIETY: Day 1: Fish curries, Day 2: Posto dishes, Day 3: Kosha preparations, Day 4: Steamed items, Day 5: Sweet dishes, Day 6: Dry preparations, Day 7: Festival specials`,
-    
+
     'tamil': `
 - Use spices like curry leaves, tamarind, coconut, sambar powder, rasam powder
 - Include dishes like sambar, rasam, curd rice, dosa, idli
@@ -81,7 +81,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: rice, lentils, coconut, curry leaves, tamarind
 - Recipe examples: Coconut Chicken Curry, Protein Sambar, Curd Rice with Paneer
 - Protein sources: lentils, coconut, chicken, paneer, yogurt, milk`,
-    
+
     'kerala': `
 - Use spices like coconut, curry leaves, black pepper, cardamom, cinnamon
 - Include dishes like fish curry, appam, puttu, coconut chutney, payasam
@@ -89,7 +89,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Common ingredients: coconut, rice, fish, curry leaves, coconut oil
 - Recipe examples: Coconut Chicken Curry, Protein Appam, Coconut Milk Payasam
 - Protein sources: coconut milk, chicken, paneer, milk-based desserts`,
-    
+
     'mixed': `
 - Use a variety of Indian spices from different regions
 - Include popular dishes from North, South, East, and West India
@@ -98,7 +98,7 @@ function getCuisineGuidelines(cuisinePreference) {
 - Recipe examples: Mix of regional favorites adapted with Milky Mist products
 - Protein sources: paneer, chicken, yogurt, milk, regional specialties`
   };
-  
+
   return guidelines[cuisinePreference] || guidelines['mixed'];
 }
 
@@ -111,7 +111,7 @@ function getActivityGuidelines(activityLevel) {
     'active': 'Design protein-rich meals for muscle recovery and energy replenishment. Include complex carbs for sustained energy.',
     'veryActive': 'Focus on high-protein, nutrient-dense meals for intense training recovery. Include quick-digesting and slow-release proteins.'
   };
-  
+
   return guidelines[activityLevel] || guidelines['moderate'];
 }
 
@@ -146,7 +146,7 @@ function getActivityMealGuidelines(activityLevel, cuisinePreference) {
   };
 
   const activityGuide = baseGuidelines[activityLevel] || baseGuidelines['moderate'];
-  
+
   // Add cuisine-specific cooking methods based on activity level
   let cookingMethods = '';
   if (activityLevel === 'sedentary') {
@@ -178,107 +178,110 @@ function getProteinTimingGuidance(activityLevel) {
 - Distribute protein evenly across meals for steady metabolism
 - Focus on high-quality, easily digestible proteins
 - No specific timing requirements, prioritize consistency`,
-    
+
     'light': `
 - Slightly higher protein at breakfast for sustained energy
 - Moderate protein at lunch for afternoon energy
 - Adequate protein at dinner for overnight recovery`,
-    
+
     'moderate': `
 - Good protein at breakfast for workout fuel if exercising
 - Balanced protein at lunch for sustained energy and recovery
 - Higher protein at dinner for muscle repair during sleep`,
-    
+
     'active': `
 - High protein breakfast for energy and pre-workout fuel
 - Recovery-focused protein at lunch after morning workouts
 - Maximum protein at dinner for intensive overnight muscle repair`,
-    
+
     'veryActive': `
 - Premium protein breakfast for intense training preparation
 - High-quality protein lunch for rapid recovery between sessions
 - Maximum protein dinner for optimal muscle synthesis and recovery`
   };
-  
+
   return guidance[activityLevel] || guidance['moderate'];
 }
 
 export async function POST(request) {
   let requestData;
-  
+
   try {
     requestData = await request.json();
-    const { name, age, height, weight, proteinRequired, dietaryPreferences = [], gender, cuisinePreference, activityLevel } = requestData;
-    
+    const { name, age, height, weight, proteinRequired, dietaryPreferences = [], gender, cuisinePreference: cuisinePreferenceRaw, activityLevel } = requestData;
+
+    // Ensure cuisinePreference is a string and handle array from the frontend
+    const cuisinePreference = Array.isArray(cuisinePreferenceRaw) ? cuisinePreferenceRaw.join(' and ') : String(cuisinePreferenceRaw || '');
+    const primaryCuisine = Array.isArray(cuisinePreferenceRaw) ? cuisinePreferenceRaw[0] : cuisinePreferenceRaw;
     // Server-side validation
     const validationErrors = [];
-    
+
     // Validate age
     const ageNum = parseInt(age);
     if (!age || isNaN(ageNum) || ageNum < 1 || ageNum > 100) {
       validationErrors.push('Age must be between 1 and 100 years');
     }
-    
+
     // Validate height
     const heightNum = parseFloat(height);
     if (!height || isNaN(heightNum) || heightNum < 50 || heightNum > 272) {
       validationErrors.push('Height must be between 50 and 272 cm');
     }
-    
+
     // Validate weight
     const weightNum = parseFloat(weight);
     if (!weight || isNaN(weightNum) || weightNum < 5 || weightNum > 500) {
       validationErrors.push('Weight must be between 5 and 500 kg');
     }
-    
+
     // Validate name
     if (!name || name.trim().length < 2) {
       validationErrors.push('Name must be at least 2 characters long');
     }
-    
+
     // Validate gender
     if (!gender || !['male', 'female', 'other'].includes(gender)) {
       validationErrors.push('Please select a valid gender');
     }
-    
+
     // Validate cuisine preference
     if (!cuisinePreference) {
       validationErrors.push('Please select your preferred cuisine');
     }
-    
+
     // Validate activity level
     if (!activityLevel) {
       validationErrors.push('Please select your activity level');
     }
-    
+
     if (validationErrors.length > 0) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Validation failed', 
-          validationErrors 
+        {
+          success: false,
+          error: 'Validation failed',
+          validationErrors
         },
         { status: 400 }
       );
     }
-    
+
     // Check if API key exists
     if (!process.env.GEMINI_API_KEY) {
       console.log('GEMINI_API_KEY not configured, using fallback recipes');
       return generateFallbackMealPlan(requestData);
     }
-    
+
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    
+
     // Build dietary preferences string
-    const dietaryString = dietaryPreferences.length > 0 
-      ? dietaryPreferences.join(', ') 
+    const dietaryString = dietaryPreferences.length > 0
+      ? dietaryPreferences.join(', ')
       : 'no specific restrictions';
-    
+
     // Determine if user wants vegetarian or non-vegetarian
     const isVegetarian = dietaryPreferences.includes('vegetarian');
     const isNonVegetarian = dietaryPreferences.includes('non-vegetarian');
-    
+
     // Create optimized prompt for Gemini - simplified for complete response
     const prompt = `Generate a COMPLETE 7-day meal plan. Age ${age}, Gender ${gender}, Weight ${weight}kg, Protein target ${proteinRequired}g/day, Diet: ${dietaryString}, Cuisine: ${cuisinePreference}, Activity: ${activityLevel}. 
 
@@ -324,10 +327,10 @@ ${!isVegetarian && !isNonVegetarian ? '- Vegetarian: NO eggs, NO chicken, NO mea
 - Example ingredient format: "100g chicken breast" NOT "100g chicken breast (31g protein)"
 
 CUISINE GUIDELINES:
-${getCuisineGuidelines(cuisinePreference)}
+${getCuisineGuidelines(primaryCuisine)}
 
 ACTIVITY-BASED MEAL PLANNING:
-${getActivityMealGuidelines(activityLevel, cuisinePreference)}
+${getActivityMealGuidelines(activityLevel, primaryCuisine)}
 
 EXAMPLE RECIPE ADAPTATIONS BY ACTIVITY LEVEL:
 
@@ -434,9 +437,9 @@ RECIPE NAMING CONVENTION:
 GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
 
     console.log('Calling Gemini API...');
-    
+
     // Use gemini-2.5-flash which is available in your API key
-    const model = genAI.getGenerativeModel({ 
+    const model = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       generationConfig: {
         temperature: 0.1,  // Very low temperature for consistent, complete output
@@ -445,51 +448,51 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
         maxOutputTokens: 32768, // Maximum tokens to ensure complete 7-day response
       }
     });
-    
+
     // Set timeout for API call
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 90000); // 90 second timeout for complete response
-    
+
     try {
       const result = await model.generateContent(prompt);
       clearTimeout(timeoutId);
-      
+
       const response = result.response;
       const text = response.text();
-      
+
       console.log('Gemini response received, length:', text.length);
       console.log('Raw response preview:', text.substring(0, 200));
-      
+
       // Extract JSON from response with better error handling
       let jsonText = text.trim();
-      
+
       // Remove markdown code blocks if present
       if (jsonText.includes('```json')) {
         jsonText = jsonText.split('```json')[1].split('```')[0].trim();
       } else if (jsonText.includes('```')) {
         jsonText = jsonText.split('```')[1].split('```')[0].trim();
       }
-      
+
       // Find JSON boundaries
       const jsonStart = jsonText.indexOf('{');
       const jsonEnd = jsonText.lastIndexOf('}');
-      
+
       if (jsonStart === -1 || jsonEnd === -1 || jsonStart >= jsonEnd) {
         console.error('Could not find valid JSON boundaries in response');
         console.error('Response text:', text);
         throw new Error('Invalid JSON structure in Gemini response - using fallback');
       }
-      
+
       jsonText = jsonText.substring(jsonStart, jsonEnd + 1);
-      
+
       console.log('Extracted JSON length:', jsonText.length);
-      
+
       // Check if JSON seems incomplete (missing closing brackets)
       const openBraces = (jsonText.match(/{/g) || []).length;
       const closeBraces = (jsonText.match(/}/g) || []).length;
       const openBrackets = (jsonText.match(/\[/g) || []).length;
       const closeBrackets = (jsonText.match(/\]/g) || []).length;
-      
+
       if (openBraces !== closeBraces || openBrackets !== closeBrackets) {
         console.error('Incomplete JSON detected:', {
           openBraces,
@@ -501,19 +504,19 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
           missingBrackets: openBrackets - closeBrackets
         });
         console.log('Attempting to complete JSON structure...');
-        
+
         // Try to complete the JSON by adding missing brackets
         let completedJson = jsonText;
         const missingBrackets = openBrackets - closeBrackets;
         const missingBraces = openBraces - closeBraces;
-        
+
         for (let i = 0; i < missingBrackets; i++) {
           completedJson += ']';
         }
         for (let i = 0; i < missingBraces; i++) {
           completedJson += '}';
         }
-        
+
         console.log('Attempting to parse completed JSON...');
         try {
           const testParse = JSON.parse(completedJson);
@@ -524,7 +527,7 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
           throw new Error('Incomplete JSON from Gemini - using fallback');
         }
       }
-      
+
       let mealPlanData;
       try {
         mealPlanData = JSON.parse(jsonText);
@@ -534,13 +537,13 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
         console.error('Failed JSON preview (last 500 chars):', jsonText.substring(Math.max(0, jsonText.length - 500)));
         throw new Error('Failed to parse Gemini response as JSON - using fallback');
       }
-      
+
       // Validate the structure
       if (!mealPlanData.weeklyPlan || !Array.isArray(mealPlanData.weeklyPlan) || mealPlanData.weeklyPlan.length !== 7) {
         console.error('Invalid meal plan structure:', mealPlanData);
         throw new Error('Gemini returned incomplete meal plan');
       }
-      
+
       // Validate that vegetarian meals don't contain eggs or chicken
       if (dietaryPreferences.includes('vegetarian')) {
         console.log('Validating vegetarian meal plan from Gemini...');
@@ -549,12 +552,12 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
             // Check for whole word matches only, not substrings
             const mealIngredientsText = meal.ingredients ? meal.ingredients.join(' ').toLowerCase() : '';
             const mealRecipeNameText = meal.recipeName ? meal.recipeName.toLowerCase() : '';
-            
+
             // Use word boundaries to match whole words only
             const hasEggs = /\begg\b|\beggs\b/.test(mealIngredientsText) || /\begg\b|\beggs\b/.test(mealRecipeNameText);
             const hasChicken = /\bchicken\b/.test(mealIngredientsText) || /\bchicken\b/.test(mealRecipeNameText);
             const hasMeat = /\bmeat\b|\bbeef\b|\bpork\b|\bfish\b/.test(mealIngredientsText) || /\bmeat\b|\bbeef\b|\bpork\b|\bfish\b/.test(mealRecipeNameText);
-            
+
             if (hasEggs || hasChicken || hasMeat) {
               console.log(`WARNING: Non-vegetarian ingredient found in meal: ${meal.recipeName}`);
               console.log(`Ingredients: ${meal.ingredients.join(', ')}`);
@@ -564,31 +567,31 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
           });
         });
       }
-      
+
       // Validate and fix protein calculations
       console.log('Validating protein calculations...');
-      
+
       mealPlanData.weeklyPlan.forEach(day => {
         day.meals.forEach(meal => {
           // Calculate expected protein from ingredients
           let calculatedProtein = 0;
-          
+
           // Enhanced ingredient analysis with better pattern matching
           const allIngredientsText = meal.ingredients ? meal.ingredients.join(' ').toLowerCase() : '';
           const recipeNameText = meal.recipeName ? meal.recipeName.toLowerCase() : '';
           const combinedText = `${allIngredientsText} ${recipeNameText}`;
-          
+
           console.log(`Analyzing meal: ${meal.recipeName}`);
           console.log(`Ingredients: ${meal.ingredients.join(', ')}`);
           console.log(`Combined text for analysis: ${combinedText}`);
-          
+
           // Count eggs (various patterns)
           const eggPatterns = [
             /(\d+)\s*(?:large\s+)?eggs?/gi,
             /(\d+)\s*eggs?/gi,
             /(\d+)\s*scrambled\s+eggs?/gi
           ];
-          
+
           for (const pattern of eggPatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -599,7 +602,7 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Count chicken (various patterns) - more comprehensive
           const chickenPatterns = [
             /(\d+)g?\s*(?:cooked\s+)?(?:chicken\s+)?breast/gi,
@@ -607,7 +610,7 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
             /(\d+)g?\s*(?:grilled\s+|roasted\s+|steamed\s+)?chicken/gi,
             /(\d+)g?\s*(?:boneless\s+)?chicken/gi
           ];
-          
+
           for (const pattern of chickenPatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -619,13 +622,13 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Count paneer (various patterns)
           const paneerPatterns = [
             /(\d+)g?\s*(?:milky\s+mist\s+)?(?:high\s+protein\s+)?paneer/gi,
             /(\d+)g?\s*paneer/gi
           ];
-          
+
           for (const pattern of paneerPatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -637,14 +640,14 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Count cheddar cheese
           const cheesePatterns = [
             /(\d+)g?\s*(?:milky\s+mist\s+)?(?:high\s+protein\s+)?cheddar\s+cheese/gi,
             /(\d+)g?\s*cheddar/gi,
             /(\d+)g?\s*cheese/gi
           ];
-          
+
           for (const pattern of cheesePatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -656,13 +659,13 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Count yogurt (various patterns)
           const yogurtPatterns = [
             /(\d+)g?\s*(?:milky\s+mist\s+)?(?:greek\s+)?yogurt/gi,
             /(\d+)g?\s*yogurt/gi
           ];
-          
+
           for (const pattern of yogurtPatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -674,12 +677,12 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Count skyr
           const skyrPatterns = [
             /(\d+)g?\s*(?:milky\s+mist\s+)?skyr/gi
           ];
-          
+
           for (const pattern of skyrPatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -691,12 +694,12 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Count milk
           const milkPatterns = [
             /(\d+)ml?\s*(?:milky\s+mist\s+)?(?:toned\s+)?milk/gi
           ];
-          
+
           for (const pattern of milkPatterns) {
             let match;
             while ((match = pattern.exec(combinedText)) !== null) {
@@ -708,7 +711,7 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
               }
             }
           }
-          
+
           // Add some protein from other common ingredients
           if (combinedText.includes('rice')) {
             calculatedProtein += 3; // Approximate for 1 cup rice
@@ -722,10 +725,10 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
             calculatedProtein += 9; // Approximate for 1 cup
             console.log(`Found lentils/dal: +9g protein`);
           }
-          
+
           console.log(`Total calculated protein: ${calculatedProtein.toFixed(1)}g`);
           console.log(`Gemini stated protein: ${meal.nutrition.protein}g`);
-          
+
           // If calculated protein differs significantly from stated protein, fix it
           if (calculatedProtein > 0) {
             const difference = Math.abs(calculatedProtein - meal.nutrition.protein);
@@ -746,7 +749,7 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
           } else {
             // If we couldn't calculate protein from ingredients, apply minimum realistic values based on meal type and ingredients
             let minimumProtein = 15; // Default minimum
-            
+
             // Check for high-protein ingredients and set realistic minimums
             if (combinedText.includes('chicken')) {
               minimumProtein = Math.max(25, meal.nutrition.protein); // Chicken meals should have at least 25g
@@ -757,14 +760,14 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
             if (combinedText.includes('egg')) {
               minimumProtein = Math.max(18, meal.nutrition.protein); // Egg meals should have at least 18g
             }
-            
+
             if (meal.nutrition.protein < minimumProtein) {
               console.log(`BOOSTING low protein for ${meal.recipeName}: ${meal.nutrition.protein}g -> ${minimumProtein}g`);
               meal.nutrition.protein = minimumProtein;
               meal.nutrition.calories = Math.max(meal.nutrition.calories, minimumProtein * 6); // Rough calorie adjustment
             }
           }
-          
+
           // Cap excessive protein values to prevent unrealistic totals - but be more lenient
           const maxProteinPerMeal = Math.ceil(proteinRequired * 0.6); // Increased from 45% to 60% per meal
           if (meal.nutrition.protein > maxProteinPerMeal) {
@@ -772,13 +775,13 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
             meal.nutrition.protein = maxProteinPerMeal;
             meal.nutrition.calories = Math.round(meal.nutrition.calories * 0.9); // Reduce calories proportionally
           }
-          
+
           console.log('---');
         });
       });
-      
+
       return formatMealPlanResponse(mealPlanData, requestData);
-      
+
     } catch (apiError) {
       clearTimeout(timeoutId);
       console.error('Gemini API Error Details:', {
@@ -790,7 +793,7 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
       console.log('Gemini API failed, using fallback:', apiError.message);
       return generateFallbackMealPlan(requestData);
     }
-    
+
   } catch (error) {
     console.error('Error generating meal plan:', error);
     return generateFallbackMealPlan(requestData);
@@ -806,13 +809,13 @@ async function generateFallbackMealPlan(requestData) {
       const recipesPath = path.join(process.cwd(), 'src', 'data', 'recipes-enhanced.json');
       recipesCache = JSON.parse(fs.readFileSync(recipesPath, 'utf-8'));
     }
-    
+
     const { dietaryPreferences = [], proteinRequired, cuisinePreference, activityLevel } = requestData;
-    
+
     // Filter recipes based on dietary preferences and cuisine
     const filterRecipes = (recipes) => {
       if (dietaryPreferences.length === 0 && !cuisinePreference) return recipes;
-      
+
       return recipes.filter(recipe => {
         // Handle dietary preferences
         let matchesDietary = true;
@@ -821,9 +824,9 @@ async function generateFallbackMealPlan(requestData) {
           if (dietaryPreferences.includes('non-vegetarian')) {
             // Must have non-vegetarian tag OR contain chicken/egg in name
             const isNonVeg = (recipe.dietary && recipe.dietary.includes('non-vegetarian')) ||
-                            recipe.recipeName.toLowerCase().includes('chicken') ||
-                            recipe.recipeName.toLowerCase().includes('egg');
-            
+              recipe.recipeName.toLowerCase().includes('chicken') ||
+              recipe.recipeName.toLowerCase().includes('egg');
+
             // Check for gluten-free if also selected
             if (dietaryPreferences.includes('gluten-free')) {
               matchesDietary = isNonVeg && recipe.dietary && recipe.dietary.includes('gluten-free');
@@ -831,19 +834,19 @@ async function generateFallbackMealPlan(requestData) {
               matchesDietary = isNonVeg;
             }
           }
-          
+
           // Handle vegetarian preference (exclude non-veg)
           else if (dietaryPreferences.includes('vegetarian')) {
             const isVegetarian = recipe.dietary && recipe.dietary.includes('vegetarian') &&
-                                !recipe.dietary.includes('non-vegetarian') &&
-                                !recipe.recipeName.toLowerCase().includes('chicken') &&
-                                !recipe.recipeName.toLowerCase().includes('egg');
-            
+              !recipe.dietary.includes('non-vegetarian') &&
+              !recipe.recipeName.toLowerCase().includes('chicken') &&
+              !recipe.recipeName.toLowerCase().includes('egg');
+
             // Additional check: ensure no eggs in ingredients
-            const hasEggs = recipe.ingredients && recipe.ingredients.some(ingredient => 
+            const hasEggs = recipe.ingredients && recipe.ingredients.some(ingredient =>
               ingredient.toLowerCase().includes('egg')
             );
-            
+
             if (hasEggs) {
               matchesDietary = false; // Exclude recipes with eggs from vegetarian selection
             } else {
@@ -855,15 +858,15 @@ async function generateFallbackMealPlan(requestData) {
               }
             }
           }
-          
+
           // Handle other preferences (gluten-free only)
           else {
-            matchesDietary = dietaryPreferences.every(pref => 
+            matchesDietary = dietaryPreferences.every(pref =>
               recipe.dietary && recipe.dietary.includes(pref)
             );
           }
         }
-        
+
         // Handle cuisine preference (basic matching for now)
         let matchesCuisine = true;
         if (cuisinePreference && cuisinePreference !== 'mixed') {
@@ -871,23 +874,23 @@ async function generateFallbackMealPlan(requestData) {
           // This is a placeholder for cuisine-based filtering
           matchesCuisine = true;
         }
-        
+
         return matchesDietary && matchesCuisine;
       });
     };
-    
+
     const filteredBreakfast = filterRecipes(recipesCache.breakfast);
     const filteredLunch = filterRecipes(recipesCache.lunch);
     const filteredDinner = filterRecipes(recipesCache.dinner);
-    
+
     const breakfastOptions = filteredBreakfast.length > 0 ? filteredBreakfast : recipesCache.breakfast;
     const lunchOptions = filteredLunch.length > 0 ? filteredLunch : recipesCache.lunch;
     const dinnerOptions = filteredDinner.length > 0 ? filteredDinner : recipesCache.dinner;
-    
+
     // Ensure product variety across the week
     const milkyMistProducts = [
       'Milky Mist Skyr',
-      'Milky Mist Greek Yogurt Natural', 
+      'Milky Mist Greek Yogurt Natural',
       'Milky Mist Greek Yogurt Cereal',
       'Milky Mist Greek Yogurt Blueberry',
       'Milky Mist Greek Yogurt Honey and Fig',
@@ -898,42 +901,42 @@ async function generateFallbackMealPlan(requestData) {
       'Milky Mist Frozen Khova',
       'Milky Mist Toned Milk'
     ];
-    
+
     // Function to select recipes with product variety and activity level consideration
     const selectRecipeWithProduct = (recipes, targetProduct, usedProducts, mealType, activityLevel) => {
       // First try to find a recipe with the target product
       let recipe = recipes.find(r => r.milkyMistProduct.includes(targetProduct));
-      
+
       // If not found, try to find a recipe with a product we haven't used much
       if (!recipe) {
         const productCounts = {};
         usedProducts.forEach(p => {
           productCounts[p] = (productCounts[p] || 0) + 1;
         });
-        
+
         // Sort products by usage count (least used first)
-        const availableProducts = milkyMistProducts.filter(p => 
+        const availableProducts = milkyMistProducts.filter(p =>
           recipes.some(r => r.milkyMistProduct.includes(p))
         ).sort((a, b) => (productCounts[a] || 0) - (productCounts[b] || 0));
-        
+
         // Find recipe with least used product
         for (const product of availableProducts) {
           recipe = recipes.find(r => r.milkyMistProduct.includes(product));
           if (recipe) break;
         }
       }
-      
+
       // Fallback to first recipe if nothing found
       recipe = recipe || recipes[0];
-      
+
       // Adjust recipe based on activity level
       if (recipe && activityLevel) {
         recipe = adjustRecipeForActivity(recipe, activityLevel, mealType);
       }
-      
+
       return recipe;
     };
-    
+
     // Function to adjust recipe portions based on activity level
     const adjustRecipeForActivity = (recipe, activityLevel, mealType) => {
       const activityMultipliers = {
@@ -943,16 +946,16 @@ async function generateFallbackMealPlan(requestData) {
         'active': 1.2,
         'veryActive': 1.3
       };
-      
+
       const multiplier = activityMultipliers[activityLevel] || 1.0;
-      
+
       // Create a copy of the recipe to avoid modifying the original
       const adjustedRecipe = JSON.parse(JSON.stringify(recipe));
-      
+
       // Adjust protein and calories based on activity level
       adjustedRecipe.nutrition.protein = Math.round(recipe.nutrition.protein * multiplier);
       adjustedRecipe.nutrition.calories = Math.round(recipe.nutrition.calories * multiplier);
-      
+
       // Adjust other macros proportionally
       if (recipe.nutrition.carbs) {
         adjustedRecipe.nutrition.carbs = Math.round(recipe.nutrition.carbs * multiplier);
@@ -960,14 +963,14 @@ async function generateFallbackMealPlan(requestData) {
       if (recipe.nutrition.fats) {
         adjustedRecipe.nutrition.fats = Math.round(recipe.nutrition.fats * multiplier);
       }
-      
+
       return adjustedRecipe;
     };
-    
+
     const weeklyPlan = [];
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const usedProducts = [];
-    
+
     // Pre-plan product distribution to ensure variety
     const productDistribution = [
       // Day 1: Mix of different products
@@ -985,30 +988,30 @@ async function generateFallbackMealPlan(requestData) {
       // Day 7: Final variety with new products
       ['Milky Mist Frozen Khova', 'Milky Mist Ghee', 'Milky Mist Greek Yogurt Blueberry']
     ];
-    
+
     for (let i = 0; i < 7; i++) {
       const [breakfastProduct, lunchProduct, dinnerProduct] = productDistribution[i];
-      
+
       const breakfast = selectRecipeWithProduct(breakfastOptions, breakfastProduct, usedProducts, 'breakfast', activityLevel);
       usedProducts.push(breakfast.milkyMistProduct);
-      
+
       const lunch = selectRecipeWithProduct(lunchOptions, lunchProduct, usedProducts, 'lunch', activityLevel);
       usedProducts.push(lunch.milkyMistProduct);
-      
+
       const dinner = selectRecipeWithProduct(dinnerOptions, dinnerProduct, usedProducts, 'dinner', activityLevel);
       usedProducts.push(dinner.milkyMistProduct);
-      
+
       const dayMeals = [
         { type: 'Breakfast', ...breakfast },
         { type: 'Lunch', ...lunch },
         { type: 'Dinner', ...dinner }
       ];
-      
+
       const dayTotalProtein = dayMeals.reduce((sum, meal) => sum + meal.nutrition.protein, 0);
       const dayTotalCalories = dayMeals.reduce((sum, meal) => sum + meal.nutrition.calories, 0);
       const dayTotalCarbs = dayMeals.reduce((sum, meal) => sum + meal.nutrition.carbs, 0);
       const dayTotalFats = dayMeals.reduce((sum, meal) => sum + meal.nutrition.fats, 0);
-      
+
       weeklyPlan.push({
         day: days[i],
         dayNumber: i + 1,
@@ -1020,9 +1023,9 @@ async function generateFallbackMealPlan(requestData) {
         achieved: dayTotalProtein >= proteinRequired
       });
     }
-    
+
     return formatMealPlanResponse({ weeklyPlan }, requestData);
-    
+
   } catch (fallbackError) {
     console.error('Fallback also failed:', fallbackError);
     return NextResponse.json(
@@ -1034,14 +1037,14 @@ async function generateFallbackMealPlan(requestData) {
 
 function formatMealPlanResponse(mealPlanData, requestData) {
   const { proteinRequired, dietaryPreferences = [] } = requestData;
-  
+
   // Calculate totals for each day
   const weeklyPlan = mealPlanData.weeklyPlan.map(day => {
     const dayTotalProtein = day.meals.reduce((sum, meal) => sum + meal.nutrition.protein, 0);
     const dayTotalCalories = day.meals.reduce((sum, meal) => sum + meal.nutrition.calories, 0);
     const dayTotalCarbs = day.meals.reduce((sum, meal) => sum + meal.nutrition.carbs, 0);
     const dayTotalFats = day.meals.reduce((sum, meal) => sum + meal.nutrition.fats, 0);
-    
+
     return {
       ...day,
       totalProtein: Math.round(dayTotalProtein), // Round daily totals
@@ -1051,35 +1054,35 @@ function formatMealPlanResponse(mealPlanData, requestData) {
       achieved: dayTotalProtein >= proteinRequired
     };
   });
-  
+
   const weeklyTotalProtein = weeklyPlan.reduce((sum, day) => sum + day.totalProtein, 0);
   const weeklyTotalCalories = weeklyPlan.reduce((sum, day) => sum + day.totalCalories, 0);
   let averageDailyProtein = Math.round(weeklyTotalProtein / 7);
   const averageDailyCalories = Math.round(weeklyTotalCalories / 7);
-  
+
   // Ensure average doesn't exceed target by more than 8g
   const maxAllowedAverage = proteinRequired + 8;
   if (averageDailyProtein > maxAllowedAverage) {
     console.log(`Capping excessive average protein: ${averageDailyProtein}g -> ${maxAllowedAverage}g`);
-    
+
     // Proportionally reduce all daily totals
     const reductionRatio = maxAllowedAverage / averageDailyProtein;
     weeklyPlan.forEach(day => {
       day.totalProtein = Math.round(day.totalProtein * reductionRatio);
       day.totalCalories = Math.round(day.totalCalories * reductionRatio);
-      
+
       // Also reduce individual meal proteins
       day.meals.forEach(meal => {
         meal.nutrition.protein = Math.round(meal.nutrition.protein * reductionRatio);
         meal.nutrition.calories = Math.round(meal.nutrition.calories * reductionRatio);
       });
     });
-    
+
     // Recalculate averages
     const newWeeklyTotalProtein = weeklyPlan.reduce((sum, day) => sum + day.totalProtein, 0);
     const newWeeklyTotalCalories = weeklyPlan.reduce((sum, day) => sum + day.totalCalories, 0);
     averageDailyProtein = Math.round(newWeeklyTotalProtein / 7);
-    
+
     return NextResponse.json({
       success: true,
       weeklyPlan,
@@ -1091,7 +1094,7 @@ function formatMealPlanResponse(mealPlanData, requestData) {
       dietaryPreferences: dietaryPreferences.length > 0 ? dietaryPreferences : ['all']
     });
   }
-  
+
   return NextResponse.json({
     success: true,
     weeklyPlan,

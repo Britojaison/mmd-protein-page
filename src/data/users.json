@@ -1790,5 +1790,37 @@
     "activityLevel": "sedentary",
     "proteinRequired": 42,
     "timestamp": "2026-02-24T09:30:35.858Z"
+  },
+  {
+    "name": "shreya",
+    "age": "23",
+    "gender": "female",
+    "height": "154",
+    "weight": "60",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "bengali"
+    ],
+    "activityLevel": "veryActive",
+    "proteinRequired": 86,
+    "timestamp": "2026-02-24T11:21:36.370Z"
+  },
+  {
+    "name": "shreya",
+    "age": "22",
+    "gender": "female",
+    "height": "123",
+    "weight": "12",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "punjabi"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 12,
+    "timestamp": "2026-02-24T11:24:22.103Z"
   }
 ]
