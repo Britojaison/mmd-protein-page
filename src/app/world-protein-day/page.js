@@ -695,23 +695,48 @@ export default function WorldProteinDay() {
                     </div>
 
                     {/* Day Title and Protein Info */}
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 lg:mb-6 text-center lg:text-left">
-                      <div>
-                        <h3 className="text-[24px] lg:text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
-                          {currentDayPlan.day}
-                        </h3>
-                        <p className="text-[14px] lg:text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
-                          Day {currentDayPlan.dayNumber} of your Meal Plan
-                        </p>
-                      </div>
-                      <div className="flex flex-col items-center mt-4 lg:mt-0">
-                        <p className="text-[14px] lg:text-[13px] text-gray-500 mb-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
-                          Total Protein
-                        </p>
-                        <div className="w-[90px] h-[50px] lg:w-[95px] lg:h-[56px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
-                          <p className="text-[18px] lg:text-[20px] font-bold bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
-                            {currentDayPlan.totalProtein - 6}-{currentDayPlan.totalProtein + 6}g
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 lg:mb-6">
+                      {/* Mobile: Left aligned title, right aligned protein */}
+                      <div className="flex justify-between items-start lg:hidden">
+                        <div className="text-left">
+                          <h3 className="text-[24px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                            {currentDayPlan.day}
+                          </h3>
+                          <p className="text-[14px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                            Day {currentDayPlan.dayNumber} of your Meal Plan
                           </p>
+                        </div>
+                        <div className="flex flex-col items-end text-right">
+                          <p className="text-[14px] text-gray-500 mb-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                            Total Protein
+                          </p>
+                          <div className="w-[90px] h-[50px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
+                            <p className="text-[18px] font-bold bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                              {currentDayPlan.totalProtein - 6}-{currentDayPlan.totalProtein + 6}g
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Desktop: Original layout */}
+                      <div className="hidden lg:flex lg:items-center lg:justify-between w-full text-center lg:text-left">
+                        <div>
+                          <h3 className="text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                            {currentDayPlan.day}
+                          </h3>
+                          <p className="text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                            Day {currentDayPlan.dayNumber} of your Meal Plan
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                          <p className="text-[13px] text-gray-500 mb-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                            Total Protein
+                          </p>
+                          <div className="w-[95px] h-[56px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
+                            <p className="text-[20px] font-bold bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                              {currentDayPlan.totalProtein - 6}-{currentDayPlan.totalProtein + 6}g
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -744,7 +769,7 @@ export default function WorldProteinDay() {
                                     key={idx}
                                     src={getProductImage(product)} 
                                     alt={product}
-                                    className="object-contain h-[85px] lg:h-[85px] min-w-[70px] lg:min-w-[70px] max-w-[105px] lg:max-w-[105px]"
+                                    className="object-contain h-[100px] lg:h-[85px] min-w-[80px] lg:min-w-[70px] max-w-[120px] lg:max-w-[105px]"
                                     style={{ objectFit: 'contain', objectPosition: 'center' }}
                                   />
                                 ))}
