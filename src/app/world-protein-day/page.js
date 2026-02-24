@@ -635,53 +635,81 @@ export default function WorldProteinDay() {
                   <div className="w-full max-w-[1122px] bg-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 p-4 lg:p-8">
                     {/* Top Header - Available plans */}
                     <div className="mb-6 lg:mb-8">
-                      <h2 className="text-[20px] lg:text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                      <h2 className="text-[24px] lg:text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
                         Available plans for {result.userData?.name || 'You'}
                       </h2>
-                      <p className="text-[11px] lg:text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                      <p className="text-[14px] lg:text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                         Select the plan that best fits you and explore your protein recipes now
                       </p>
                     </div>
 
                     {/* Day Selector */}
-                    <div className="flex flex-wrap gap-2 mb-6 lg:mb-8 justify-center">
-                      {result.weeklyPlan.map((dayPlan, index) => (
-                        <button
-                          key={dayPlan.day}
-                          onClick={() => setSelectedDay(dayPlan.day)}
-                          className={`w-[100px] lg:w-[129px] h-[35px] lg:h-[40px] rounded-[12px] transition-all duration-300 flex items-center justify-between px-2 lg:px-4 bg-white ${
-                            selectedDay === dayPlan.day
-                              ? 'border-2 border-[#2B4C6F]'
-                              : 'border border-gray-200 hover:border-[#2B4C6F]'
-                          }`}
-                        >
-                          <span className="text-[11px] lg:text-[13px] text-[#2B4C6F]" style={{ fontFamily: 'AG Display, sans-serif', fontWeight: 700 }}>
-                            {dayPlan.day.substring(0, 3)}
-                          </span>
-                          <div className={`w-[14px] h-[14px] lg:w-[18px] lg:h-[18px] rounded-full ${
-                            selectedDay === dayPlan.day ? 'bg-gradient-to-r from-[#211E57] to-[#106D6B]' : 'border-2 border-gray-300'
-                          }`}>
-                          </div>
-                        </button>
-                      ))}
+                    <div className="mb-6 lg:mb-8">
+                      {/* Mobile: Horizontal scrolling */}
+                      <div className="flex lg:hidden overflow-x-auto gap-2 pb-2 scrollbar-hide">
+                        <div className="flex gap-2 min-w-max px-4">
+                          {result.weeklyPlan.map((dayPlan, index) => (
+                            <button
+                              key={dayPlan.day}
+                              onClick={() => setSelectedDay(dayPlan.day)}
+                              className={`w-[110px] h-[40px] rounded-[12px] transition-all duration-300 flex items-center justify-between px-3 bg-white flex-shrink-0 ${
+                                selectedDay === dayPlan.day
+                                  ? 'border-2 border-[#2B4C6F]'
+                                  : 'border border-gray-200 hover:border-[#2B4C6F]'
+                              }`}
+                            >
+                              <span className="text-[14px] text-[#2B4C6F]" style={{ fontFamily: 'AG Display, sans-serif', fontWeight: 700 }}>
+                                {dayPlan.day.substring(0, 3)}
+                              </span>
+                              <div className={`w-[16px] h-[16px] rounded-full ${
+                                selectedDay === dayPlan.day ? 'bg-gradient-to-r from-[#211E57] to-[#106D6B]' : 'border-2 border-gray-300'
+                              }`}>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {/* Desktop: Flex wrap */}
+                      <div className="hidden lg:flex flex-wrap gap-2 justify-center">
+                        {result.weeklyPlan.map((dayPlan, index) => (
+                          <button
+                            key={dayPlan.day}
+                            onClick={() => setSelectedDay(dayPlan.day)}
+                            className={`w-[129px] h-[40px] rounded-[12px] transition-all duration-300 flex items-center justify-between px-4 bg-white ${
+                              selectedDay === dayPlan.day
+                                ? 'border-2 border-[#2B4C6F]'
+                                : 'border border-gray-200 hover:border-[#2B4C6F]'
+                            }`}
+                          >
+                            <span className="text-[13px] text-[#2B4C6F]" style={{ fontFamily: 'AG Display, sans-serif', fontWeight: 700 }}>
+                              {dayPlan.day.substring(0, 3)}
+                            </span>
+                            <div className={`w-[18px] h-[18px] rounded-full ${
+                              selectedDay === dayPlan.day ? 'bg-gradient-to-r from-[#211E57] to-[#106D6B]' : 'border-2 border-gray-300'
+                            }`}>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Day Title and Protein Info */}
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 lg:mb-6 text-center lg:text-left">
                       <div>
-                        <h3 className="text-[20px] lg:text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                        <h3 className="text-[24px] lg:text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
                           {currentDayPlan.day}
                         </h3>
-                        <p className="text-[11px] lg:text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                        <p className="text-[14px] lg:text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                           Day {currentDayPlan.dayNumber} of your Meal Plan
                         </p>
                       </div>
                       <div className="flex flex-col items-center mt-4 lg:mt-0">
-                        <p className="text-[11px] lg:text-[13px] text-gray-500 mb-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                        <p className="text-[14px] lg:text-[13px] text-gray-500 mb-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                           Total Protein
                         </p>
-                        <div className="w-[80px] h-[45px] lg:w-[95px] lg:h-[56px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
-                          <p className="text-[16px] lg:text-[20px] font-bold bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                        <div className="w-[90px] h-[50px] lg:w-[95px] lg:h-[56px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
+                          <p className="text-[18px] lg:text-[20px] font-bold bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
                             {currentDayPlan.totalProtein - 6}-{currentDayPlan.totalProtein + 6}g
                           </p>
                         </div>
@@ -690,22 +718,22 @@ export default function WorldProteinDay() {
 
                     {/* Meal Cards - Always expanded, centered and middle aligned */}
                     <div className="w-full flex justify-center items-center mb-6 lg:mb-8">
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 w-full max-w-[320px] lg:max-w-none">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-6 w-full max-w-[350px] lg:max-w-none">
                         {currentDayPlan.meals.map((meal, index) => (
                           <div 
                             key={index}
-                            className="bg-white rounded-[12px] overflow-hidden w-full lg:w-[320px] h-[400px] lg:h-[450px] border border-gray-200 mx-auto flex flex-col"
+                            className="bg-white rounded-[12px] overflow-hidden w-full lg:w-[320px] h-[450px] lg:h-[450px] border border-gray-200 mx-auto flex flex-col"
                           >
                             {/* Fixed Header Section */}
-                            <div className="p-3 lg:p-4 flex-shrink-0">
+                            <div className="p-4 lg:p-4 flex-shrink-0">
                               <div className="flex items-center justify-between mb-1">
-                                <h4 className="text-[14px] lg:text-[16px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                                <h4 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   {meal.type}
                                 </h4>
                               </div>
                               
                               {/* Recipe Name - Always show */}
-                              <p className="text-gray-700 mb-2 text-[11px] lg:text-[13px] font-semibold" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: '1.4' }}>
+                              <p className="text-gray-700 mb-2 text-[14px] lg:text-[13px] font-semibold" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: '1.4' }}>
                                 {meal.recipeName}
                               </p>
                                 
@@ -716,21 +744,21 @@ export default function WorldProteinDay() {
                                     key={idx}
                                     src={getProductImage(product)} 
                                     alt={product}
-                                    className="object-contain h-[75px] lg:h-[85px] min-w-[60px] lg:min-w-[70px] max-w-[95px] lg:max-w-[105px]"
+                                    className="object-contain h-[85px] lg:h-[85px] min-w-[70px] lg:min-w-[70px] max-w-[105px] lg:max-w-[105px]"
                                     style={{ objectFit: 'contain', objectPosition: 'center' }}
                                   />
                                 ))}
                               </div>
 
                               {/* Tags */}
-                              <div className="flex flex-wrap gap-1 lg:gap-2 mb-3 justify-center">
+                              <div className="flex flex-wrap gap-2 lg:gap-2 mb-3 justify-center">
                                 {meal.dietary && meal.dietary.slice(0, 1).map((tag, tagIndex) => {
                                   const isNonVeg = tag === 'non-vegetarian';
                                   const tagText = tag === 'non-vegetarian' ? 'Non-Veg' : tag === 'vegetarian' ? 'Veg' : tag === 'gluten-free' ? 'Gluten Free' : tag;
                                   return (
                                     <span 
                                       key={tagIndex}
-                                      className={`px-2 lg:px-3 h-[22px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit`}
+                                      className={`px-3 lg:px-3 h-[26px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[12px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit`}
                                       style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                     >
                                       {tagText}
@@ -738,13 +766,13 @@ export default function WorldProteinDay() {
                                   );
                                 })}
                                 <span 
-                                  className="px-2 lg:px-3 h-[22px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit" 
+                                  className="px-3 lg:px-3 h-[26px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[12px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit" 
                                   style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                 >
                                   {meal.nutrition.protein - 2}-{meal.nutrition.protein + 2}g Protein
                                 </span>
                                 <span 
-                                  className="px-2 lg:px-3 h-[22px] lg:h-[24px] bg-transparent border border-blue-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit" 
+                                  className="px-3 lg:px-3 h-[26px] lg:h-[24px] bg-transparent border border-blue-600 text-[#2B4C6F] text-[12px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit" 
                                   style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                 >
                                   {meal.nutrition.calories} Cal
@@ -753,15 +781,15 @@ export default function WorldProteinDay() {
                             </div>
 
                             {/* Scrollable Content Section */}
-                            <div className="flex-1 overflow-y-auto px-3 lg:px-4 pb-3 lg:pb-4 custom-scrollbar relative">
+                            <div className="flex-1 overflow-y-auto px-4 lg:px-4 pb-4 lg:pb-4 custom-scrollbar relative">
                               {/* Ingredients - Always show */}
                               <div className="mb-4">
-                                <h5 className="text-[14px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2 py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                                <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2 py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   Ingredients
                                 </h5>
                                 <ul className="space-y-2">
                                   {meal.ingredients && meal.ingredients.map((ingredient, idx) => (
-                                    <li key={idx} className="text-[12px] lg:text-[14px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                    <li key={idx} className="text-[14px] lg:text-[14px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
                                       <span className="mr-2 flex-shrink-0">•</span>
                                       <span className="break-words leading-relaxed">{ingredient}</span>
                                     </li>
@@ -771,12 +799,12 @@ export default function WorldProteinDay() {
 
                               {/* How to Prepare - Always show */}
                               <div className="mb-1">
-                                <h5 className="text-[14px] lg:text-[16px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                                <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   How to Prepare
                                 </h5>
                                 <ol className="space-y-2">
                                   {meal.steps && meal.steps.map((step, idx) => (
-                                    <li key={idx} className="text-[12px] lg:text-[14px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                    <li key={idx} className="text-[14px] lg:text-[14px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
                                       <span className="mr-2 flex-shrink-0">{idx + 1}.</span>
                                       <span className="break-words leading-relaxed">{step}</span>
                                     </li>
@@ -796,7 +824,7 @@ export default function WorldProteinDay() {
                     <div className="flex flex-col lg:flex-row justify-center gap-4 mt-6 lg:mt-8 mb-4">
                       <button
                         onClick={downloadMealPlanAsPDF}
-                        className="w-full max-w-[280px] lg:w-[320px] h-[48px] flex items-center justify-center px-[18px] py-[16px] bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white rounded-[8px] font-semibold text-[12px] lg:text-[14px] hover:opacity-90 transition-all duration-300 shadow-sm"
+                        className="w-full max-w-[320px] lg:w-[320px] h-[52px] lg:h-[48px] flex items-center justify-center px-[18px] py-[16px] bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white rounded-[8px] font-semibold text-[16px] lg:text-[14px] hover:opacity-90 transition-all duration-300 shadow-sm"
                       >
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -810,7 +838,7 @@ export default function WorldProteinDay() {
                           setShowMealPlan(false);
                           setSelectedDay('Monday');
                         }}
-                        className="w-full max-w-[280px] lg:w-[320px] h-[48px] flex items-center justify-center px-[18px] py-[16px] bg-gradient-to-r from-[#211E57] to-[#106D6B] text-white rounded-[8px] font-semibold text-[12px] lg:text-[14px] hover:opacity-90 transition-all duration-300 shadow-sm"
+                        className="w-full max-w-[320px] lg:w-[320px] h-[52px] lg:h-[48px] flex items-center justify-center px-[18px] py-[16px] bg-gradient-to-r from-[#211E57] to-[#106D6B] text-white rounded-[8px] font-semibold text-[16px] lg:text-[14px] hover:opacity-90 transition-all duration-300 shadow-sm"
                       >
                         Calculate for Another Person
                       </button>
@@ -854,6 +882,15 @@ export default function WorldProteinDay() {
         /* Sticky headers in scroll area */
         .custom-scrollbar h5 {
           z-index: 10;
+        }
+        
+        /* Hide scrollbar for day selector on mobile */
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
         }
       `}</style>
     </div>

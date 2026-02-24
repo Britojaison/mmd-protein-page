@@ -1758,5 +1758,37 @@
     "activityLevel": "light",
     "proteinRequired": 53,
     "timestamp": "2026-02-24T06:46:38.345Z"
+  },
+  {
+    "name": "Shreya",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "53",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "gujarati"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 42,
+    "timestamp": "2026-02-24T09:26:35.234Z"
+  },
+  {
+    "name": "Maya ",
+    "age": "21",
+    "gender": "female",
+    "height": "154",
+    "weight": "53",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "mixed"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 42,
+    "timestamp": "2026-02-24T09:30:35.858Z"
   }
 ]
