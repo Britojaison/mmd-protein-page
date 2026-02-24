@@ -1630,5 +1630,117 @@
     "activityLevel": "sedentary",
     "proteinRequired": 43,
     "timestamp": "2026-02-23T14:43:03.199Z"
+  },
+  {
+    "name": "kshetra",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "mixed"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-24T04:58:50.959Z"
+  },
+  {
+    "name": "Shreya",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "mixed"
+    ],
+    "activityLevel": "light",
+    "proteinRequired": 53,
+    "timestamp": "2026-02-24T05:18:55.471Z"
+  },
+  {
+    "name": "Shreya Paul",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "56",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "bengali"
+    ],
+    "activityLevel": "light",
+    "proteinRequired": 54,
+    "timestamp": "2026-02-24T06:02:28.004Z"
+  },
+  {
+    "name": "Kshetra",
+    "age": "22",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "bengali"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-24T06:08:30.889Z"
+  },
+  {
+    "name": "Kshetra mohan",
+    "age": "21",
+    "gender": "female",
+    "height": "147",
+    "weight": "55",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "kerala"
+    ],
+    "activityLevel": "sedentary",
+    "proteinRequired": 44,
+    "timestamp": "2026-02-24T06:13:09.249Z"
+  },
+  {
+    "name": "Hena",
+    "age": "23",
+    "gender": "female",
+    "height": "162",
+    "weight": "60",
+    "dietaryPreferences": [
+      "non-vegetarian"
+    ],
+    "cuisinePreference": [
+      "kerala"
+    ],
+    "activityLevel": "light",
+    "proteinRequired": 58,
+    "timestamp": "2026-02-24T06:16:28.382Z"
+  },
+  {
+    "name": "Maya",
+    "age": "21",
+    "gender": "female",
+    "height": "154",
+    "weight": "55",
+    "dietaryPreferences": [
+      "vegetarian"
+    ],
+    "cuisinePreference": [
+      "punjabi"
+    ],
+    "activityLevel": "light",
+    "proteinRequired": 53,
+    "timestamp": "2026-02-24T06:22:49.967Z"
   }
 ]

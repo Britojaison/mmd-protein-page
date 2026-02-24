@@ -10,7 +10,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
     height: '',
     weight: '',
     dietaryPreferences: [],
-    cuisinePreference: '',
+    cuisinePreference: [],
     activityLevel: ''
   });
 
@@ -94,6 +94,15 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
     }
   };
 
+  const handleCuisineChange = (cuisine) => {
+    setFormData(prev => ({
+      ...prev,
+      cuisinePreference: prev.cuisinePreference.includes(cuisine)
+        ? prev.cuisinePreference.filter(c => c !== cuisine)
+        : [...prev.cuisinePreference, cuisine]
+    }));
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -120,8 +129,8 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
       newErrors.weight = 'Please enter a valid weight between 5 and 500 kg';
     }
 
-    if (!formData.cuisinePreference) {
-      newErrors.cuisinePreference = 'Please select your preferred cuisine';
+    if (!formData.cuisinePreference || formData.cuisinePreference.length === 0) {
+      newErrors.cuisinePreference = 'Please select at least one preferred cuisine';
     }
 
     if (!formData.activityLevel) {
@@ -192,25 +201,33 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
 
         <div className="animate-slideUp" style={{ animationDelay: '0.3s' }}>
           <InputLabel title="Gender" />
-          <div className="relative">
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] appearance-none ${errors.gender ? 'border-red-400' : 'border-gray-100'
-                }`}
-            >
-              <option value="" disabled className="text-gray-400">Select...</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-            {/* Custom arrow right icon */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+          <div className="flex gap-4">
+            {['male', 'female', 'other'].map((genderOption) => (
+              <label key={genderOption} className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="gender"
+                  value={genderOption}
+                  checked={formData.gender === genderOption}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <div className={`w-5 h-5 rounded-full border-2 mr-2 flex items-center justify-center transition-all duration-200 ${
+                  formData.gender === genderOption 
+                    ? 'border-[#0f284e] bg-[#0f284e]' 
+                    : 'border-gray-300 hover:border-[#0f284e]'
+                }`}>
+                  {formData.gender === genderOption && (
+                    <div className="w-2 h-2 rounded-full bg-white"></div>
+                  )}
+                </div>
+                <span className={`text-[16px] capitalize ${
+                  formData.gender === genderOption ? 'text-[#0f284e] font-medium' : 'text-gray-600'
+                }`}>
+                  {genderOption}
+                </span>
+              </label>
+            ))}
           </div>
           {errors.gender && (
             <p className="text-red-500 text-[14px] mt-1">{errors.gender}</p>
@@ -257,7 +274,7 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         <label className="block text-[16px] font-medium text-[#0f284e] mb-2 mt-1">
           Dietary Preferences
         </label>
-        <div className="grid grid-cols-2 gap-3 max-w-xs sm:max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-3 max-w-xs sm:max-w-md">
           {dietaryOptions.map((option) => {
             const isSelected = formData.dietaryPreferences.includes(option.value);
             return (
@@ -295,32 +312,38 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
       {/* Indian Cuisine Preference */}
       <div className="animate-slideUp" style={{ animationDelay: '0.7s' }}>
         <InputLabel title="Preferred Indian Cuisine" />
-        <div className="relative">
-          <select
-            name="cuisinePreference"
-            value={formData.cuisinePreference}
-            onChange={handleChange}
-            className={`w-full px-4 py-3 border rounded-[1rem] bg-white shadow-[0_2px_10px_rgba(0,0,0,0.01)] focus:ring-2 focus:ring-[#0f284e]/20 focus:border-[#0f284e] outline-none transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.03)] text-[16px] appearance-none ${errors.cuisinePreference ? 'border-red-400' : 'border-gray-100'
-              }`}
-          >
-            <option value="" disabled className="text-gray-400">Select cuisine...</option>
-            <option value="north-indian">North Indian</option>
-            <option value="south-indian">South Indian</option>
-            <option value="west-indian">West Indian</option>
-            <option value="east-indian">East Indian</option>
-            <option value="punjabi">Punjabi</option>
-            <option value="gujarati">Gujarati</option>
-            <option value="maharashtrian">Maharashtrian</option>
-            <option value="bengali">Bengali</option>
-            <option value="tamil">Tamil</option>
-            <option value="kerala">Kerala</option>
-            <option value="mixed">Mixed/All Regions</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {[
+            { value: 'north-indian', label: 'North Indian' },
+            { value: 'south-indian', label: 'South Indian' },
+            { value: 'west-indian', label: 'West Indian' },
+            { value: 'east-indian', label: 'East Indian' },
+            { value: 'punjabi', label: 'Punjabi' },
+            { value: 'gujarati', label: 'Gujarati' },
+            { value: 'maharashtrian', label: 'Maharashtrian' },
+            { value: 'bengali', label: 'Bengali' },
+            { value: 'tamil', label: 'Tamil' },
+            { value: 'kerala', label: 'Kerala' },
+            { value: 'mixed', label: 'Mixed/All Regions' }
+          ].map((cuisine) => {
+            const isSelected = formData.cuisinePreference.includes(cuisine.value);
+            return (
+              <button
+                key={cuisine.value}
+                type="button"
+                onClick={() => handleCuisineChange(cuisine.value)}
+                className={`py-3 px-4 rounded-xl border transition-all duration-300 text-center cursor-pointer ${
+                  isSelected
+                    ? 'border-[#0f284e] bg-[#f8fbff] text-[#0f284e] font-medium shadow-sm ring-1 ring-[#0f284e] transform scale-[1.02]'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-[#0f284e]/40 hover:bg-[#f8fbff] hover:text-[#0f284e] hover:shadow-md transform hover:-translate-y-0.5'
+                }`}
+              >
+                <div className="text-[14px] font-medium">
+                  {cuisine.label}
+                </div>
+              </button>
+            );
+          })}
         </div>
         {errors.cuisinePreference && (
           <p className="text-red-500 text-[14px] mt-1">{errors.cuisinePreference}</p>

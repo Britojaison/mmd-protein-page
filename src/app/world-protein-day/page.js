@@ -262,7 +262,8 @@ export default function WorldProteinDay() {
       // Title Page
       pdf.setFontSize(24);
       pdf.setTextColor(43, 76, 111); // #2B4C6F
-      pdf.text('Your Personalized Meal Plan', pageWidth / 2, 40, { align: 'center' });
+      const userName = result.userData?.name || 'Your';
+      pdf.text(`${userName}'s Personalized Meal Plan`, pageWidth / 2, 40, { align: 'center' });
       
       pdf.setFontSize(12);
       pdf.setTextColor(102, 102, 102);
@@ -280,9 +281,9 @@ export default function WorldProteinDay() {
       
       pdf.setFontSize(14);
       pdf.setTextColor(16, 109, 107);
-      pdf.text(`${result.proteinRequired}g`, margin + 20, 85);
-      pdf.text(`${result.averageDailyProtein}g`, margin + 70, 85);
-      pdf.text(`${result.weeklyTotalProtein}g`, margin + 130, 85);
+      pdf.text(`${result.proteinRequired - 2}-${result.proteinRequired + 2}g`, margin + 20, 85);
+      pdf.text(`${result.averageDailyProtein - 2}-${result.averageDailyProtein + 2}g`, margin + 70, 85);
+      pdf.text(`${result.weeklyTotalProtein - 14}-${result.weeklyTotalProtein + 14}g`, margin + 130, 85);
       
       // Generate each day on a separate page
       result.weeklyPlan.forEach((day, dayIndex) => {
@@ -302,7 +303,7 @@ export default function WorldProteinDay() {
         
         pdf.setFontSize(12);
         pdf.setTextColor(102, 102, 102);
-        pdf.text(`Total Protein: ${day.totalProtein}g`, pageWidth - margin - 40, yPosition, { align: 'right' });
+        pdf.text(`Total Protein: ${day.totalProtein - 6}-${day.totalProtein + 6}g`, pageWidth - margin - 40, yPosition, { align: 'right' });
         
         yPosition += 15;
         
@@ -344,7 +345,7 @@ export default function WorldProteinDay() {
           pdf.setFillColor(40, 167, 69);
           pdf.rect(tagX - 26, currentY - 1, 26, 5, 'F');
           pdf.setTextColor(255, 255, 255);
-          pdf.text(`${meal.nutrition.protein}g Protein`, tagX - 25, currentY + 2);
+          pdf.text(`${meal.nutrition.protein - 2}-${meal.nutrition.protein + 2}g`, tagX - 25, currentY + 2);
           tagX -= 30;
           
           // Dietary tag
@@ -434,7 +435,6 @@ export default function WorldProteinDay() {
       );
       
       // Download PDF
-      const userName = result.userData?.name || 'User';
       pdf.save(`${userName}_Meal_Plan.pdf`);
       
     } catch (error) {
@@ -582,16 +582,9 @@ export default function WorldProteinDay() {
                 />
                 <Step
                   number={3}
-                  title="Select Your Plan"
-                  desc="Choose the plan that fits your needs."
-                  active={!!result && showMealPlan}
-                  isCompleted={false}
-                />
-                <Step
-                  number={4}
                   title="Explore Curated Recipes"
                   desc="Have the best days with our Milkymist products."
-                  active={false}
+                  active={!!result && showMealPlan}
                   isLast={true}
                 />
               </div>
@@ -643,7 +636,7 @@ export default function WorldProteinDay() {
                     {/* Top Header - Available plans */}
                     <div className="mb-6 lg:mb-8">
                       <h2 className="text-[20px] lg:text-[28px] text-[#2B4C6F] mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
-                        Available plans
+                        Available plans for {result.userData?.name || 'You'}
                       </h2>
                       <p className="text-[11px] lg:text-[13px] text-gray-500" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                         Select the plan that best fits you and explore your protein recipes now
@@ -666,7 +659,7 @@ export default function WorldProteinDay() {
                             {dayPlan.day.substring(0, 3)}
                           </span>
                           <div className={`w-[14px] h-[14px] lg:w-[18px] lg:h-[18px] rounded-full ${
-                            selectedDay === dayPlan.day ? 'bg-[#2B4C6F]' : 'border-2 border-gray-300'
+                            selectedDay === dayPlan.day ? 'bg-gradient-to-r from-[#211E57] to-[#106D6B]' : 'border-2 border-gray-300'
                           }`}>
                           </div>
                         </button>
@@ -687,9 +680,9 @@ export default function WorldProteinDay() {
                         <p className="text-[11px] lg:text-[13px] text-gray-500 mb-2" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                           Total Protein
                         </p>
-                        <div className="w-[50px] h-[45px] lg:w-[62px] lg:h-[56px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
-                          <p className="text-[16px] lg:text-[20px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
-                            {currentDayPlan.totalProtein}g
+                        <div className="w-[80px] h-[45px] lg:w-[95px] lg:h-[56px] bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 rounded-[10px] flex items-center justify-center shadow-sm">
+                          <p className="text-[16px] lg:text-[20px] font-bold bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 700 }}>
+                            {currentDayPlan.totalProtein - 6}-{currentDayPlan.totalProtein + 6}g
                           </p>
                         </div>
                       </div>
@@ -723,7 +716,7 @@ export default function WorldProteinDay() {
                                     key={idx}
                                     src={getProductImage(product)} 
                                     alt={product}
-                                    className="object-contain h-[60px] lg:h-[70px] min-w-[50px] lg:min-w-[60px] max-w-[80px] lg:max-w-[90px]"
+                                    className="object-contain h-[75px] lg:h-[85px] min-w-[60px] lg:min-w-[70px] max-w-[95px] lg:max-w-[105px]"
                                     style={{ objectFit: 'contain', objectPosition: 'center' }}
                                   />
                                 ))}
@@ -737,7 +730,7 @@ export default function WorldProteinDay() {
                                   return (
                                     <span 
                                       key={tagIndex}
-                                      className={`${isNonVeg ? 'w-[55px] lg:w-[65px]' : 'w-[40px] lg:w-[47px]'} h-[20px] lg:h-[22px] bg-transparent border border-green-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center`}
+                                      className={`px-2 lg:px-3 h-[22px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit`}
                                       style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                     >
                                       {tagText}
@@ -745,13 +738,13 @@ export default function WorldProteinDay() {
                                   );
                                 })}
                                 <span 
-                                  className="w-[80px] lg:w-[97px] h-[20px] lg:h-[22px] bg-transparent border border-green-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center" 
+                                  className="px-2 lg:px-3 h-[22px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit" 
                                   style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                 >
-                                  {meal.nutrition.protein}g Protein
+                                  {meal.nutrition.protein - 2}-{meal.nutrition.protein + 2}g Protein
                                 </span>
                                 <span 
-                                  className="w-[75px] lg:w-[90px] h-[20px] lg:h-[22px] bg-transparent border border-blue-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center" 
+                                  className="px-2 lg:px-3 h-[22px] lg:h-[24px] bg-transparent border border-blue-600 text-[#2B4C6F] text-[11px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit" 
                                   style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                 >
                                   {meal.nutrition.calories} Cal
@@ -762,15 +755,15 @@ export default function WorldProteinDay() {
                             {/* Scrollable Content Section */}
                             <div className="flex-1 overflow-y-auto px-3 lg:px-4 pb-3 lg:pb-4 custom-scrollbar relative">
                               {/* Ingredients - Always show */}
-                              <div className="mb-3">
-                                <h5 className="text-[11px] lg:text-[13px] font-bold text-[#2B4C6F] mb-1 sticky top-0 bg-white py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                              <div className="mb-4">
+                                <h5 className="text-[14px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2 py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   Ingredients
                                 </h5>
-                                <ul className="space-y-1">
+                                <ul className="space-y-2">
                                   {meal.ingredients && meal.ingredients.map((ingredient, idx) => (
-                                    <li key={idx} className="text-[9px] lg:text-[11px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                      <span className="mr-1 flex-shrink-0">•</span>
-                                      <span className="break-words leading-tight">{ingredient}</span>
+                                    <li key={idx} className="text-[12px] lg:text-[14px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                      <span className="mr-2 flex-shrink-0">•</span>
+                                      <span className="break-words leading-relaxed">{ingredient}</span>
                                     </li>
                                   ))}
                                 </ul>
@@ -778,14 +771,14 @@ export default function WorldProteinDay() {
 
                               {/* How to Prepare - Always show */}
                               <div className="mb-1">
-                                <h5 className="text-[11px] lg:text-[13px] font-bold text-[#2B4C6F] mb-1 sticky top-0 bg-white py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                                <h5 className="text-[14px] lg:text-[16px] font-bold text-[#2B4C6F]" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   How to Prepare
                                 </h5>
-                                <ol className="space-y-1">
+                                <ol className="space-y-2">
                                   {meal.steps && meal.steps.map((step, idx) => (
-                                    <li key={idx} className="text-[9px] lg:text-[11px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
-                                      <span className="mr-1 flex-shrink-0">{idx + 1}.</span>
-                                      <span className="break-words leading-tight">{step}</span>
+                                    <li key={idx} className="text-[12px] lg:text-[14px] text-gray-600 flex items-start" style={{ fontFamily: 'Inter, sans-serif' }}>
+                                      <span className="mr-2 flex-shrink-0">{idx + 1}.</span>
+                                      <span className="break-words leading-relaxed">{step}</span>
                                     </li>
                                   ))}
                                 </ol>
