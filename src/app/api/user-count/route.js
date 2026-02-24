@@ -1,21 +1,31 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { list } from '@vercel/blob';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'src', 'data', 'users.json');
-    
     let count = 0;
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const users = JSON.parse(fileContent);
-      count = users.length;
+
+    try {
+      const { blobs } = await list({ prefix: 'users.json' });
+
+      if (blobs.length > 0) {
+        const response = await fetch(blobs[0].downloadUrl, {
+          headers: {
+            Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
+          },
+        });
+        if (response.ok) {
+          const users = await response.json();
+          count = users.length;
+        }
+      }
+    } catch (readError) {
+      console.warn('Could not read user count from Blob (might not exist yet).', readError);
     }
-    
+
     return NextResponse.json({ count });
   } catch (error) {
-    console.error('Error reading user count:', error);
+    console.error('Error in user count route:', error);
     return NextResponse.json({ count: 0 });
   }
 }

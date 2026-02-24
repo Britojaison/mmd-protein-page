@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@vercel/blob": "^2.3.0",
     "caniuse-lite": "^1.0.30001770",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.0",
