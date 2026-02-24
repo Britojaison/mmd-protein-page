@@ -1,34 +1,54 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { put, list } from '@vercel/blob';
 
 export async function POST(request) {
   try {
     const userData = await request.json();
-    
-    const filePath = path.join(process.cwd(), 'src', 'data', 'users.json');
-    
-    // Read existing users
+
+    // Read existing users from Vercel Blob
     let users = [];
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      users = JSON.parse(fileContent);
+    try {
+      const { blobs } = await list({ prefix: 'users.json' });
+      if (blobs.length > 0) {
+        const response = await fetch(blobs[0].downloadUrl, {
+          headers: {
+            Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}`,
+          },
+        });
+        if (response.ok) {
+          const text = await response.text();
+          if (text) {
+            try {
+              users = JSON.parse(text);
+            } catch (e) {
+              console.warn('Invalid JSON in blob, proceeding with empty array');
+            }
+          }
+        }
+      }
+    } catch (readError) {
+      console.warn('Could not read existing users list (might not exist yet or no token set). Proceeding with an empty array.', readError);
     }
-    
+
     // Append new user
     users.push(userData);
-    
-    // Save back to file
-    fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
-    
-    return NextResponse.json({ 
-      success: true, 
-      message: 'User data saved successfully' 
+
+    // Save back to Vercel Blob, overwriting the same file without random suffix
+    await put('users.json', JSON.stringify(users, null, 2), {
+      access: 'private',
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      contentType: 'application/json'
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: 'User data saved successfully via Vercel Blob'
     });
   } catch (error) {
     console.error('Error saving user:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to save user data' },
+      { success: false, error: error.message || String(error) },
       { status: 500 }
     );
   }
