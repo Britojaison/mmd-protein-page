@@ -666,7 +666,7 @@ export default function WorldProteinDay() {
 
           {/* Hero Section - Only show on form page */}
           {!result && (
-            <div className="w-full h-screen relative overflow-hidden flex-shrink-0">
+            <div className="w-full h-screen relative overflow-hidden flex-shrink-0 mb-0">
               {/* Desktop Banner */}
               <div className="hidden lg:block w-full h-full">
                 <img 
@@ -681,7 +681,7 @@ export default function WorldProteinDay() {
                 <img 
                   src="/assets/images/Mobile.jpg" 
                   alt="Milky Mist World Protein Day" 
-                  className="w-full h-full object-fill"
+                  className="w-full h-full object-contain object-top"
                   style={{
                     imageRendering: 'crisp-edges',
                     imageRendering: '-webkit-optimize-contrast',
@@ -695,7 +695,7 @@ export default function WorldProteinDay() {
 
           {/* Form Section - Only show on form page */}
           {!result && (
-            <div className="w-full flex flex-col lg:flex-row justify-center items-start gap-4 lg:gap-8 py-4 lg:py-8 px-4 lg:px-0 min-h-screen flex-shrink-0">
+            <div className="w-full flex flex-col lg:flex-row justify-center items-start gap-4 lg:gap-8 pt-0 pb-0 lg:py-8 px-4 lg:px-0 min-h-screen flex-shrink-0">
               {/* Left Stepper Sidebar - Only show on desktop */}
               <div className="bg-gradient-to-b from-[#FFFFFF] to-[#E6F0FF] rounded-[1.5rem] lg:rounded-[2.5rem] w-full lg:w-[348px] h-auto lg:h-[746px] flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 relative shrink-0 p-4 lg:p-8 hidden lg:flex">
                 <div>
