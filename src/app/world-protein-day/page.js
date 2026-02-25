@@ -681,7 +681,13 @@ export default function WorldProteinDay() {
                 <img 
                   src="/assets/images/Mobile.jpg" 
                   alt="Milky Mist World Protein Day" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-fill"
+                  style={{
+                    imageRendering: 'crisp-edges',
+                    imageRendering: '-webkit-optimize-contrast',
+                    imageRendering: 'optimize-contrast',
+                    msInterpolationMode: 'nearest-neighbor'
+                  }}
                 />
               </div>
             </div>
