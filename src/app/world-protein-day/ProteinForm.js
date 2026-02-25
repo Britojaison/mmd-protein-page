@@ -379,11 +379,11 @@ export default function ProteinForm({ onSubmit, isLoading = false }) {
         )}
       </div>
 
-      <div className="pt-4 lg:pt-3 xl:pt-6 animate-slideUp flex justify-center" style={{ animationDelay: '0.9s' }}>
+      <div className="pt-4 lg:pt-3 xl:pt-6 animate-slideUp w-full" style={{ animationDelay: '0.9s' }}>
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white py-4 lg:py-3 px-8 rounded-xl font-semibold text-[18px] lg:text-[16px] hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:-translate-y-0.5"
+          className="w-full bg-gradient-to-r from-[#17435B] to-[#116d7a] text-white py-4 lg:py-3 px-8 rounded-xl font-semibold text-[18px] lg:text-[16px] hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:-translate-y-0.5"
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">
