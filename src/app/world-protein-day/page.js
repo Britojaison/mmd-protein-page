@@ -51,15 +51,30 @@ export default function WorldProteinDay() {
 
     if (isLoading) {
       setProgress(0);
+      let currentProgress = 0;
+      
       progressInterval = setInterval(() => {
         setProgress((prev) => {
-          if (prev >= 90) {
+          if (prev >= 95) {
             clearInterval(progressInterval);
-            return 90;
+            return 95;
           }
-          return prev + Math.random() * 8;
+          
+          // Slow and steady progress - starts faster, then slows down
+          let increment;
+          if (prev < 30) {
+            increment = 2; // Faster in the beginning
+          } else if (prev < 60) {
+            increment = 1.5; // Medium speed
+          } else if (prev < 80) {
+            increment = 1; // Slower
+          } else {
+            increment = 0.5; // Very slow near the end
+          }
+          
+          return Math.min(prev + increment, 95);
         });
-      }, 500);
+      }, 800); // Slower interval for steadier progress
 
       const texts = [
         'Analyzing your profile...',
@@ -74,7 +89,7 @@ export default function WorldProteinDay() {
       textInterval = setInterval(() => {
         textIndex = (textIndex + 1) % texts.length;
         setLoadingText(texts[textIndex]);
-      }, 2500);
+      }, 3000); // Slightly slower text changes
 
     } else {
       setProgress(100);
@@ -318,15 +333,74 @@ export default function WorldProteinDay() {
 
       pdf.setFontSize(10);
       pdf.setTextColor(43, 76, 111);
-      pdf.text('Daily Target', margin + 20, 75);
-      pdf.text('Average Per Day', margin + 70, 75);
-      pdf.text('Weekly Total', margin + 130, 75);
+      pdf.text('Daily Target', pageWidth / 2 - 40, 75, { align: 'center' });
+      pdf.text('Weekly Total', pageWidth / 2 + 40, 75, { align: 'center' });
 
       pdf.setFontSize(14);
       pdf.setTextColor(16, 109, 107);
-      pdf.text(`${result.proteinRequired - 2}-${result.proteinRequired + 2}g`, margin + 20, 85);
-      pdf.text(`${result.averageDailyProtein - 2}-${result.averageDailyProtein + 2}g`, margin + 70, 85);
-      pdf.text(`${result.weeklyTotalProtein - 14}-${result.weeklyTotalProtein + 14}g`, margin + 130, 85);
+      pdf.text(`${result.proteinRequired - 2}-${result.proteinRequired + 2}g`, pageWidth / 2 - 40, 85, { align: 'center' });
+      pdf.text(`${result.weeklyTotalProtein - 14}-${result.weeklyTotalProtein + 14}g`, pageWidth / 2 + 40, 85, { align: 'center' });
+
+      // Add Web Banner image at the bottom of the first page
+      try {
+        const bannerImg = new Image();
+        bannerImg.crossOrigin = 'anonymous';
+        
+        await new Promise((resolve, reject) => {
+          bannerImg.onload = () => {
+            try {
+              console.log('Banner image loaded successfully:', bannerImg.width, 'x', bannerImg.height);
+              
+              // Create a canvas to convert the image with high quality
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              
+              // Calculate image dimensions - use full page width and maintain aspect ratio
+              const imgWidth = pageWidth; // Full page width (210mm)
+              const aspectRatio = bannerImg.width / bannerImg.height;
+              const imgHeight = imgWidth / aspectRatio;
+              
+              // Position image at the bottom of the page
+              const imgX = 0; // No margin - start from edge
+              const imgY = pageHeight - imgHeight - 10; // 10mm from bottom
+              
+              // Set canvas size for high resolution
+              const scale = 4; // Higher scale for better quality
+              canvas.width = bannerImg.width * scale;
+              canvas.height = bannerImg.height * scale;
+              
+              // Enable image smoothing for better quality
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = 'high';
+              
+              // Draw image to canvas at high resolution
+              ctx.drawImage(bannerImg, 0, 0, canvas.width, canvas.height);
+              
+              // Convert canvas to high-quality data URL
+              const dataURL = canvas.toDataURL('image/jpeg', 1.0); // Maximum quality
+              
+              console.log('Adding full-width image to PDF at bottom:', imgX, imgY, imgWidth, imgHeight);
+              
+              // Add image to PDF using data URL
+              pdf.addImage(dataURL, 'JPEG', imgX, imgY, imgWidth, imgHeight);
+              resolve();
+            } catch (error) {
+              console.error('Failed to add banner image to PDF:', error);
+              resolve(); // Continue without image
+            }
+          };
+          
+          bannerImg.onerror = (error) => {
+            console.error('Failed to load Web Banner image:', error);
+            console.log('Attempted path: /assets/images/Web Banner.jpg');
+            resolve(); // Continue without image
+          };
+          
+          bannerImg.src = '/assets/images/Web Banner.jpg';
+        });
+      } catch (error) {
+        console.error('Error loading banner image:', error);
+      }
 
       // Generate each day on a separate page
       result.weeklyPlan.forEach((day, dayIndex) => {
@@ -488,32 +562,32 @@ export default function WorldProteinDay() {
 
   return (
     <div
-      className={`${showMealPlan ? 'min-h-screen overflow-y-auto' : 'h-screen overflow-hidden'} bg-[#F8FAFF] font-sans tracking-tight`}
+      className={`${showMealPlan ? 'min-h-screen overflow-y-auto' : 'min-h-screen overflow-y-auto'} bg-[#F8FAFF] font-sans tracking-tight`}
       style={{ backgroundImage: "url('/assets/images/BG.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
     >
       {/* Summary Page - Full Screen Centered */}
       {result && !showMealPlan ? (
-        <div className="h-full w-full flex items-center justify-center px-4">
-          <div className="w-full max-w-[1056px] lg:w-[1056px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[32px] lg:pt-[48px] px-6 lg:px-12 pb-8 lg:pb-0">
+        <div className="min-h-screen w-full flex items-center justify-center px-0 py-4 lg:px-4 lg:py-0 lg:h-full lg:items-center">
+          <div className="w-full max-w-[1056px] lg:w-[1056px] min-h-[700px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[20px] lg:pt-[48px] px-4 lg:px-12 pb-8 lg:pb-0 mx-auto">
             {/* Progress Steps */}
-            <div className="flex items-center justify-center mb-8 lg:mb-8">
-              <div className="flex items-center space-x-3 lg:space-x-3">
+            <div className="flex items-center justify-center mb-6 lg:mb-8">
+              <div className="flex items-center space-x-2 lg:space-x-3">
                 <div className="flex flex-col lg:flex-row items-center lg:items-center">
-                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
+                  <div className="w-7 h-7 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     1
                   </div>
                   <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base text-[#2B4C6F] font-medium text-center">Personal Info</span>
                 </div>
-                <div className="w-8 lg:w-10 h-[2px] bg-[#2B4C6F] mt-4 lg:mt-0"></div>
+                <div className="w-6 lg:w-10 h-[2px] bg-[#2B4C6F] mt-4 lg:mt-0"></div>
                 <div className="flex flex-col lg:flex-row items-center lg:items-center">
-                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
+                  <div className="w-7 h-7 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     2
                   </div>
                   <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base font-semibold text-[#2B4C6F] text-center">Plan for You</span>
                 </div>
-                <div className="w-8 lg:w-10 h-[2px] bg-gray-300 mt-4 lg:mt-0"></div>
+                <div className="w-6 lg:w-10 h-[2px] bg-gray-300 mt-4 lg:mt-0"></div>
                 <div className="flex flex-col lg:flex-row items-center lg:items-center">
-                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-gray-300 text-gray-500 rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
+                  <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gray-300 text-gray-500 rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     3
                   </div>
                   <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base text-gray-400 text-center">Meal Plan</span>
@@ -522,12 +596,12 @@ export default function WorldProteinDay() {
             </div>
 
             {/* Title Section with Step indicator */}
-            <div className="w-full max-w-[960px] flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 lg:mb-6 lg:mt-8 text-left lg:text-left">
+            <div className="w-full max-w-[960px] flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 lg:mb-6 lg:mt-8 text-left lg:text-left">
               <div className="flex flex-col">
-                <h1 className="text-[24px] lg:text-[30px] text-[#2B4C6F] leading-[1.2] mb-2 lg:mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                <h1 className="text-[22px] lg:text-[30px] text-[#2B4C6F] leading-[1.2] mb-2 lg:mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
                   {result.userData?.name ? `${result.userData.name}'s Personalized Meal Plan` : 'Your Personalised Meal Plan'}
                 </h1>
-                <p className="text-[14px] lg:text-[14px] text-gray-500 leading-[1.4]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                <p className="text-[13px] lg:text-[14px] text-gray-500 leading-[1.4]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                   Crafted with Premium Milky Mist Dairy Products
                 </p>
               </div>
@@ -535,43 +609,33 @@ export default function WorldProteinDay() {
             </div>
 
             {/* Protein Summary Cards */}
-            <div className="w-full max-w-[960px] grid grid-cols-2 lg:flex lg:justify-center gap-4 lg:gap-6 mb-8 lg:mb-10 px-2 lg:px-8">
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                    {result.proteinRequired}g
+            <div className="w-full max-w-[960px] grid grid-cols-1 lg:flex lg:justify-center gap-3 lg:gap-8 mb-4 lg:mb-10 px-2 lg:px-8">
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
+                <div className="w-[60px] h-[45px] lg:w-[80px] lg:h-[70px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
+                  <span className="text-[14px] lg:text-[20px] leading-[1.1] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                    {result.proteinRequired - 2}-{result.proteinRequired + 2}g
                   </span>
                 </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Your goal</div>
+                <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Your goal</div>
               </div>
 
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[11px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center whitespace-nowrap" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>AVERAGE PER DAY</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                    {result.averageDailyProtein}g
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>WEEKLY TOTAL</div>
+                <div className="w-[75px] h-[45px] lg:w-[95px] lg:h-[70px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
+                  <span className="text-[13px] lg:text-[19px] leading-[1.1] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                    {result.weeklyTotalProtein - 14}-{result.weeklyTotalProtein + 14}g
                   </span>
                 </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Exceeds by {result.averageDailyProtein - result.proteinRequired}g</div>
+                <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
               </div>
 
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>WEEKLY TOTAL</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                    {result.weeklyTotalProtein}g
-                  </span>
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
+                <div className="w-[60px] h-[45px] lg:w-[80px] lg:h-[70px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
+                  <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-5 h-5 lg:w-8 lg:h-8" />
                 </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
-              </div>
-
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-5 h-5 lg:w-6 lg:h-6" />
-                </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Optimal</div>
+                <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Optimal</div>
               </div>
             </div>
 
@@ -598,118 +662,148 @@ export default function WorldProteinDay() {
         </div>
       ) : (
         // Form, Day Selector, and Meal Plan Pages - Normal Layout
-        <div className={`${showMealPlan ? 'min-h-screen' : 'h-screen'} w-full flex flex-col lg:flex-row justify-center items-start gap-4 lg:gap-8 py-4 lg:py-8 px-4 lg:px-0`}>
+        <div className="w-full">
 
-          {/* Left Stepper Sidebar - Only show on desktop and only on form page */}
+          {/* Hero Section - Only show on form page */}
           {!result && (
-            <div className="bg-gradient-to-b from-[#FFFFFF] to-[#E6F0FF] rounded-[1.5rem] lg:rounded-[2.5rem] w-full lg:w-[348px] h-auto lg:h-[746px] flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 relative shrink-0 p-4 lg:p-8 hidden lg:flex">
-              <div>
-                <div className="mb-4 lg:mb-8 pb-4 lg:pb-8 border-b border-indigo-50/70 flex justify-center">
-                  <img src="/assets/logos/logo.png" alt="MilkyMist" className="h-8 lg:h-10 object-contain ml-3" />
+            <div className="w-full h-screen relative overflow-hidden flex-shrink-0">
+              {/* Desktop Banner */}
+              <div className="hidden lg:block w-full h-full">
+                <img 
+                  src="/assets/images/Web Banner.jpg" 
+                  alt="Milky Mist World Protein Day" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Mobile Banner */}
+              <div className="block lg:hidden w-full h-full">
+                <img 
+                  src="/assets/images/Mobile.jpg" 
+                  alt="Milky Mist World Protein Day" 
+                  className="w-full h-full object-fill"
+                  style={{
+                    imageRendering: 'crisp-edges',
+                    imageRendering: '-webkit-optimize-contrast',
+                    imageRendering: 'optimize-contrast',
+                    msInterpolationMode: 'nearest-neighbor'
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Form Section - Only show on form page */}
+          {!result && (
+            <div className="w-full flex flex-col lg:flex-row justify-center items-start gap-4 lg:gap-8 py-4 lg:py-8 px-4 lg:px-0 min-h-screen flex-shrink-0">
+              {/* Left Stepper Sidebar - Only show on desktop */}
+              <div className="bg-gradient-to-b from-[#FFFFFF] to-[#E6F0FF] rounded-[1.5rem] lg:rounded-[2.5rem] w-full lg:w-[348px] h-auto lg:h-[746px] flex-col justify-between shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-white/50 relative shrink-0 p-4 lg:p-8 hidden lg:flex">
+                <div>
+                  <div className="mb-4 lg:mb-8 pb-4 lg:pb-8 border-b border-indigo-50/70 flex justify-center">
+                    <img src="/assets/logos/logo.png" alt="MilkyMist" className="h-8 lg:h-10 object-contain ml-3" />
+                  </div>
+
+                  <div className="space-y-0 relative px-2">
+                    <Step
+                      number={1}
+                      title="Enter the Details"
+                      desc="Tell us who you are to get started."
+                      active={!result}
+                      isCompleted={!!result}
+                    />
+                    <Step
+                      number={2}
+                      title="View your Protein Need"
+                      desc="View the personalized meal plan."
+                      active={!!result && !showMealPlan}
+                      isCompleted={!!result && showMealPlan}
+                    />
+                    <Step
+                      number={3}
+                      title="Explore Curated Recipes"
+                      desc="Have the best days with our Milkymist products."
+                      active={!!result && showMealPlan}
+                      isLast={true}
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-0 relative px-2">
-                  <Step
-                    number={1}
-                    title="Enter the Details"
-                    desc="Tell us who you are to get started."
-                    active={!result}
-                    isCompleted={!!result}
-                  />
-                  <Step
-                    number={2}
-                    title="View your Protein Need"
-                    desc="View the personalized meal plan."
-                    active={!!result && !showMealPlan}
-                    isCompleted={!!result && showMealPlan}
-                  />
-                  <Step
-                    number={3}
-                    title="Explore Curated Recipes"
-                    desc="Have the best days with our Milkymist products."
-                    active={!!result && showMealPlan}
-                    isLast={true}
-                  />
+                <div className="mt-4 lg:mt-16 flex items-center justify-between px-2">
+                  <div>
+                    <h4 className="font-bold text-[16px] text-[#04142f] mb-0.5">Need a help?</h4>
+                    <p className="text-[13px] text-gray-500 font-medium">chat with live support</p>
+                  </div>
+                  <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#0f284e] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:scale-105 transition-all duration-300 transform cursor-pointer">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                      <path d="M21 19a2 2 0 0 1-2 2h1a2 2 0 0 1 2-2v-3a2 2 0 0 1-2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 lg:mt-16 flex items-center justify-between px-2">
-                <div>
-                  <h4 className="font-bold text-[16px] text-[#04142f] mb-0.5">Need a help?</h4>
-                  <p className="text-[13px] text-gray-500 font-medium">chat with live support</p>
-                </div>
-                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center text-[#0f284e] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.06)] hover:scale-105 transition-all duration-300 transform cursor-pointer">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                    <path d="M21 19a2 2 0 0 1-2 2h1a2 2 0 0 1 2-2v-3a2 2 0 0 1-2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                  </svg>
+              {/* Right Content Area - Form */}
+              <div className="bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[1.5rem] lg:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/50 w-full lg:w-[680px] h-auto lg:h-[746px] flex items-center justify-center p-4 lg:p-12 overflow-hidden">
+                <div className="w-full max-w-3xl h-full flex flex-col px-2">
+                  {!isLoading && (
+                    <h2 className="text-2xl lg:text-2xl xl:text-[28px] font-bold text-[#0f284e] mb-6 lg:mb-8 text-center lg:text-left shrink-0">
+                      Calculate Your Protein Today!
+                    </h2>
+                  )}
+                  {error && !isLoading && (
+                    <div className="mb-4 lg:mb-6 p-4 lg:p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl shrink-0">
+                      <p className="text-red-600 text-[14px] lg:text-[15px]">{error}</p>
+                    </div>
+                  )}
+
+                  <div className="flex-1 overflow-y-auto">
+                    {isLoading ? (
+                      <div className="flex flex-col items-center justify-center h-full min-h-[400px] animate-fade-in fade-in-up">
+                        <div className="w-24 h-24 mb-8 relative">
+                          <svg className="animate-spin w-full h-full text-[#116d7a] opacity-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          </svg>
+                          <svg className="animate-spin w-full h-full text-[#116d7a] absolute top-0 left-0" style={{ animationDuration: '2s' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </div>
+                        <h3 className="text-[22px] lg:text-[26px] font-bold text-[#2B4C6F] mb-3 text-center transition-all duration-500" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                          {loadingText}
+                        </h3>
+                        <p className="text-gray-500 text-center mb-10 max-w-[320px] text-[15px]" style={{ fontFamily: 'Inter, sans-serif' }}>
+                          Our AI is crafting a personalized, protein-rich meal plan just for you. This might take a moment.
+                        </p>
+
+                        <div className="w-full max-w-[80%] bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
+                          <div
+                            className="bg-gradient-to-r from-[#211E57] to-[#106D6B] h-full rounded-full transition-all duration-300 ease-out relative"
+                            style={{ width: `${Math.min(progress, 100)}%` }}
+                          >
+                            <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/20 animate-pulse rounded-full"></div>
+                          </div>
+                        </div>
+                        <p className="text-[16px] font-bold text-[#2B4C6F] mt-4" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                          {Math.round(Math.min(progress, 100))}%
+                        </p>
+                      </div>
+                    ) : (
+                      <ProteinForm onSubmit={handleSubmit} isLoading={false} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Right Content Area */}
-          <div className={`${result && showMealPlan
-              ? 'w-full min-h-screen flex items-start justify-center py-4 lg:py-8'
-              : 'bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[1.5rem] lg:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100/50 w-full lg:w-[680px] h-auto lg:h-[746px] flex items-center justify-center p-4 lg:p-12 overflow-hidden'
-            }`}>
-            {!result ? (
-              <div className="w-full max-w-3xl h-full flex flex-col px-2">
-                {!isLoading && (
-                  <h2 className="text-2xl lg:text-2xl xl:text-[28px] font-bold text-[#0f284e] mb-6 lg:mb-8 text-center lg:text-left shrink-0">
-                    Calculate Your Protein Today!
-                  </h2>
-                )}
-                {error && !isLoading && (
-                  <div className="mb-4 lg:mb-6 p-4 lg:p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl shrink-0">
-                    <p className="text-red-600 text-[14px] lg:text-[15px]">{error}</p>
-                  </div>
-                )}
+          {/* Meal Plan Display - Always expanded cards */}
+          {result && showMealPlan && (
+            (() => {
+              // Find the selected day's data from weeklyPlan
+              const dayIndex = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].indexOf(selectedDay);
+              const currentDayPlan = result.weeklyPlan[dayIndex] || result.weeklyPlan[0];
 
-                <div className="flex-1 overflow-y-auto">
-                  {isLoading ? (
-                    <div className="flex flex-col items-center justify-center h-full min-h-[400px] animate-fade-in fade-in-up">
-                      <div className="w-24 h-24 mb-8 relative">
-                        <svg className="animate-spin w-full h-full text-[#116d7a] opacity-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        </svg>
-                        <svg className="animate-spin w-full h-full text-[#116d7a] absolute top-0 left-0" style={{ animationDuration: '2s' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                      </div>
-                      <h3 className="text-[22px] lg:text-[26px] font-bold text-[#2B4C6F] mb-3 text-center transition-all duration-500" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
-                        {loadingText}
-                      </h3>
-                      <p className="text-gray-500 text-center mb-10 max-w-[320px] text-[15px]" style={{ fontFamily: 'Inter, sans-serif' }}>
-                        Our AI is crafting a personalized, protein-rich meal plan just for you. This might take a moment.
-                      </p>
-
-                      <div className="w-full max-w-[80%] bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
-                        <div
-                          className="bg-gradient-to-r from-[#211E57] to-[#106D6B] h-full rounded-full transition-all duration-300 ease-out relative"
-                          style={{ width: `${Math.min(progress, 100)}%` }}
-                        >
-                          <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/20 animate-pulse rounded-full"></div>
-                        </div>
-                      </div>
-                      <p className="text-[16px] font-bold text-[#2B4C6F] mt-4" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
-                        {Math.round(Math.min(progress, 100))}%
-                      </p>
-                    </div>
-                  ) : (
-                    <ProteinForm onSubmit={handleSubmit} isLoading={false} />
-                  )}
-                </div>
-              </div>
-            ) : showMealPlan ? (
-              // Meal Plan Display - Always expanded cards
-              (() => {
-                // Find the selected day's data from weeklyPlan
-                const dayIndex = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].indexOf(selectedDay);
-                const currentDayPlan = result.weeklyPlan[dayIndex] || result.weeklyPlan[0];
-
-                return (
-                  <div className="w-full min-h-screen flex items-start justify-center py-4 lg:py-8 px-4 lg:px-0">
+              return (
+                <div className="w-full min-h-screen flex items-start justify-center py-4 lg:py-8 px-4 lg:px-0">
                     <div className="w-full max-w-[1122px] bg-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 p-4 lg:p-8">
                       {/* Top Header - Available plans */}
                       <div className="mb-6 lg:mb-8">
@@ -946,8 +1040,7 @@ export default function WorldProteinDay() {
                   </div>
                 );
               })()
-            ) : null}
-          </div>
+            )}
         </div>
       )}
 
