@@ -333,15 +333,74 @@ export default function WorldProteinDay() {
 
       pdf.setFontSize(10);
       pdf.setTextColor(43, 76, 111);
-      pdf.text('Daily Target', margin + 20, 75);
-      pdf.text('Average Per Day', margin + 70, 75);
-      pdf.text('Weekly Total', margin + 130, 75);
+      pdf.text('Daily Target', pageWidth / 2 - 40, 75, { align: 'center' });
+      pdf.text('Weekly Total', pageWidth / 2 + 40, 75, { align: 'center' });
 
       pdf.setFontSize(14);
       pdf.setTextColor(16, 109, 107);
-      pdf.text(`${result.proteinRequired - 2}-${result.proteinRequired + 2}g`, margin + 20, 85);
-      pdf.text(`${result.averageDailyProtein - 2}-${result.averageDailyProtein + 2}g`, margin + 70, 85);
-      pdf.text(`${result.weeklyTotalProtein - 14}-${result.weeklyTotalProtein + 14}g`, margin + 130, 85);
+      pdf.text(`${result.proteinRequired - 2}-${result.proteinRequired + 2}g`, pageWidth / 2 - 40, 85, { align: 'center' });
+      pdf.text(`${result.weeklyTotalProtein - 14}-${result.weeklyTotalProtein + 14}g`, pageWidth / 2 + 40, 85, { align: 'center' });
+
+      // Add Web Banner image at the bottom of the first page
+      try {
+        const bannerImg = new Image();
+        bannerImg.crossOrigin = 'anonymous';
+        
+        await new Promise((resolve, reject) => {
+          bannerImg.onload = () => {
+            try {
+              console.log('Banner image loaded successfully:', bannerImg.width, 'x', bannerImg.height);
+              
+              // Create a canvas to convert the image with high quality
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              
+              // Calculate image dimensions - use full page width and maintain aspect ratio
+              const imgWidth = pageWidth; // Full page width (210mm)
+              const aspectRatio = bannerImg.width / bannerImg.height;
+              const imgHeight = imgWidth / aspectRatio;
+              
+              // Position image at the bottom of the page
+              const imgX = 0; // No margin - start from edge
+              const imgY = pageHeight - imgHeight - 10; // 10mm from bottom
+              
+              // Set canvas size for high resolution
+              const scale = 4; // Higher scale for better quality
+              canvas.width = bannerImg.width * scale;
+              canvas.height = bannerImg.height * scale;
+              
+              // Enable image smoothing for better quality
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = 'high';
+              
+              // Draw image to canvas at high resolution
+              ctx.drawImage(bannerImg, 0, 0, canvas.width, canvas.height);
+              
+              // Convert canvas to high-quality data URL
+              const dataURL = canvas.toDataURL('image/jpeg', 1.0); // Maximum quality
+              
+              console.log('Adding full-width image to PDF at bottom:', imgX, imgY, imgWidth, imgHeight);
+              
+              // Add image to PDF using data URL
+              pdf.addImage(dataURL, 'JPEG', imgX, imgY, imgWidth, imgHeight);
+              resolve();
+            } catch (error) {
+              console.error('Failed to add banner image to PDF:', error);
+              resolve(); // Continue without image
+            }
+          };
+          
+          bannerImg.onerror = (error) => {
+            console.error('Failed to load Web Banner image:', error);
+            console.log('Attempted path: /assets/images/Web Banner.jpg');
+            resolve(); // Continue without image
+          };
+          
+          bannerImg.src = '/assets/images/Web Banner.jpg';
+        });
+      } catch (error) {
+        console.error('Error loading banner image:', error);
+      }
 
       // Generate each day on a separate page
       result.weeklyPlan.forEach((day, dayIndex) => {
@@ -508,27 +567,27 @@ export default function WorldProteinDay() {
     >
       {/* Summary Page - Full Screen Centered */}
       {result && !showMealPlan ? (
-        <div className="h-full w-full flex items-center justify-center px-4">
-          <div className="w-full max-w-[1056px] lg:w-[1056px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[32px] lg:pt-[48px] px-6 lg:px-12 pb-8 lg:pb-0">
+        <div className="min-h-screen w-full flex items-start justify-center px-4 py-4 lg:py-0 lg:h-full lg:items-center">
+          <div className="w-full max-w-[1056px] lg:w-[1056px] min-h-[700px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[20px] lg:pt-[48px] px-4 lg:px-12 pb-8 lg:pb-0">
             {/* Progress Steps */}
-            <div className="flex items-center justify-center mb-8 lg:mb-8">
-              <div className="flex items-center space-x-3 lg:space-x-3">
+            <div className="flex items-center justify-center mb-6 lg:mb-8">
+              <div className="flex items-center space-x-2 lg:space-x-3">
                 <div className="flex flex-col lg:flex-row items-center lg:items-center">
-                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
+                  <div className="w-7 h-7 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     1
                   </div>
                   <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base text-[#2B4C6F] font-medium text-center">Personal Info</span>
                 </div>
-                <div className="w-8 lg:w-10 h-[2px] bg-[#2B4C6F] mt-4 lg:mt-0"></div>
+                <div className="w-6 lg:w-10 h-[2px] bg-[#2B4C6F] mt-4 lg:mt-0"></div>
                 <div className="flex flex-col lg:flex-row items-center lg:items-center">
-                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
+                  <div className="w-7 h-7 lg:w-8 lg:h-8 bg-[#2B4C6F] text-white rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     2
                   </div>
                   <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base font-semibold text-[#2B4C6F] text-center">Plan for You</span>
                 </div>
-                <div className="w-8 lg:w-10 h-[2px] bg-gray-300 mt-4 lg:mt-0"></div>
+                <div className="w-6 lg:w-10 h-[2px] bg-gray-300 mt-4 lg:mt-0"></div>
                 <div className="flex flex-col lg:flex-row items-center lg:items-center">
-                  <div className="w-8 h-8 lg:w-8 lg:h-8 bg-gray-300 text-gray-500 rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
+                  <div className="w-7 h-7 lg:w-8 lg:h-8 bg-gray-300 text-gray-500 rounded-[6px] flex items-center justify-center text-sm lg:text-sm font-semibold">
                     3
                   </div>
                   <span className="mt-1 lg:mt-0 lg:ml-2 text-xs lg:text-base text-gray-400 text-center">Meal Plan</span>
@@ -537,12 +596,12 @@ export default function WorldProteinDay() {
             </div>
 
             {/* Title Section with Step indicator */}
-            <div className="w-full max-w-[960px] flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 lg:mb-6 lg:mt-8 text-left lg:text-left">
+            <div className="w-full max-w-[960px] flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 lg:mb-6 lg:mt-8 text-left lg:text-left">
               <div className="flex flex-col">
-                <h1 className="text-[24px] lg:text-[30px] text-[#2B4C6F] leading-[1.2] mb-2 lg:mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                <h1 className="text-[22px] lg:text-[30px] text-[#2B4C6F] leading-[1.2] mb-2 lg:mb-1" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
                   {result.userData?.name ? `${result.userData.name}'s Personalized Meal Plan` : 'Your Personalised Meal Plan'}
                 </h1>
-                <p className="text-[14px] lg:text-[14px] text-gray-500 leading-[1.4]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
+                <p className="text-[13px] lg:text-[14px] text-gray-500 leading-[1.4]" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>
                   Crafted with Premium Milky Mist Dairy Products
                 </p>
               </div>
@@ -550,43 +609,33 @@ export default function WorldProteinDay() {
             </div>
 
             {/* Protein Summary Cards */}
-            <div className="w-full max-w-[960px] grid grid-cols-2 lg:flex lg:justify-center gap-4 lg:gap-6 mb-8 lg:mb-10 px-2 lg:px-8">
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                    {result.proteinRequired}g
+            <div className="w-full max-w-[960px] grid grid-cols-1 lg:flex lg:justify-center gap-3 lg:gap-8 mb-4 lg:mb-10 px-2 lg:px-8">
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
+                <div className="w-[48px] h-[40px] lg:w-[70px] lg:h-[64px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
+                  <span className="text-[16px] lg:text-[22px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                    {result.proteinRequired - 2}-{result.proteinRequired + 2}g
                   </span>
                 </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Your goal</div>
+                <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Your goal</div>
               </div>
 
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[11px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center whitespace-nowrap" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>AVERAGE PER DAY</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                    {result.averageDailyProtein}g
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>WEEKLY TOTAL</div>
+                <div className="w-[48px] h-[40px] lg:w-[70px] lg:h-[64px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
+                  <span className="text-[16px] lg:text-[22px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
+                    {result.weeklyTotalProtein - 14}-{result.weeklyTotalProtein + 14}g
                   </span>
                 </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Exceeds by {result.averageDailyProtein - result.proteinRequired}g</div>
+                <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
               </div>
 
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>WEEKLY TOTAL</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <span className="text-[18px] lg:text-[20px] leading-[1.2] bg-gradient-to-r from-[#211E57] to-[#106D6B] bg-clip-text text-transparent" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>
-                    {result.weeklyTotalProtein}g
-                  </span>
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+                <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
+                <div className="w-[48px] h-[40px] lg:w-[70px] lg:h-[64px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
+                  <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-4 h-4 lg:w-7 lg:h-7" />
                 </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
-              </div>
-
-              <div className="w-full lg:w-[180px] h-[160px] lg:h-[162px] flex flex-col items-center justify-center p-4 lg:p-5 bg-white border border-[#E5E7EB] rounded-[12px]">
-                <div className="text-[12px] lg:text-[12px] text-gray-500 tracking-wider uppercase mb-3 lg:mb-3 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
-                <div className="w-[56px] h-[50px] lg:w-[62px] lg:h-[56px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-3 lg:mb-3">
-                  <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-5 h-5 lg:w-6 lg:h-6" />
-                </div>
-                <div className="text-[12px] lg:text-[12px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Optimal</div>
+                <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>Optimal</div>
               </div>
             </div>
 
