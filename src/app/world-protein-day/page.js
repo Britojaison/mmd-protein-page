@@ -562,13 +562,13 @@ export default function WorldProteinDay() {
 
   return (
     <div
-      className={`${showMealPlan ? 'min-h-screen overflow-y-auto' : 'min-h-screen overflow-y-auto'} bg-[#F8FAFF] font-sans tracking-tight`}
+      className={`${showMealPlan ? 'min-h-screen overflow-y-auto' : 'h-screen overflow-hidden lg:min-h-screen lg:overflow-y-auto'} bg-[#F8FAFF] font-sans tracking-tight`}
       style={{ backgroundImage: "url('/assets/images/BG.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
     >
       {/* Summary Page - Full Screen Centered */}
       {result && !showMealPlan ? (
-        <div className="min-h-screen w-full flex items-center justify-center px-0 py-4 lg:px-4 lg:py-0 lg:h-full lg:items-center">
-          <div className="w-full max-w-[1056px] lg:w-[1056px] min-h-[700px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[20px] lg:pt-[48px] px-4 lg:px-12 pb-8 lg:pb-0 mx-auto">
+        <div className="h-screen w-full flex items-center justify-center px-0 py-2 lg:px-4 lg:py-0 lg:h-full lg:items-center lg:min-h-screen">
+          <div className="w-full max-w-[1056px] lg:w-[1056px] h-full lg:min-h-[700px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[20px] lg:pt-[48px] px-4 lg:px-12 pb-4 lg:pb-0 mx-auto">
             {/* Progress Steps */}
             <div className="flex items-center justify-center mb-6 lg:mb-8">
               <div className="flex items-center space-x-2 lg:space-x-3">
@@ -609,7 +609,7 @@ export default function WorldProteinDay() {
             </div>
 
             {/* Protein Summary Cards */}
-            <div className="w-full max-w-[960px] grid grid-cols-1 lg:flex lg:justify-center gap-3 lg:gap-8 mb-4 lg:mb-10 px-2 lg:px-8">
+            <div className="w-full max-w-[960px] grid grid-cols-2 lg:flex lg:justify-center gap-3 lg:gap-8 mb-4 lg:mb-10 px-2 lg:px-8">
               <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
                 <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>DAILY TARGET</div>
                 <div className="w-[60px] h-[45px] lg:w-[80px] lg:h-[70px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
@@ -630,7 +630,7 @@ export default function WorldProteinDay() {
                 <div className="text-[10px] lg:text-[13px] text-gray-400 text-center" style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}>If you follow plan</div>
               </div>
 
-              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px]">
+              <div className="w-full lg:w-[220px] h-[120px] lg:h-[180px] flex flex-col items-center justify-center p-3 lg:p-6 bg-white border border-[#E5E7EB] rounded-[12px] col-span-2 lg:col-span-1">
                 <div className="text-[10px] lg:text-[13px] text-gray-500 tracking-wider uppercase mb-2 lg:mb-4 text-center" style={{ fontFamily: 'Founders Grotesk, sans-serif', fontWeight: 600 }}>PLAN QUALITY</div>
                 <div className="w-[60px] h-[45px] lg:w-[80px] lg:h-[70px] flex items-center justify-center bg-gradient-to-b from-[#F3F4F6] to-[#E0E7FF] rounded-[10px] mb-2 lg:mb-4">
                   <img src="/assets/logos/tick/Form/V2/Vector.png" alt="✓" className="w-5 h-5 lg:w-8 lg:h-8" />
@@ -640,7 +640,7 @@ export default function WorldProteinDay() {
             </div>
 
             {/* Action Buttons */}
-            <div className="w-full max-w-[960px] flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 mt-auto mb-6 lg:mb-8 px-4 lg:px-0">
+            <div className="w-full max-w-[960px] flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 mt-4 lg:mt-auto mb-4 lg:mb-8 px-4 lg:px-0">
               <button
                 onClick={() => {
                   setResult(null);
