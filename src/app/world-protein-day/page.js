@@ -51,15 +51,30 @@ export default function WorldProteinDay() {
 
     if (isLoading) {
       setProgress(0);
+      let currentProgress = 0;
+      
       progressInterval = setInterval(() => {
         setProgress((prev) => {
-          if (prev >= 90) {
+          if (prev >= 95) {
             clearInterval(progressInterval);
-            return 90;
+            return 95;
           }
-          return prev + Math.random() * 8;
+          
+          // Slow and steady progress - starts faster, then slows down
+          let increment;
+          if (prev < 30) {
+            increment = 2; // Faster in the beginning
+          } else if (prev < 60) {
+            increment = 1.5; // Medium speed
+          } else if (prev < 80) {
+            increment = 1; // Slower
+          } else {
+            increment = 0.5; // Very slow near the end
+          }
+          
+          return Math.min(prev + increment, 95);
         });
-      }, 500);
+      }, 800); // Slower interval for steadier progress
 
       const texts = [
         'Analyzing your profile...',
@@ -74,7 +89,7 @@ export default function WorldProteinDay() {
       textInterval = setInterval(() => {
         textIndex = (textIndex + 1) % texts.length;
         setLoadingText(texts[textIndex]);
-      }, 2500);
+      }, 3000); // Slightly slower text changes
 
     } else {
       setProgress(100);
