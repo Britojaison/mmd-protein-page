@@ -45,6 +45,28 @@ export default function WorldProteinDay() {
   const [progress, setProgress] = useState(0);
   const [loadingText, setLoadingText] = useState('Analyzing your profile...');
 
+  // Disable body scroll on mobile when summary page is active
+  useEffect(() => {
+    if (result && !showMealPlan) {
+      // Only disable on mobile (screen width < 1024px)
+      const isMobile = window.innerWidth < 1024;
+      if (isMobile) {
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
+      }
+    } else {
+      // Re-enable body scroll
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+    };
+  }, [result, showMealPlan]);
+
   useEffect(() => {
     let progressInterval;
     let textInterval;
@@ -562,13 +584,13 @@ export default function WorldProteinDay() {
 
   return (
     <div
-      className={`${showMealPlan ? 'min-h-screen overflow-y-auto' : 'h-screen overflow-hidden lg:min-h-screen lg:overflow-y-auto'} bg-[#F8FAFF] font-sans tracking-tight`}
+      className={`${showMealPlan ? 'min-h-screen overflow-y-auto' : 'min-h-screen overflow-y-auto'} bg-[#F8FAFF] font-sans tracking-tight`}
       style={{ backgroundImage: "url('/assets/images/BG.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}
     >
       {/* Summary Page - Full Screen Centered */}
       {result && !showMealPlan ? (
-        <div className="h-screen w-full flex items-center justify-center px-0 py-2 lg:px-4 lg:py-0 lg:h-full lg:items-center lg:min-h-screen">
-          <div className="w-full max-w-[1056px] lg:w-[1056px] h-full lg:min-h-[700px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[20px] lg:pt-[48px] px-4 lg:px-12 pb-4 lg:pb-0 mx-auto">
+        <div className="fixed inset-0 z-50 lg:relative lg:z-auto lg:min-h-screen w-full flex items-center justify-center px-0 py-2 lg:px-4 lg:py-0 lg:h-full lg:items-center lg:min-h-screen bg-[#F8FAFF] lg:bg-transparent">
+          <div className="w-full max-w-[1056px] lg:w-[1056px] max-h-[90vh] lg:min-h-[700px] lg:h-[540px] bg-gradient-to-b from-[#E8F4F8] to-[#FFFFFF] rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-gray-100 flex flex-col items-center pt-[20px] lg:pt-[48px] px-4 lg:px-12 pb-4 lg:pb-0 mx-auto overflow-hidden">
             {/* Progress Steps */}
             <div className="flex items-center justify-center mb-6 lg:mb-8">
               <div className="flex items-center space-x-2 lg:space-x-3">
@@ -758,7 +780,7 @@ export default function WorldProteinDay() {
 
                   <div className="flex-1 overflow-y-auto">
                     {isLoading ? (
-                      <div className="flex flex-col items-center justify-center h-full min-h-[400px] animate-fade-in fade-in-up">
+                      <div className="fixed inset-0 z-50 lg:relative lg:z-auto lg:inset-auto flex flex-col items-center justify-center h-full min-h-[400px] animate-fade-in fade-in-up bg-[#F8FAFF] lg:bg-transparent">
                         <div className="w-24 h-24 mb-8 relative">
                           <svg className="animate-spin w-full h-full text-[#116d7a] opacity-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
