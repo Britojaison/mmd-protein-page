@@ -342,8 +342,9 @@ export default function WorldProteinDay() {
       // Title Page
       pdf.setFontSize(24);
       pdf.setTextColor(43, 76, 111); // #2B4C6F
-      const userName = result.userData?.name || 'Your';
-      pdf.text(`${userName}'s Personalized Meal Plan`, pageWidth / 2, 40, { align: 'center' });
+      let userName = result.userData?.name || 'Your';
+      userName = userName.charAt(0).toUpperCase() + userName.slice(1);
+      pdf.text(`${userName}'s Personalized Protein Meal Plan`, pageWidth / 2, 40, { align: 'center' });
 
       pdf.setFontSize(12);
       pdf.setTextColor(102, 102, 102);
@@ -355,8 +356,8 @@ export default function WorldProteinDay() {
 
       pdf.setFontSize(10);
       pdf.setTextColor(43, 76, 111);
-      pdf.text('Daily Target', pageWidth / 2 - 40, 75, { align: 'center' });
-      pdf.text('Weekly Total', pageWidth / 2 + 40, 75, { align: 'center' });
+      pdf.text('Daily Protein Target', pageWidth / 2 - 40, 75, { align: 'center' });
+      pdf.text('Weekly Protein Total', pageWidth / 2 + 40, 75, { align: 'center' });
 
       pdf.setFontSize(14);
       pdf.setTextColor(16, 109, 107);
