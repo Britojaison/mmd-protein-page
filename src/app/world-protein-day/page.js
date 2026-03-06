@@ -997,7 +997,7 @@ export default function WorldProteinDay() {
                             </div>
 
                             {/* Scrollable Content Section */}
-                            <div className="flex-1 overflow-y-auto px-4 lg:px-4 pb-4 lg:pb-4 custom-scrollbar relative">
+                            <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 lg:px-4 pb-4 lg:pb-4">
                               {/* Ingredients - Always show */}
                               <div className="mb-4">
                                 <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2 py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
@@ -1015,7 +1015,7 @@ export default function WorldProteinDay() {
 
                               {/* How to Prepare - Always show */}
                               <div className="mb-1">
-                                <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
+                                <h5 className="text-[16px] lg:text-[16px] font-bold text-[#2B4C6F] mb-2 py-1" style={{ fontFamily: 'Founders Grotesk, sans-serif' }}>
                                   How to Prepare
                                 </h5>
                                 <ol className="space-y-2">
@@ -1027,9 +1027,6 @@ export default function WorldProteinDay() {
                                   ))}
                                 </ol>
                               </div>
-
-                              {/* Scroll indicator gradient */}
-                              <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
                             </div>
                           </div>
                         ))}
