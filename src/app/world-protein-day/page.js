@@ -485,7 +485,7 @@ export default function WorldProteinDay() {
           pdf.setFillColor(40, 167, 69);
           pdf.rect(tagX - 26, currentY - 1, 26, 5, 'F');
           pdf.setTextColor(255, 255, 255);
-          pdf.text(`${meal.nutrition.protein - 2}-${meal.nutrition.protein + 2}g`, tagX - 25, currentY + 2);
+          pdf.text(`${Math.round(meal.nutrition.protein - 2)}-${Math.round(meal.nutrition.protein + 2)}g`, tagX - 25, currentY + 2);
           tagX -= 30;
 
           // Dietary tag
@@ -985,13 +985,13 @@ export default function WorldProteinDay() {
                                   className="px-3 lg:px-3 h-[26px] lg:h-[24px] bg-transparent border border-green-600 text-[#2B4C6F] text-[12px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit"
                                   style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                 >
-                                  {meal.nutrition.protein - 2}-{meal.nutrition.protein + 2}g Protein
+                                  {Math.round(meal.nutrition.protein - 2)}-{Math.round(meal.nutrition.protein + 2)}g Protein
                                 </span>
                                 <span
                                   className="px-3 lg:px-3 h-[26px] lg:h-[24px] bg-transparent border border-blue-600 text-[#2B4C6F] text-[12px] lg:text-[13px] rounded-[6px] flex items-center justify-center whitespace-nowrap min-w-fit"
                                   style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 700 }}
                                 >
-                                  {meal.nutrition.calories} Cal
+                                  {Math.round(meal.nutrition.calories - 20)}-{Math.round(meal.nutrition.calories + 20)} Cal
                                 </span>
                               </div>
                             </div>

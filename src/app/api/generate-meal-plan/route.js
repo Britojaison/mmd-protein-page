@@ -282,87 +282,68 @@ export async function POST(request) {
     const isVegetarian = dietaryPreferences.includes('vegetarian');
     const isNonVegetarian = dietaryPreferences.includes('non-vegetarian');
 
-    // Create optimized prompt for Gemini - simplified for complete response
-    const prompt = `Generate a COMPLETE 7-day meal plan. Age ${age}, Gender ${gender}, Weight ${weight}kg, Protein target ${proteinRequired}g/day, Diet: ${dietaryString}, Cuisine: ${cuisinePreference}, Activity: ${activityLevel}. 
+    // Create optimized prompt for Gemini
+    const prompt = `Generate a COMPLETE 7-day meal plan as valid JSON.
 
-CRITICAL PROTEIN CALCULATION RULES:
-1. ALWAYS calculate protein by ADDING ALL protein sources in each recipe
-2. Use these EXACT values: Chicken=31g/100g, Eggs=6g/each, Paneer=18g/100g, Greek Yogurt=10g/100g
-3. Example: 100g chicken + 100g paneer + 150g yogurt = 31+18+15 = 64g protein (NOT 18g!)
-4. ADJUST INGREDIENT PORTIONS to meet target protein ranges naturally
-5. Don't create recipes with excessive protein that need to be capped later
+IMPORTANT: All recipes are for a SINGLE PERSON, ONE SERVING per meal. Ingredient quantities, protein, and calories must reflect what ONE individual eats in ONE sitting.
 
-SMART INGREDIENT PORTIONING:
-- For ${Math.round(proteinRequired * 0.2)}-${Math.round(proteinRequired * 0.3)}g breakfast: Use 80-120g chicken OR 2 eggs + 100g paneer OR 200g yogurt + 50g paneer
-- For ${Math.round(proteinRequired * 0.3)}-${Math.round(proteinRequired * 0.4)}g lunch: Use 100-150g chicken OR 3 eggs + 80g paneer OR 150g paneer + 100g yogurt  
-- For ${Math.round(proteinRequired * 0.25)}-${Math.round(proteinRequired * 0.35)}g dinner: Use 80-120g chicken OR 2 eggs + 80g paneer OR 120g paneer + 100g yogurt
+USER PROFILE:
+- Age: ${age}, Gender: ${gender}, Height: ${height}cm, Weight: ${weight}kg
+- Daily protein target: ${proteinRequired}g/day
+- Diet: ${dietaryString}
+- Cuisine: ${cuisinePreference}
+- Activity level: ${activityLevel}
 
-PORTION CONTROL EXAMPLES:
-- Target 20g protein breakfast: 80g chicken (25g) + 50g yogurt (5g) = 30g ✓
-- Target 25g protein lunch: 100g chicken (31g) + NO extra high-protein ingredients = 31g ✓  
-- Target 18g protein dinner: 2 eggs (12g) + 50g paneer (9g) = 21g ✓
-
-CUISINE VARIETY REQUIREMENTS FOR ${cuisinePreference.toUpperCase()}:
-- Create DIFFERENT ${cuisinePreference} dishes for each day - NO repetition of cooking methods
-- Day 1: Traditional curry-based meals, Day 2: Grilled/tandoori, Day 3: Steamed/light
-- Day 4: Rich gravies, Day 5: Dry preparations, Day 6: Soup-based, Day 7: Fusion dishes
-- Use diverse spice levels: mild, medium, spicy across different days
-- Include different meal types: rice dishes, bread-based, soup-based, dry preparations
-
-RULES:
-${isVegetarian ? '- VEGETARIAN ONLY: NO eggs, NO chicken, NO meat, NO fish - STRICTLY VEGETARIAN' : ''}
+DIETARY RULES:
+${isVegetarian ? '- STRICTLY VEGETARIAN: NO eggs, NO chicken, NO meat, NO fish' : ''}
 ${isNonVegetarian ? '- NON-VEGETARIAN: MUST include chicken OR eggs in EVERY meal. Use ONLY chicken and eggs (no other meat/fish)' : ''}
 ${!isVegetarian && !isNonVegetarian ? '- Vegetarian: NO eggs, NO chicken, NO meat\n- Non-vegetarian: ONLY chicken and eggs allowed' : ''}
-- Each meal MUST include a Milky Mist product
-- CUISINE FOCUS: Create recipes inspired by ${cuisinePreference} cuisine with traditional spices, cooking methods, and flavor profiles
-- ACTIVITY CONSIDERATION: ${getActivityGuidelines(activityLevel)}
-- Keep ingredients SHORT (max 4 items)
-- Keep steps DETAILED (4-6 preparation steps with specific instructions)
-- Steps should include prep, cooking method, timing, and serving suggestions
-- DO NOT include protein/calorie/fat/carbs details in ingredient strings - just list the ingredient and quantity
-- Target ${proteinRequired}g protein per day (distribute: breakfast 12-18g, lunch 15-22g, dinner 12-20g)
-- CRITICAL: Daily total should be ${proteinRequired}g ± 5g maximum (between ${proteinRequired - 5}g and ${proteinRequired + 5}g)
-- Adjust ingredient portions to meet target precisely, don't exceed by more than 5g per day
-- Calculate nutrition.protein and nutrition.calories based on standard nutritional values
-- Example ingredient format: "100g chicken breast" NOT "100g chicken breast (31g protein)"
 
 CUISINE GUIDELINES:
 ${getCuisineGuidelines(primaryCuisine)}
+- Create DIFFERENT dishes each day. NO repetition of recipes or cooking methods across the week.
 
-ACTIVITY-BASED MEAL PLANNING:
-${getActivityMealGuidelines(activityLevel, primaryCuisine)}
+ACTIVITY LEVEL CONSIDERATION:
+- ${getActivityGuidelines(activityLevel)}
+- Adjust portion sizes based on activity: sedentary=smaller portions, very active=larger portions
 
-EXAMPLE RECIPE ADAPTATIONS BY ACTIVITY LEVEL:
+MEAL STRUCTURE:
+- Each meal MUST include exactly 1 Milky Mist product
+- Each day use 3 DIFFERENT Milky Mist products (no repeats in same day)
+- Max 4 ingredients per meal
+- 4-6 detailed preparation steps per meal
+- DO NOT include nutritional info in ingredient strings
 
-SEDENTARY PERSON (${cuisinePreference} cuisine):
-- Breakfast: Light ${cuisinePreference} breakfast with yogurt/milk, easy to digest
-- Lunch: Moderate portion ${cuisinePreference} curry with paneer, not too heavy
-- Dinner: Simple ${cuisinePreference} preparation with minimal oil, focus on protein
+PROTEIN TARGETS PER MEAL (must add up to ~${proteinRequired}g/day ± 3g):
+- Breakfast: ${Math.round(proteinRequired * 0.25)}-${Math.round(proteinRequired * 0.35)}g
+- Lunch: ${Math.round(proteinRequired * 0.35)}-${Math.round(proteinRequired * 0.40)}g
+- Dinner: ${Math.round(proteinRequired * 0.25)}-${Math.round(proteinRequired * 0.35)}g
 
-LIGHT ACTIVE PERSON (${cuisinePreference} cuisine):
-- Breakfast: Energizing ${cuisinePreference} breakfast with balanced macros
-- Lunch: Traditional ${cuisinePreference} meal with good protein for recovery
-- Dinner: Satisfying ${cuisinePreference} dinner with muscle-supporting protein
+PROTEIN VALUES PER INGREDIENT (use to calculate nutrition.protein):
+- Chicken breast: 31g/100g | Eggs: 6g/egg | Paneer: 18g/100g
+- Greek Yogurt: 10g/100g | Skyr: 11g/100g | Cheddar Cheese: 25g/100g
+- Toned Milk: 3.5g/100ml | Lentils/Dal: 9g/100g cooked | Oats: 13g/100g
+- Rice: 2.7g/100g cooked | Bread: 3g/slice | Butter/Ghee: 0g
 
-MODERATE ACTIVE PERSON (${cuisinePreference} cuisine):
-- Breakfast: Substantial ${cuisinePreference} breakfast with complex carbs and protein
-- Lunch: Well-balanced ${cuisinePreference} meal for sustained energy
-- Dinner: Protein-rich ${cuisinePreference} dinner for overnight recovery
+CALORIE VALUES PER INGREDIENT (use to calculate nutrition.calories as INTEGER):
+- Chicken breast: 165 cal/100g | Eggs: 70 cal/egg | Paneer: 265 cal/100g
+- Greek Yogurt: 59 cal/100g | Skyr: 63 cal/100g | Cheddar Cheese: 400 cal/100g
+- Toned Milk: 58 cal/100ml | Rice (cooked): 130 cal/100g | Bread: 80 cal/slice
+- Lentils (cooked): 116 cal/100g | Oats (dry): 389 cal/100g
+- Butter/Ghee: 100 cal/tbsp | Oil: 120 cal/tbsp | Vegetables: 30 cal/100g
+- Curry/Gravy: 80 cal/100g | Fruits: 60 cal/100g | Nuts: 600 cal/100g
+- Honey: 64 cal/tbsp
 
-VERY ACTIVE PERSON (${cuisinePreference} cuisine):
-- Breakfast: High-energy ${cuisinePreference} breakfast with premium protein
-- Lunch: Recovery-focused ${cuisinePreference} meal with ample nutrients
-- Dinner: Muscle-building ${cuisinePreference} dinner with complete proteins
+CALCULATION METHOD (MANDATORY for every meal):
+1. For each ingredient, multiply its quantity by the per-unit value above
+2. Add all ingredient values together
+3. Return INTEGER values only (no decimals)
 
-EXTREMELY ACTIVE PERSON (${cuisinePreference} cuisine):
-- Breakfast: Power-packed ${cuisinePreference} breakfast with maximum nutrition
-- Lunch: Performance ${cuisinePreference} meal with high-quality protein
-- Dinner: Intensive recovery ${cuisinePreference} dinner with premium ingredients
+Example: "45g chicken + 150g rice + 100g gravy + 1 tbsp ghee"
+- Protein: (45×0.31) + (150×0.027) + 0 + 0 = 14 + 4 + 0 + 0 = 18g
+- Calories: (45×1.65) + (150×1.30) + (100×0.80) + 100 = 74 + 195 + 80 + 100 = 449
 
-PROTEIN TIMING FOR ${activityLevel.toUpperCase()} ACTIVITY LEVEL:
-${getProteinTimingGuidance(activityLevel)}
-
-PRODUCTS (use variety):
+MILKY MIST PRODUCTS (use variety across the week):
 1. Milky Mist Skyr (15g protein/150g)
 2. Milky Mist Greek Yogurt Natural (10g protein/150g)
 3. Milky Mist Greek Yogurt Cereal (10g protein/150g)
@@ -370,71 +351,15 @@ PRODUCTS (use variety):
 5. Milky Mist Greek Yogurt Honey and Fig (10g protein/150g)
 6. Milky Mist High Protein Paneer (18g protein/100g)
 7. Milky Mist High Protein Cheddar Cheese (20g protein/80g)
-8. Milky Mist Butter (0g protein/tbsp, use with protein-rich foods)
-9. Milky Mist Ghee (0g protein/tbsp, use with protein-rich foods)
+8. Milky Mist Butter (0g protein/tbsp)
+9. Milky Mist Ghee (0g protein/tbsp)
 10. Milky Mist Frozen Khova (6g protein/80g)
 11. Milky Mist Toned Milk (7g protein/200ml)
 
-PROTEIN REFERENCE VALUES (use these to calculate nutrition.protein):
-- Chicken breast: 31g protein per 100g
-- Eggs: 6g protein per large egg (50g)
-- Paneer: 18g protein per 100g
-- Greek Yogurt: 10g protein per 100g
-- Cheddar Cheese: 25g protein per 100g
-- Skyr: 11g protein per 100g
-- Toned Milk: 3.5g protein per 100ml
-- Rice: 2.7g protein per 100g cooked
-- Bread: 3g protein per slice
-- Lentils: 9g protein per 100g cooked
-- Quinoa: 4.4g protein per 100g cooked
-- Oats: 13g protein per 100g
-- Butter/Ghee: 0g protein
+Return ONLY valid JSON (no markdown, no code blocks):
+{"weeklyPlan":[{"day":"Monday","dayNumber":1,"meals":[{"type":"Breakfast","recipeName":"Name","milkyMistProduct":"Milky Mist Greek Yogurt Cereal","ingredients":["200g Milky Mist Greek Yogurt Cereal","1 banana","2 tbsp nuts"],"steps":["Step 1","Step 2","Step 3","Step 4"],"nutrition":{"protein":18,"calories":350,"carbs":35,"fats":12},"dietary":["vegetarian"]},...more meals...],...all 7 days...]}
 
-CRITICAL CALCULATION RULE:
-For each meal, ADD UP the protein from ALL ingredients using the reference values above.
-Example: "2 eggs + 100g chicken breast + 150g paneer" = (2×6) + (100×0.31) + (150×0.18) = 12 + 31 + 27 = 70g → nutrition.protein: 70
-
-INTELLIGENT RECIPE CREATION:
-- Design recipes with ingredient portions that naturally hit target protein ranges
-- Don't combine multiple high-protein ingredients unless needed for higher targets
-- Use supporting ingredients (rice, vegetables, spices) to complete the meal
-- Balance protein sources with carbs and fats for complete nutrition
-
-SMART PORTION EXAMPLES:
-For 22g protein target:
-- "80g chicken breast + vegetables + rice" = 25g protein ✓
-- "2 eggs + 60g paneer + bread" = 12+11 = 23g protein ✓
-NOT: "150g chicken + 100g paneer" = 46g protein (too high!)
-
-PROTEIN RANGE REQUIREMENTS:
-- Breakfast: ${Math.round(proteinRequired * 0.2)}-${Math.round(proteinRequired * 0.3)}g protein
-- Lunch: ${Math.round(proteinRequired * 0.3)}-${Math.round(proteinRequired * 0.4)}g protein  
-- Dinner: ${Math.round(proteinRequired * 0.25)}-${Math.round(proteinRequired * 0.35)}g protein
-- Daily Total: ${proteinRequired - 3}g to ${proteinRequired + 3}g protein (strict range)
-
-MANDATORY: Create recipes with ingredient portions that naturally fit the target ranges. Don't over-engineer with excessive protein!
-
-IMPORTANT: Each day use 3 DIFFERENT products. No repeats in same day.
-
-CRITICAL: You MUST generate ALL 7 DAYS. Do not stop early. Complete the entire JSON structure.
-
-Return ONLY valid JSON (no markdown, no code blocks). Structure:
-{"weeklyPlan":[{"day":"Monday","dayNumber":1,"meals":[{"type":"Breakfast","recipeName":"Name","milkyMistProduct":"Milky Mist Greek Yogurt Cereal","ingredients":["200g Milky Mist Greek Yogurt Cereal","1 banana","2 tbsp nuts"],"steps":["Gather all ingredients and ensure yogurt is at room temperature","Layer yogurt in bowl as base","Add sliced banana and nuts in layers","Mix gently to combine flavors","Serve immediately or chill for enhanced taste"],"nutrition":{"protein":18,"calories":350,"carbs":35,"fats":12},"dietary":["vegetarian"]},{"type":"Lunch","recipeName":"Name","milkyMistProduct":"Milky Mist High Protein Paneer","ingredients":["100g Milky Mist Paneer","1 cup rice","vegetables"],"steps":["Cook rice according to package instructions","Heat oil in pan over medium heat","Add paneer and vegetables, cook for 5 minutes","Season with spices and mix well","Serve hot with garnish"],"nutrition":{"protein":20,"calories":420,"carbs":45,"fats":15},"dietary":["vegetarian"]},{"type":"Dinner","recipeName":"Name","milkyMistProduct":"Milky Mist Skyr","ingredients":["150g Milky Mist Skyr","chicken breast","vegetables"],"steps":["Marinate chicken in Skyr and spices for 30 minutes","Preheat grill to medium-high heat","Grill chicken for 4-5 minutes per side","Prepare vegetables as side dish","Let rest 2 minutes before serving"],"nutrition":{"protein":18,"calories":380,"carbs":25,"fats":14},"dietary":["non-vegetarian"]}]},{"day":"Tuesday","dayNumber":2,"meals":[...]},{"day":"Wednesday","dayNumber":3,"meals":[...]},{"day":"Thursday","dayNumber":4,"meals":[...]},{"day":"Friday","dayNumber":5,"meals":[...]},{"day":"Saturday","dayNumber":6,"meals":[...]},{"day":"Sunday","dayNumber":7,"meals":[...]}]}
-
-MANDATORY RECIPE REQUIREMENTS:
-1. CUISINE AUTHENTICITY: Every recipe MUST reflect authentic ${cuisinePreference} flavors, spices, and cooking techniques
-2. ACTIVITY OPTIMIZATION: Recipes MUST be optimized for ${activityLevel} activity level with appropriate portions and nutrition density
-3. MILKY MIST INTEGRATION: Each recipe MUST creatively incorporate Milky Mist products as key ingredients, not just additions
-4. REGIONAL COOKING METHODS: Use traditional ${cuisinePreference} cooking methods (steaming, tempering, slow cooking, etc.)
-5. SPICE PROFILES: Apply authentic ${cuisinePreference} spice combinations and flavor profiles
-6. MEAL TIMING: Consider ${activityLevel} activity level for optimal meal timing and macronutrient distribution
-
-RECIPE NAMING CONVENTION:
-- Use ${cuisinePreference} style names (e.g., "Paneer Makhani with Greek Yogurt" for North Indian)
-- Include cooking method when relevant (e.g., "Steamed", "Tandoori", "Coconut Curry")
-- Highlight the Milky Mist product integration
-
-GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
+You MUST generate ALL 7 DAYS (Monday to Sunday). Do not stop early.`;
 
     console.log('Calling Gemini API...');
 
@@ -568,215 +493,18 @@ GENERATE ALL 7 DAYS NOW. START WITH MONDAY AND END WITH SUNDAY.`;
         });
       }
 
-      // Validate and fix protein calculations
-      console.log('Validating protein calculations...');
+      // Validate and round nutrition values to integers
+      console.log('Validating nutrition values...');
 
       mealPlanData.weeklyPlan.forEach(day => {
         day.meals.forEach(meal => {
-          // Calculate expected protein from ingredients
-          let calculatedProtein = 0;
+          // Round all nutrition values to integers
+          meal.nutrition.protein = Math.round(meal.nutrition.protein);
+          meal.nutrition.calories = Math.round(meal.nutrition.calories);
+          if (meal.nutrition.carbs) meal.nutrition.carbs = Math.round(meal.nutrition.carbs);
+          if (meal.nutrition.fats) meal.nutrition.fats = Math.round(meal.nutrition.fats);
 
-          // Enhanced ingredient analysis with better pattern matching
-          const allIngredientsText = meal.ingredients ? meal.ingredients.join(' ').toLowerCase() : '';
-          const recipeNameText = meal.recipeName ? meal.recipeName.toLowerCase() : '';
-          const combinedText = `${allIngredientsText} ${recipeNameText}`;
-
-          console.log(`Analyzing meal: ${meal.recipeName}`);
-          console.log(`Ingredients: ${meal.ingredients.join(', ')}`);
-          console.log(`Combined text for analysis: ${combinedText}`);
-
-          // Count eggs (various patterns)
-          const eggPatterns = [
-            /(\d+)\s*(?:large\s+)?eggs?/gi,
-            /(\d+)\s*eggs?/gi,
-            /(\d+)\s*scrambled\s+eggs?/gi
-          ];
-
-          for (const pattern of eggPatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const eggCount = parseInt(match[1]);
-              if (eggCount > 0 && eggCount <= 10) { // Reasonable range check
-                calculatedProtein += eggCount * 6;
-                console.log(`Found ${eggCount} eggs: +${eggCount * 6}g protein`);
-              }
-            }
-          }
-
-          // Count chicken (various patterns) - more comprehensive
-          const chickenPatterns = [
-            /(\d+)g?\s*(?:cooked\s+)?(?:chicken\s+)?breast/gi,
-            /(\d+)g?\s*chicken\s*(?:breast|thigh|pieces?)?/gi,
-            /(\d+)g?\s*(?:grilled\s+|roasted\s+|steamed\s+)?chicken/gi,
-            /(\d+)g?\s*(?:boneless\s+)?chicken/gi
-          ];
-
-          for (const pattern of chickenPatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const chickenGrams = parseInt(match[1]);
-              if (chickenGrams > 0 && chickenGrams <= 500) { // Reasonable range check
-                const chickenProtein = chickenGrams * 0.31;
-                calculatedProtein += chickenProtein;
-                console.log(`Found ${chickenGrams}g chicken: +${chickenProtein.toFixed(1)}g protein`);
-              }
-            }
-          }
-
-          // Count paneer (various patterns)
-          const paneerPatterns = [
-            /(\d+)g?\s*(?:milky\s+mist\s+)?(?:high\s+protein\s+)?paneer/gi,
-            /(\d+)g?\s*paneer/gi
-          ];
-
-          for (const pattern of paneerPatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const paneerGrams = parseInt(match[1]);
-              if (paneerGrams > 0 && paneerGrams <= 300) { // Reasonable range check
-                const paneerProtein = paneerGrams * 0.18;
-                calculatedProtein += paneerProtein;
-                console.log(`Found ${paneerGrams}g paneer: +${paneerProtein.toFixed(1)}g protein`);
-              }
-            }
-          }
-
-          // Count cheddar cheese
-          const cheesePatterns = [
-            /(\d+)g?\s*(?:milky\s+mist\s+)?(?:high\s+protein\s+)?cheddar\s+cheese/gi,
-            /(\d+)g?\s*cheddar/gi,
-            /(\d+)g?\s*cheese/gi
-          ];
-
-          for (const pattern of cheesePatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const cheeseGrams = parseInt(match[1]);
-              if (cheeseGrams > 0 && cheeseGrams <= 200) { // Reasonable range check
-                const cheeseProtein = cheeseGrams * 0.25;
-                calculatedProtein += cheeseProtein;
-                console.log(`Found ${cheeseGrams}g cheese: +${cheeseProtein.toFixed(1)}g protein`);
-              }
-            }
-          }
-
-          // Count yogurt (various patterns)
-          const yogurtPatterns = [
-            /(\d+)g?\s*(?:milky\s+mist\s+)?(?:greek\s+)?yogurt/gi,
-            /(\d+)g?\s*yogurt/gi
-          ];
-
-          for (const pattern of yogurtPatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const yogurtGrams = parseInt(match[1]);
-              if (yogurtGrams > 0 && yogurtGrams <= 400) { // Reasonable range check
-                const yogurtProtein = yogurtGrams * 0.10;
-                calculatedProtein += yogurtProtein;
-                console.log(`Found ${yogurtGrams}g yogurt: +${yogurtProtein.toFixed(1)}g protein`);
-              }
-            }
-          }
-
-          // Count skyr
-          const skyrPatterns = [
-            /(\d+)g?\s*(?:milky\s+mist\s+)?skyr/gi
-          ];
-
-          for (const pattern of skyrPatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const skyrGrams = parseInt(match[1]);
-              if (skyrGrams > 0 && skyrGrams <= 300) { // Reasonable range check
-                const skyrProtein = skyrGrams * 0.11;
-                calculatedProtein += skyrProtein;
-                console.log(`Found ${skyrGrams}g skyr: +${skyrProtein.toFixed(1)}g protein`);
-              }
-            }
-          }
-
-          // Count milk
-          const milkPatterns = [
-            /(\d+)ml?\s*(?:milky\s+mist\s+)?(?:toned\s+)?milk/gi
-          ];
-
-          for (const pattern of milkPatterns) {
-            let match;
-            while ((match = pattern.exec(combinedText)) !== null) {
-              const milkMl = parseInt(match[1]);
-              if (milkMl > 0 && milkMl <= 500) { // Reasonable range check
-                const milkProtein = milkMl * 0.035;
-                calculatedProtein += milkProtein;
-                console.log(`Found ${milkMl}ml milk: +${milkProtein.toFixed(1)}g protein`);
-              }
-            }
-          }
-
-          // Add some protein from other common ingredients
-          if (combinedText.includes('rice')) {
-            calculatedProtein += 3; // Approximate for 1 cup rice
-            console.log(`Found rice: +3g protein`);
-          }
-          if (combinedText.includes('bread') || combinedText.includes('slice')) {
-            calculatedProtein += 3; // Per slice
-            console.log(`Found bread: +3g protein`);
-          }
-          if (combinedText.includes('lentils') || combinedText.includes('dal')) {
-            calculatedProtein += 9; // Approximate for 1 cup
-            console.log(`Found lentils/dal: +9g protein`);
-          }
-
-          console.log(`Total calculated protein: ${calculatedProtein.toFixed(1)}g`);
-          console.log(`Gemini stated protein: ${meal.nutrition.protein}g`);
-
-          // If calculated protein differs significantly from stated protein, fix it
-          if (calculatedProtein > 0) {
-            const difference = Math.abs(calculatedProtein - meal.nutrition.protein);
-            if (difference > 1) { // Very aggressive threshold - 1g difference
-              console.log(`FIXING protein for ${meal.recipeName}: ${meal.nutrition.protein}g -> ${Math.round(calculatedProtein)}g`);
-              const oldProtein = meal.nutrition.protein;
-              meal.nutrition.protein = Math.round(calculatedProtein);
-              // Adjust calories proportionally
-              if (oldProtein > 0) {
-                const ratio = calculatedProtein / oldProtein;
-                meal.nutrition.calories = Math.round(meal.nutrition.calories * ratio);
-              } else {
-                meal.nutrition.calories = Math.round(meal.nutrition.calories + calculatedProtein * 4);
-              }
-            } else {
-              console.log(`Protein calculation acceptable (difference: ${difference.toFixed(1)}g)`);
-            }
-          } else {
-            // If we couldn't calculate protein from ingredients, apply minimum realistic values based on meal type and ingredients
-            let minimumProtein = 15; // Default minimum
-
-            // Check for high-protein ingredients and set realistic minimums
-            if (combinedText.includes('chicken')) {
-              minimumProtein = Math.max(25, meal.nutrition.protein); // Chicken meals should have at least 25g
-            }
-            if (combinedText.includes('paneer')) {
-              minimumProtein = Math.max(20, meal.nutrition.protein); // Paneer meals should have at least 20g
-            }
-            if (combinedText.includes('egg')) {
-              minimumProtein = Math.max(18, meal.nutrition.protein); // Egg meals should have at least 18g
-            }
-
-            if (meal.nutrition.protein < minimumProtein) {
-              console.log(`BOOSTING low protein for ${meal.recipeName}: ${meal.nutrition.protein}g -> ${minimumProtein}g`);
-              meal.nutrition.protein = minimumProtein;
-              meal.nutrition.calories = Math.max(meal.nutrition.calories, minimumProtein * 6); // Rough calorie adjustment
-            }
-          }
-
-          // Cap excessive protein values to prevent unrealistic totals - but be more lenient
-          const maxProteinPerMeal = Math.ceil(proteinRequired * 0.6); // Increased from 45% to 60% per meal
-          if (meal.nutrition.protein > maxProteinPerMeal) {
-            console.log(`CAPPING excessive protein for ${meal.recipeName}: ${meal.nutrition.protein}g -> ${maxProteinPerMeal}g`);
-            meal.nutrition.protein = maxProteinPerMeal;
-            meal.nutrition.calories = Math.round(meal.nutrition.calories * 0.9); // Reduce calories proportionally
-          }
-
-          console.log('---');
+          console.log(`Meal: ${meal.recipeName} - Protein: ${meal.nutrition.protein}g, Calories: ${meal.nutrition.calories}`);
         });
       });
 
@@ -1042,12 +770,12 @@ function formatMealPlanResponse(mealPlanData, requestData) {
   const weeklyPlan = mealPlanData.weeklyPlan.map(day => {
     const dayTotalProtein = day.meals.reduce((sum, meal) => sum + meal.nutrition.protein, 0);
     const dayTotalCalories = day.meals.reduce((sum, meal) => sum + meal.nutrition.calories, 0);
-    const dayTotalCarbs = day.meals.reduce((sum, meal) => sum + meal.nutrition.carbs, 0);
-    const dayTotalFats = day.meals.reduce((sum, meal) => sum + meal.nutrition.fats, 0);
+    const dayTotalCarbs = day.meals.reduce((sum, meal) => sum + (meal.nutrition.carbs || 0), 0);
+    const dayTotalFats = day.meals.reduce((sum, meal) => sum + (meal.nutrition.fats || 0), 0);
 
     return {
       ...day,
-      totalProtein: Math.round(dayTotalProtein), // Round daily totals
+      totalProtein: Math.round(dayTotalProtein),
       totalCalories: Math.round(dayTotalCalories),
       totalCarbs: Math.round(dayTotalCarbs),
       totalFats: Math.round(dayTotalFats),
@@ -1057,43 +785,8 @@ function formatMealPlanResponse(mealPlanData, requestData) {
 
   const weeklyTotalProtein = weeklyPlan.reduce((sum, day) => sum + day.totalProtein, 0);
   const weeklyTotalCalories = weeklyPlan.reduce((sum, day) => sum + day.totalCalories, 0);
-  let averageDailyProtein = Math.round(weeklyTotalProtein / 7);
+  const averageDailyProtein = Math.round(weeklyTotalProtein / 7);
   const averageDailyCalories = Math.round(weeklyTotalCalories / 7);
-
-  // Ensure average doesn't exceed target by more than 8g
-  const maxAllowedAverage = proteinRequired + 8;
-  if (averageDailyProtein > maxAllowedAverage) {
-    console.log(`Capping excessive average protein: ${averageDailyProtein}g -> ${maxAllowedAverage}g`);
-
-    // Proportionally reduce all daily totals
-    const reductionRatio = maxAllowedAverage / averageDailyProtein;
-    weeklyPlan.forEach(day => {
-      day.totalProtein = Math.round(day.totalProtein * reductionRatio);
-      day.totalCalories = Math.round(day.totalCalories * reductionRatio);
-
-      // Also reduce individual meal proteins
-      day.meals.forEach(meal => {
-        meal.nutrition.protein = Math.round(meal.nutrition.protein * reductionRatio);
-        meal.nutrition.calories = Math.round(meal.nutrition.calories * reductionRatio);
-      });
-    });
-
-    // Recalculate averages
-    const newWeeklyTotalProtein = weeklyPlan.reduce((sum, day) => sum + day.totalProtein, 0);
-    const newWeeklyTotalCalories = weeklyPlan.reduce((sum, day) => sum + day.totalCalories, 0);
-    averageDailyProtein = Math.round(newWeeklyTotalProtein / 7);
-
-    return NextResponse.json({
-      success: true,
-      weeklyPlan,
-      proteinRequired,
-      averageDailyProtein,
-      averageDailyCalories: Math.round(newWeeklyTotalCalories / 7),
-      weeklyTotalProtein: Math.round(newWeeklyTotalProtein), // Round weekly total
-      weeklyTotalCalories: Math.round(newWeeklyTotalCalories),
-      dietaryPreferences: dietaryPreferences.length > 0 ? dietaryPreferences : ['all']
-    });
-  }
 
   return NextResponse.json({
     success: true,
@@ -1101,7 +794,7 @@ function formatMealPlanResponse(mealPlanData, requestData) {
     proteinRequired,
     averageDailyProtein,
     averageDailyCalories,
-    weeklyTotalProtein: Math.round(weeklyTotalProtein), // Round weekly total
+    weeklyTotalProtein: Math.round(weeklyTotalProtein),
     weeklyTotalCalories: Math.round(weeklyTotalCalories),
     dietaryPreferences: dietaryPreferences.length > 0 ? dietaryPreferences : ['all']
   });
