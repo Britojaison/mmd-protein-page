@@ -296,12 +296,33 @@ USER PROFILE:
 
 DIETARY RULES:
 ${isVegetarian ? '- STRICTLY VEGETARIAN: NO eggs, NO chicken, NO meat, NO fish' : ''}
-${isNonVegetarian ? '- NON-VEGETARIAN: MUST include chicken OR eggs in EVERY meal. Use ONLY chicken and eggs (no other meat/fish)' : ''}
+${isNonVegetarian ? `- NON-VEGETARIAN with MIXED meals: People don't eat non-veg at every meal.
+  - Each day MUST have a MIX of vegetarian AND non-vegetarian meals. NOT all 3 meals should be non-veg.
+  - Ideal pattern per day: 1-2 non-veg meals + 1-2 veg meals. For example: veg breakfast, non-veg lunch, veg dinner OR non-veg breakfast, veg lunch, non-veg dinner.
+  - VARY the pattern across the week so non-veg appears in different meal slots (sometimes breakfast, sometimes lunch, sometimes dinner).
+  - For non-veg meals: Use ONLY chicken and eggs (no other meat/fish).
+  - For veg meals: Use Milky Mist products like Paneer, Khova, Butter, Ghee, Greek Yogurt, Skyr, Cheddar Cheese, Toned Milk as primary protein sources.
+  - IMPORTANT: Even in non-veg meals, incorporate Milky Mist products like Paneer, Butter, Ghee, Khova, Cheddar Cheese alongside chicken/eggs for richer recipes.` : ''}
 ${!isVegetarian && !isNonVegetarian ? '- Vegetarian: NO eggs, NO chicken, NO meat\n- Non-vegetarian: ONLY chicken and eggs allowed' : ''}
 
 CUISINE GUIDELINES:
 ${getCuisineGuidelines(primaryCuisine)}
 - Create DIFFERENT dishes each day. NO repetition of recipes or cooking methods across the week.
+
+RECIPE AUTHENTICITY & CULINARY CORRECTNESS (CRITICAL):
+- Every recipe MUST be a real, recognizable dish that people actually cook and eat in the selected cuisine region.
+- DO NOT invent fake recipe names or nonsensical combinations. If a dish name exists in Indian cooking, use it correctly.
+- Ingredients in each recipe MUST make culinary sense together. Never pair ingredients that clash or are never used together in real cooking. Examples of BAD pairings: cheddar cheese in sambar, Greek yogurt in biryani, skyr in dal makhani, blueberry yogurt in a curry.
+- The Milky Mist product in each meal must fit NATURALLY into the recipe. Think about how that product would realistically be used:
+  * Paneer → curries, parathas, tikka, bhurji, salads — NOT in dosa batter or rasam
+  * Butter/Ghee → tempering, parathas, rice dishes, gravies — these are versatile and fit most dishes
+  * Greek Yogurt/Skyr → smoothies, raita, marinades, lassi, parfaits, as a side — NOT cooked into hot curries directly
+  * Cheddar Cheese → sandwiches, parathas, toast, wraps, fusion dishes — NOT in traditional sambar or rasam
+  * Khova → desserts, sweets, halwa, barfi, payasam — NOT in savory curries or dal
+  * Toned Milk → porridge, oats, smoothies, chai, payasam — NOT as a gravy base for dry dishes
+  * Flavored yogurts (Blueberry, Honey & Fig, Cereal) → breakfast bowls, smoothies, parfaits, as a side/dessert — NEVER in cooked savory dishes
+- Preparation steps must describe a realistic cooking process. No vague or impossible steps.
+- Recipe names should reflect the actual dish being made, not just list ingredients.
 
 ACTIVITY LEVEL CONSIDERATION:
 - ${getActivityGuidelines(activityLevel)}
@@ -310,6 +331,7 @@ ACTIVITY LEVEL CONSIDERATION:
 MEAL STRUCTURE:
 - Each meal MUST include exactly 1 Milky Mist product
 - Each day use 3 DIFFERENT Milky Mist products (no repeats in same day)
+- For non-veg users: Use a WIDE variety of Milky Mist products across meals — not just Butter and Ghee. Include Paneer, Khova, Cheddar Cheese, Greek Yogurt, Skyr, and Toned Milk prominently in both veg and non-veg meals.
 - Max 4 ingredients per meal
 - 4-6 detailed preparation steps per meal
 - DO NOT include nutritional info in ingredient strings
